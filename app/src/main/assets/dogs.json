@@ -1,0 +1,46 @@
+{
+  "entity": {
+    "type": "dogs",
+    "category": "animals",
+    "icon": "dog_50363",
+    "title": "Dogs",
+    "images": [
+      {
+        "reference": "dog_50355"
+      },
+      {
+        "reference": "dog_50363"
+      },
+      {
+        "reference": "dog_50371"
+      },
+      {
+        "reference": "dog_50378"
+      },
+      {
+        "reference": "dog_50379"
+      },
+      {
+        "reference": "dog_50386"
+      },
+      {
+        "reference": "dog_50388"
+      },
+      {
+        "reference": "dog_50390"
+      },
+      {
+        "reference": "dog_50391"
+      },
+      {
+        "reference": "dog_50398"
+      },
+      {
+        "reference": "dog_50403"
+      },
+      {
+        "reference": "dog_50407"
+      }
+    ]
+  }
+}

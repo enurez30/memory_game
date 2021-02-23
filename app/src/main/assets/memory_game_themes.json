@@ -1,0 +1,11 @@
+{
+  "entity": {
+    "collection": [
+      {
+        "title": "Dogs",
+        "icon": "dog_icon_cartoon",
+        "json_ref": "dogs"
+      }
+    ]
+  }
+}

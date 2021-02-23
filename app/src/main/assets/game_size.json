@@ -1,0 +1,41 @@
+{
+  "entity": {
+    "collection": [
+      {
+        "xAxis": "2",
+        "yAxis": "2",
+        "size": "4"
+      },
+      {
+        "xAxis": "2",
+        "yAxis": "3",
+        "size": "6"
+      },
+      {
+        "xAxis": "2",
+        "yAxis": "4",
+        "size": "8"
+      },
+      {
+        "xAxis": "3",
+        "yAxis": "4",
+        "size": "12"
+      },
+      {
+        "xAxis": "4",
+        "yAxis": "4",
+        "size": "16"
+      },
+      {
+        "xAxis": "4",
+        "yAxis": "5",
+        "size": "20"
+      },
+      {
+        "xAxis": "4",
+        "yAxis": "6",
+        "size": "24"
+      }
+    ]
+  }
+}
