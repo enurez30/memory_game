@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1061184558703",
+    "project_id": "memorygame-c6487",
+    "storage_bucket": "memorygame-c6487.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061184558703:android:9a3e51706178f3e0afdf9a",
+        "android_client_info": {
+          "package_name": "com.sera.memorygame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061184558703-8mbq3gdltgb2d6k8udk1l5jrs1cssp8q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sera.memorygame",
+            "certificate_hash": "e269e3cce878d1fd2484045c3b4d05e41bc32a61"
+          }
+        },
+        {
+          "client_id": "1061184558703-5lvntdkeeo884km1lnat44iks319svtl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNDZpdbaQOVMEsKnbFdRgaEnDq3l0gtXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061184558703-5lvntdkeeo884km1lnat44iks319svtl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

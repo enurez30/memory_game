@@ -53,7 +53,12 @@ class MemoryFragment : BaseFragment(), Handlers {
      *
      */
     override fun getChildView(container: ViewGroup?): View {
-        mBinder = DataBindingUtil.inflate(LayoutInflater.from(requireContext()), R.layout.fragment_memory, container, false)
+        mBinder = DataBindingUtil.inflate(
+            LayoutInflater.from(requireContext()),
+            R.layout.fragment_memory,
+            container,
+            false
+        )
         return mBinder.root
     }
 
@@ -87,7 +92,8 @@ class MemoryFragment : BaseFragment(), Handlers {
      *
      */
     private fun animateLayout() {
-        mBinder.recycler.layoutAnimation = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_fall_down)
+        mBinder.recycler.layoutAnimation =
+            AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_fall_down)
     }
 
     /**
@@ -107,7 +113,11 @@ class MemoryFragment : BaseFragment(), Handlers {
     private fun addObservers() {
         viewModel.updatePair.observe(viewLifecycleOwner, {
             if (it.first != null && it.second != null) {
-                Toast.makeText(requireContext(), "${it.first?.tag} - ${it.second?.tag} ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "${it.first?.tag} - ${it.second?.tag} ",
+                    Toast.LENGTH_SHORT
+                ).show()
                 mBinder.overlay.visibility = View.VISIBLE
                 if (it.first?.tag == it.second?.tag) {
                     val prev = viewModel.getControlValue.value ?: 0
@@ -180,13 +190,11 @@ class MemoryFragment : BaseFragment(), Handlers {
      *
      */
     override fun onHandleClickedWithPosition(view: View, position: Int) {
-        TODO("Not yet implemented")
+
     }
 
     /**
      *
      */
-    override fun onLongClicked(view: View, position: Int?): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun onLongClicked(view: View, position: Int?): Boolean = false
 }

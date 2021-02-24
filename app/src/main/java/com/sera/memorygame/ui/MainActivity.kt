@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.sera.memorygame.ui
 
 import android.os.Bundle

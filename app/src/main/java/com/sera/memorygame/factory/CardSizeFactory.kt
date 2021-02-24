@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.sera.memorygame.factory
 
 import android.content.Context
