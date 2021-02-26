@@ -7,7 +7,8 @@ import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.model.GameThemeObject
 import com.sera.memorygame.utils.Utils
 
-class GameThemeViewHolder(val binding: ViewDataBinding, val callback: Handlers? = null) : RecyclerView.ViewHolder(binding.root) {
+class GameThemeViewHolder(val binding: ViewDataBinding, val callback: Handlers? = null) :
+    RecyclerView.ViewHolder(binding.root) {
 
     /**
      *
@@ -17,7 +18,12 @@ class GameThemeViewHolder(val binding: ViewDataBinding, val callback: Handlers? 
             handlers = callback
             position = absoluteAdapterPosition
             titleTV.text = item.title
-            Utils.getDrawableByReference(context = root.context, reference = item.iconReference)?.let {
+
+            Utils.getDrawableFromAssets(
+                context = root.context,
+                dirRef = item.jsonReference,
+                reference = item.iconReference
+            )?.let {
                 iconView.setImageDrawable(it)
             }
         }

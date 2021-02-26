@@ -9,10 +9,13 @@ import com.sera.memorygame.model.MemoryViewObject
 import com.sera.memorygame.model.SizeViewObject
 import com.sera.memorygame.utils.Utils
 import com.sera.memorygame.view.MemoryCardView
-import org.json.JSONObject
 import kotlin.random.Random
 
-class MemoryViewModel(private val context: Context, private val jsonRef: String, private val sizeViewObject: SizeViewObject) : ViewModel() {
+class MemoryViewModel(
+    private val context: Context,
+    private val jsonRef: String,
+    private val sizeViewObject: SizeViewObject
+) : ViewModel() {
 
     /**
      *
@@ -64,10 +67,14 @@ class MemoryViewModel(private val context: Context, private val jsonRef: String,
     /**
      *
      */
-    fun generateMemoryViewObject(memoryObjeList: ArrayList<MemoryViewObject>, handlers: Handlers): ArrayList<MemoryViewObject> {
+    fun generateMemoryViewObject(
+        memoryObjeList: ArrayList<MemoryViewObject>,
+        handlers: Handlers
+    ): ArrayList<MemoryViewObject> {
         return ArrayList<MemoryViewObject>().apply {
             memoryObjeList.map {
-                val card = MemoryCardView(mContext = context, memoryViewObject = it, callback = handlers)
+                val card =
+                    MemoryCardView(mContext = context, memoryViewObject = it, callback = handlers)
                 it.memoryView = card
                 this.add(it)
             }
@@ -95,13 +102,17 @@ class MemoryViewModel(private val context: Context, private val jsonRef: String,
                 memoryListValue.value = list.size
                 var counter = 0
                 val breakPoint = (list.size / 2) - 1
-                list.mapIndexed { index, jsonObject ->
+                list.mapIndexed { index, imgRef ->
                     this.add(
                         MemoryViewObject(
                             id = counter,
                             width = width,
                             height = height,
-                            frontResource = Utils.getDrawableByReference(context = context, reference = jsonObject.getString("reference")),
+                            frontResource = Utils.getDrawableFromAssets(
+                                context = context,
+                                reference = imgRef,
+                                dirRef = jsonRef
+                            ),
                             backResource = R.drawable.bckg_squires,
                         )
                     )
@@ -118,8 +129,8 @@ class MemoryViewModel(private val context: Context, private val jsonRef: String,
     /**
      *
      */
-    private fun generateList(): ArrayList<JSONObject> {
-        return ArrayList<JSONObject>().apply {
+    private fun generateList(): ArrayList<String> {
+        return ArrayList<String>().apply {
             val imgList = getImagesObjects()
             this.addAll(imgList)
             this.addAll(imgList)
@@ -129,16 +140,19 @@ class MemoryViewModel(private val context: Context, private val jsonRef: String,
     /**
      *
      */
-    private fun getImagesObjects(): ArrayList<JSONObject> {
+    private fun getImagesObjects(): ArrayList<String> {
         return Utils.loadJSONFromAsset(context = context, jsonFile = jsonRef)?.let { json ->
-            val arr = json.getJSONArray("images")
-            ArrayList<JSONObject>().apply {
+            val listArray = Utils.getImagesArrayByDirReference(
+                context = context,
+                dirRef = json.getString("type")
+            )
+            ArrayList<String>().apply {
                 repeat(sizeViewObject.size / 2) {
                     // Pick a random between 0 and the total
-                    val random = Random.nextInt(arr.length())
-                    val obj = arr[random] as JSONObject
-                    this.add(obj)
-                    arr.remove(random)
+                    val random = Random.nextInt(listArray.size)
+                    val entry = listArray[random]
+                    this.add(entry)
+                    listArray.remove(entry)
                 }
             }
         } ?: kotlin.run {

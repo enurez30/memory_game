@@ -1,7 +1,6 @@
 package com.sera.memorygame.utils
 
 import android.content.Context
-import android.util.Log
 import java.io.File
 
 object FileUtils {
@@ -12,7 +11,7 @@ object FileUtils {
     fun createDir(context: Context, dirName: String) {
         val path = context.filesDir.toString() + "/" + dirName
         val folder = File(path)
-        folder.mkdir()
+        folder.mkdirs()
     }
 
     /**

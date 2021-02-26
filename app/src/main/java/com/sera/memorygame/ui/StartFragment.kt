@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.StartFragmentBinding
 import com.sera.memorygame.factory.StartFragmentFactory
@@ -82,28 +80,14 @@ class StartFragment : BaseFragment() {
     override fun delegateHandlerClick(view: View) {
         when (view.id) {
             R.id.playBtn -> {
-                val path = requireContext().filesDir.toString() + "/" + "assest"
-                //(requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
-                println()
+                (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
+//                println()
 //                val storage = Firebase.storage("gs://memorygame-c6487.appspot.com")
 //                val storageRef = storage.reference
 //                println()
-//
-////                var islandRef = storageRef.child("files/files.zip")
-////                val ONE_MEGABYTE: Long = 1024 * 1024
-////                lifecycleScope.launch(Dispatchers.IO) {
-////                    islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener {
-////                        // Data for "images/island.jpg" is returned, use this as needed
-////                        println()
-////                    }.addOnFailureListener {
-////                        // Handle any errors
-////                        println()
-////                    }
-////                }
-//
 //                val islandRef = storageRef.child("files/files.zip")
 //
-//                val localFile = File.createTempFile("tmp", "zip")
+//                val localFile = File.createTempFile("tmp", ".zip")
 //
 //                islandRef.getFile(localFile).addOnSuccessListener {
 //                    println()
@@ -129,18 +113,19 @@ class StartFragment : BaseFragment() {
             if (!File(path).exists()) {
                 FileUtils.createDir(requireContext(), dirName)
             }
-            val zipFile = File(path, "files.zip")
-            zipFile.writeBytes(tempFile.readBytes())
-            val zipFilePath = zipFile.path
-
+//            val zipFile = File(path, "files.zip")
+//            zipFile.createNewFile()
+//            zipFile.writeBytes(tempFile.readBytes())
+//            val zipFilePath = zipFile.path
             println()
 
             FileUtils.deleteDirectory(requireContext(), dirName)
 
             //create assets folder
             FileUtils.createDir(requireContext(), dirName)
-            if (zipFilePath.isNotEmpty()) {
-                ZipManager.unzip(zipFilePath, requireContext().filesDir.toString() + "/" + dirName)
+            if (tempFile.path.isNotEmpty()) {
+                ZipManager.unzip(tempFile.path, requireContext().filesDir.toString() + "/" + dirName)
+//                UnzipUtility.unzip(zipFilePath,requireContext().filesDir.toString() + "/" + dirName)
             }
 
             tempFile.delete()

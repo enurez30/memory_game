@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import androidx.appcompat.content.res.AppCompatResources
 import org.json.JSONObject
+import java.io.File
 import java.io.IOException
 import java.io.InputStream
 
@@ -40,7 +41,11 @@ object Utils {
     /**
      *
      */
-    fun loadJSONFromAsset(context: Context, jsonFile: String, objectName: String? = null): JSONObject? {
+    fun loadJSONFromAsset(
+        context: Context,
+        jsonFile: String,
+        objectName: String? = null
+    ): JSONObject? {
         val json: String?
 
         try {
@@ -88,6 +93,74 @@ object Utils {
      *
      */
     fun getDrawableByReference(context: Context, reference: String): Drawable? {
-        return AppCompatResources.getDrawable(context, getImageByReference(mContext = context, reference = reference))
+        return AppCompatResources.getDrawable(
+            context,
+            getImageByReference(mContext = context, reference = reference)
+        )
+    }
+
+    /**
+     *
+     */
+    fun getDrawableFromAssets(context: Context, dirRef: String, reference: String): Drawable? {
+        var drawable: Drawable? = null
+        var inputStream: InputStream? = null
+        try {
+            val assetsPath = context.filesDir.toString() + "/assets/files/$dirRef/"
+            getValidFile(path = assetsPath, reference = reference)?.let { imagePath ->
+                inputStream = imagePath.inputStream()
+                drawable = Drawable.createFromStream(inputStream, null)
+            }
+        } catch (e: Exception) {
+            drawable = null
+        } finally {
+            inputStream?.close()
+        }
+
+        return drawable
+    }
+
+    /**
+     *
+     */
+    private fun getValidFile(path: String, reference: String): File? {
+        if (reference.endsWith(".png") || reference.endsWith(".webp")) {
+            return File(path + reference)
+        }
+        var ref = "$reference.png"
+        return if (File(path + ref).exists()) {
+            return File(path + ref)
+        } else {
+            ref = "$reference.webp"
+            if (File(path + ref).exists()) {
+                return File(path + ref)
+            } else {
+                null
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    fun getSizeByDirectoryReference(context: Context, dirRef: String): Int {
+        return try {
+            val assetsPath = context.filesDir.toString() + "/assets/files/$dirRef/"
+            File(assetsPath).list()?.size ?: 0
+        } catch (e: Exception) {
+            0
+        }
+    }
+
+    /**
+     *
+     */
+    fun getImagesArrayByDirReference(context: Context, dirRef: String): ArrayList<String> {
+        return try {
+            val assetsPath = context.filesDir.toString() + "/assets/files/$dirRef/"
+            File(assetsPath).list()?.toList() as ArrayList<String>
+        } catch (e: Exception) {
+            ArrayList()
+        }
     }
 }

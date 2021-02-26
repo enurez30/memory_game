@@ -8,8 +8,8 @@ data class MemoryViewObject(
     val id: Int,
     val width: Float,
     val height: Float,
-    val frontResource: Any? = R.drawable.dog_bck,
-    val backResource: Any? = R.drawable.heart_bckg,
+    val frontResource: Any? = R.drawable.bckg_squires,
+    val backResource: Any? = R.drawable.bckg_squires,
     var memoryView: MemoryCardView? = null
 ) : IObject() {
 

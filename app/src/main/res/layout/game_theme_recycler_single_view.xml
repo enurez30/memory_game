@@ -27,7 +27,6 @@
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:contentDescription="gameIcon"
-            android:src="@drawable/dog_50363"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -45,7 +45,7 @@ class MemoryCardView constructor(private val mContext: Context, private val memo
 
         with(targetImg) {
             layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-            scaleType = ImageView.ScaleType.CENTER_INSIDE
+            scaleType = ImageView.ScaleType.FIT_CENTER
         }
 
         this.addView(targetImg)

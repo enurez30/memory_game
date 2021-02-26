@@ -69,13 +69,16 @@ object ZipManager {
 
             do {
                 ze = zis.nextEntry
-                if(ze == null){
+                if (ze == null) {
                     break
                 }
                 filename = ze.name
 
                 //Split on the '/' to separate folder name from file name
                 val filenames = filename.split("/")
+                if (filename.contains(".DS_Store")) {
+                    continue
+                }
                 // Need to create directories if not exists, or
                 // it will generate an Exception...
                 if (ze.isDirectory) {
@@ -83,25 +86,29 @@ object ZipManager {
                     fmd.mkdirs()
                     continue
                     //If the parent folder is included in the filepath, create a dir out of the parent
-                } else if(filenames.size == 2){
+                } else if (filenames.size == 2) {
                     val fmd = File("$targetPath/${filenames[0]}")
                     fmd.mkdirs()
                 }
 
+                val fout = try {
+                    FileOutputStream("$targetPath/$filename")
+                } catch (e: Exception) {
+                    continue
+                }
 
-                val fout = FileOutputStream("$targetPath/$filename")
 
                 do {
                     count = zis.read(buffer)
-                    if(count == -1){
+                    if (count == -1) {
                         break
                     }
                     fout.write(buffer, 0, count)
-                } while(true)
+                } while (true)
 
                 fout.close()
                 zis.closeEntry()
-            } while(true)
+            } while (true)
 
             zis.close()
         } catch (e: IOException) {

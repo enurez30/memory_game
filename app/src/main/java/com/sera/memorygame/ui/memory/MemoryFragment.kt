@@ -157,31 +157,19 @@ class MemoryFragment : BaseFragment(), Handlers {
      *
      */
     override fun onHandlerClicked(view: View) {
-        when (view.id) {
-            R.id.cardView -> {
-//                val degree = if (mBinder.childImageBackCard.visibility == View.VISIBLE) {
-//                    180F
-//                } else {
-//                    0F
-//                }
-//                viewModel.onRotationClick(degree = degree)
-            }
-            else -> {
-                // memory card was clicked
-                (view as? MemoryCardView)?.let { cardView ->
-                    viewModel.updatePair.value?.let {
-                        var pair: Pair<MemoryCardView?, MemoryCardView?> = it
-                        when {
-                            it.first == null -> {
-                                pair = Pair(cardView, null)
-                            }
-                            it.second == null -> {
-                                pair = Pair(it.first, cardView)
-                            }
-                        }
-                        viewModel.updatePair.value = pair
+        // memory card was clicked
+        (view as? MemoryCardView)?.let { cardView ->
+            viewModel.updatePair.value?.let {
+                var pair: Pair<MemoryCardView?, MemoryCardView?> = it
+                when {
+                    it.first == null -> {
+                        pair = Pair(cardView, null)
+                    }
+                    it.second == null -> {
+                        pair = Pair(it.first, cardView)
                     }
                 }
+                viewModel.updatePair.value = pair
             }
         }
     }
