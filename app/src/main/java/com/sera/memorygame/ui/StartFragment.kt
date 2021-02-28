@@ -12,10 +12,7 @@ import com.sera.memorygame.R
 import com.sera.memorygame.databinding.StartFragmentBinding
 import com.sera.memorygame.factory.StartFragmentFactory
 import com.sera.memorygame.utils.AnimationHelper
-import com.sera.memorygame.utils.FileUtils
-import com.sera.memorygame.utils.ZipManager
 import com.sera.memorygame.viewModel.StartViewModel
-import java.io.File
 
 class StartFragment : BaseFragment() {
     private lateinit var mBinder: StartFragmentBinding
@@ -80,6 +77,7 @@ class StartFragment : BaseFragment() {
     override fun delegateHandlerClick(view: View) {
         when (view.id) {
             R.id.playBtn -> {
+//                EventBus.getDefault().post(Pair("test",HashMap<String,Any>()))
                 (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
 //                println()
 //                val storage = Firebase.storage("gs://memorygame-c6487.appspot.com")
@@ -102,36 +100,5 @@ class StartFragment : BaseFragment() {
         }
     }
 
-    /**
-     * Creates and unzips a zip file contained within the [response] data
-     * Uses [versionNumber] to build the filepath
-     */
-    private fun unzipFiles(tempFile: File) {
-        try {
-            val dirName = "assets"
-            val path = requireContext().filesDir.toString() + "/" + dirName
-            if (!File(path).exists()) {
-                FileUtils.createDir(requireContext(), dirName)
-            }
-//            val zipFile = File(path, "files.zip")
-//            zipFile.createNewFile()
-//            zipFile.writeBytes(tempFile.readBytes())
-//            val zipFilePath = zipFile.path
-            println()
 
-            FileUtils.deleteDirectory(requireContext(), dirName)
-
-            //create assets folder
-            FileUtils.createDir(requireContext(), dirName)
-            if (tempFile.path.isNotEmpty()) {
-                ZipManager.unzip(tempFile.path, requireContext().filesDir.toString() + "/" + dirName)
-//                UnzipUtility.unzip(zipFilePath,requireContext().filesDir.toString() + "/" + dirName)
-            }
-
-            tempFile.delete()
-            println()
-        } catch (e: Exception) {
-            println()
-        }
-    }
 }

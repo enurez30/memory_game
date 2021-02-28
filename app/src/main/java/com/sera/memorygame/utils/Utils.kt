@@ -41,19 +41,18 @@ object Utils {
     /**
      *
      */
-    fun loadJSONFromAsset(
-        context: Context,
-        jsonFile: String,
-        objectName: String? = null
-    ): JSONObject? {
+    fun loadJSONFromAsset(context: Context, jsonFile: String, objectName: String? = null): JSONObject? {
         val json: String?
 
         try {
-            val `is`: InputStream = if (jsonFile.endsWith(".json")) {
-                getAssetsInputStream(context, jsonFile)
+
+            val reference = if (jsonFile.endsWith(".json")) {
+                jsonFile
             } else {
-                getAssetsInputStream(context, "$jsonFile.json")
+                "$jsonFile.json"
             }
+
+            val `is`: InputStream = getAssetsInputStream(context, reference)
 
             val size = `is`.available()
             val buffer = ByteArray(size)
@@ -85,7 +84,10 @@ object Utils {
 //                context.assets.open(fileName)
 //            }
 //        } else {
-        return context.assets.open(fileName)
+        val assetsPath = context.filesDir.toString() + "/assets/files/json_files/"
+        val file = File(assetsPath + fileName)
+        return file.inputStream()
+//        return context.assets.open(fileName)
 //        }
     }
 

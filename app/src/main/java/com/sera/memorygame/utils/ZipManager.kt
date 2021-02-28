@@ -3,6 +3,7 @@ package com.sera.memorygame.utils
 import android.util.Log
 import java.io.*
 import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
@@ -56,7 +57,7 @@ object ZipManager {
     }
 
     @Throws(IOException::class)
-    fun unzip(zipFilePath: String, targetPath: String): Boolean {
+    fun unzip(zipFilePath: String, targetPath: String, callback: (Result<Int>) -> Unit): Boolean {
         val `is`: InputStream
         val zis: ZipInputStream
         try {
@@ -69,6 +70,7 @@ object ZipManager {
 
             do {
                 ze = zis.nextEntry
+//                println("DOWNLOAD: filename - ${ze.name}")
                 if (ze == null) {
                     break
                 }
@@ -79,6 +81,7 @@ object ZipManager {
                 if (filename.contains(".DS_Store")) {
                     continue
                 }
+                callback(Result.success(1))
                 // Need to create directories if not exists, or
                 // it will generate an Exception...
                 if (ze.isDirectory) {
@@ -97,7 +100,6 @@ object ZipManager {
                     continue
                 }
 
-
                 do {
                     count = zis.read(buffer)
                     if (count == -1) {
@@ -109,7 +111,6 @@ object ZipManager {
                 fout.close()
                 zis.closeEntry()
             } while (true)
-
             zis.close()
         } catch (e: IOException) {
             e.printStackTrace()
@@ -118,5 +119,11 @@ object ZipManager {
 
         return true
     }
+
+    /**
+     *
+     */
+    fun getMaxCount(file: File): Int = ZipFile(file.path).size()
+
 
 }
