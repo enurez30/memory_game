@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.StartFragmentBinding
 import com.sera.memorygame.factory.StartFragmentFactory
+import com.sera.memorygame.ui.dialog.AssetDownloadDialog
 import com.sera.memorygame.utils.AnimationHelper
 import com.sera.memorygame.viewModel.StartViewModel
 
@@ -51,6 +52,7 @@ class StartFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
         prepareView()
+        AssetDownloadDialog.newInstance().show(requireActivity().supportFragmentManager, "")
         Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
             releaseView()
         }, 500)
@@ -77,25 +79,8 @@ class StartFragment : BaseFragment() {
     override fun delegateHandlerClick(view: View) {
         when (view.id) {
             R.id.playBtn -> {
-//                EventBus.getDefault().post(Pair("test",HashMap<String,Any>()))
-                (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
-//                println()
-//                val storage = Firebase.storage("gs://memorygame-c6487.appspot.com")
-//                val storageRef = storage.reference
-//                println()
-//                val islandRef = storageRef.child("files/files.zip")
-//
-//                val localFile = File.createTempFile("tmp", ".zip")
-//
-//                islandRef.getFile(localFile).addOnSuccessListener {
-//                    println()
-//                    unzipFiles(tempFile = localFile)
-//                    // Local temp file has been created
-//                }.addOnFailureListener {
-//                    // Handle any errors
-//                    println()
-//                }
-
+//                (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
+                AssetDownloadDialog.newInstance().show(requireActivity().supportFragmentManager, "")
             }
         }
     }

@@ -7,7 +7,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.sera.memorygame.Constants
 import com.sera.memorygame.MessageEvent
-import com.sera.memorygame.ui.MainActivity
+import com.sera.memorygame.ui.dialog.AssetDownloadDialog
 import com.sera.memorygame.utils.FileUtils
 import com.sera.memorygame.utils.ZipManager
 import kotlinx.coroutines.CoroutineScope
@@ -38,21 +38,18 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
      *
      */
     private suspend fun getConfiguration() {
-        sendEvent(msg = "DOWNLOAD: getConfiguration request")
         coroutineScope {
             val fileRef = Firebase.storage(Constants.BUCKET_ID).reference.child("configuration.json")
             val localFile = createTempFile("tmp", ".json")
             fileRef.getFile(localFile).addOnSuccessListener {
-                sendEvent(msg = "DOWNLOAD: obtaining request and parsing data")
                 parseData(localFile = localFile)?.let { json ->
-                    sendEvent(msg = "DOWNLOAD: version= ${json.getString("asset_version")}")
                     localFile.delete()
                 }
                 scope.launch {
                     getAssets()
                 }
             }.addOnFailureListener {
-                sendEvent(msg = "DOWNLOAD: error downloading file= ${it.message}")
+                sendEvent(key = "error", msg = "${it.message}")
                 localFile.delete()
             }
         }
@@ -62,16 +59,15 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
      *
      */
     private suspend fun getAssets() {
-        sendEvent(msg = "DOWNLOAD: executing assets request")
+        sendEvent(key = "status", msg = "Downloading files")
         coroutineScope {
             val fileRef = Firebase.storage(Constants.BUCKET_ID).reference.child("files/files.zip")
             val localFile = createTempFile("tmp", ".zip")
             fileRef.getFile(localFile).addOnSuccessListener {
-                sendEvent(msg = "DOWNLOAD: Start Unzipping")
                 unzipFiles(tempFile = localFile)
                 localFile.delete()
             }.addOnFailureListener {
-                sendEvent(msg = "DOWNLOAD: error downloading file= ${it.message}")
+                sendEvent(key = "error", msg = "${it.message}")
                 localFile.delete()
             }
         }
@@ -82,8 +78,7 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
      */
     private fun unzipFiles(tempFile: File) {
         try {
-            var count = 0
-            sendEvent(msg = "DOWNLOAD: max count= ${ZipManager.getMaxCount(file = tempFile)}")
+            sendEvent(key = "max_length", msg = "${ZipManager.getMaxCount(file = tempFile)}")
             val dirName = "assets"
             val path = context.filesDir.toString() + "/" + dirName
             if (!File(path).exists()) {
@@ -96,16 +91,15 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
             if (tempFile.path.isNotEmpty()) {
                 ZipManager.unzip(tempFile.path, context.filesDir.toString() + "/" + dirName) { result ->
                     if (result.isSuccess) {
-                        count += 1
-                        sendEvent(msg = "DOWNLOAD file count= $count")
+                        sendEvent(key = "progress_update", msg = "1")
                     }
                 }
             }
         } catch (e: Exception) {
-            sendEvent(msg = "DOWNLOAD error parsing zip file= ${e.message}")
+            sendEvent(key = "error", msg = "${e.message}")
         }
         //            EventBus.getDefault().post(Pair("test",HashMap<String,Any>()))
-        sendEvent(msg = "DOWNLOAD DONE!!!!")
+        sendEvent(key = "finish", msg = "All set!")
     }
 
 
@@ -127,10 +121,10 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
     /**
      *
      */
-    private fun sendEvent(msg: String) {
+    private fun sendEvent(key: String, msg: String) {
         val event = MessageEvent().apply {
-            this.reciever = MainActivity::class.java.simpleName
-            this.key = "assets_service"
+            this.reciever = AssetDownloadDialog::class.java.simpleName
+            this.key = key
             this.message = msg
         }
         EventBus.getDefault().post(event)

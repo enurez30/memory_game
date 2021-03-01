@@ -10,4 +10,5 @@
     <color name="colorDividerGreyLight">#F8F6F6</color>
     <color name="colorLightGrey">#F4F4F4</color>
     <color name="service_line_gray">#DDDDDD</color>
+    <color name="colorGrayDark">#707070</color>
 </resources>
