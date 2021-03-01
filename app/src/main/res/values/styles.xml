@@ -3,7 +3,6 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="colorPrimaryDark">@color/colorTransparent</item>
@@ -24,5 +23,13 @@
         <item name="android:windowExitAnimation">@anim/slide_out_down</item>
     </style>
 
+<!--    <style name="progressCircleStyle" parent="Widget.MaterialComponents.CircularProgressIndicator">-->
+<!--        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CircularProgressIndicator</item>-->
+<!--&lt;!&ndash;        <item name="trackThickness">19dp</item>&ndash;&gt;-->
+<!--    </style>-->
+
+<!--    <style name="ThemeOverlay.App.CircularProgressIndicator" parent="">-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--    </style>-->
 
 </resources>

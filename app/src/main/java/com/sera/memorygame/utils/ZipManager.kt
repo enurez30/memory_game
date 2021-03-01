@@ -57,7 +57,7 @@ object ZipManager {
     }
 
     @Throws(IOException::class)
-    fun unzip(zipFilePath: String, targetPath: String, callback: (Result<Int>) -> Unit): Boolean {
+    fun unzip(zipFilePath: String, targetPath: String): Boolean {
         val `is`: InputStream
         val zis: ZipInputStream
         try {
@@ -81,7 +81,7 @@ object ZipManager {
                 if (filename.contains(".DS_Store")) {
                     continue
                 }
-                callback(Result.success(1))
+
                 // Need to create directories if not exists, or
                 // it will generate an Exception...
                 if (ze.isDirectory) {

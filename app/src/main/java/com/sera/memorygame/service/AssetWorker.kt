@@ -59,7 +59,6 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
      *
      */
     private suspend fun getAssets() {
-        sendEvent(key = "status", msg = "Downloading files")
         coroutineScope {
             val fileRef = Firebase.storage(Constants.BUCKET_ID).reference.child("files/files.zip")
             val localFile = createTempFile("tmp", ".zip")
@@ -78,7 +77,6 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
      */
     private fun unzipFiles(tempFile: File) {
         try {
-            sendEvent(key = "max_length", msg = "${ZipManager.getMaxCount(file = tempFile)}")
             val dirName = "assets"
             val path = context.filesDir.toString() + "/" + dirName
             if (!File(path).exists()) {
@@ -89,16 +87,11 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
             //create assets folder
             FileUtils.createDir(context, dirName)
             if (tempFile.path.isNotEmpty()) {
-                ZipManager.unzip(tempFile.path, context.filesDir.toString() + "/" + dirName) { result ->
-                    if (result.isSuccess) {
-                        sendEvent(key = "progress_update", msg = "1")
-                    }
-                }
+                ZipManager.unzip(tempFile.path, context.filesDir.toString() + "/" + dirName)
             }
         } catch (e: Exception) {
             sendEvent(key = "error", msg = "${e.message}")
         }
-        //            EventBus.getDefault().post(Pair("test",HashMap<String,Any>()))
         sendEvent(key = "finish", msg = "All set!")
     }
 
@@ -127,6 +120,7 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
             this.key = key
             this.message = msg
         }
+        println("DOWNLOAD: post event= ${event.key}")
         EventBus.getDefault().post(event)
     }
 
