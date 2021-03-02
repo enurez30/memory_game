@@ -16,7 +16,7 @@ import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.GameThemeFragmentBinding
 import com.sera.memorygame.factory.GameThemeFactory
-import com.sera.memorygame.model.GameThemeObject
+import com.sera.memorygame.database.model.GameThemeObject
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.viewModel.GameThemeViewModel
 import com.sera.memorygame.ui.MainActivity

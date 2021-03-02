@@ -75,6 +75,12 @@ class StartFragment : BaseFragment() {
                 when (it) {
                     NetworkStatus.START.status -> {
                         snackbar?.dismiss()
+                        this.showSnackBar("Check for updates", duration = Snackbar.LENGTH_INDEFINITE, view = mBinder.root) { sb ->
+                            snackbar = (sb as Snackbar)
+                        }
+                    }
+                    NetworkStatus.DOWNLOAD.status -> {
+                        snackbar?.dismiss()
                         this.showSnackBar("Downloading Assets", duration = Snackbar.LENGTH_INDEFINITE, view = mBinder.root) { sb ->
                             snackbar = (sb as Snackbar)
                         }

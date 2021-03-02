@@ -10,10 +10,10 @@ import com.sera.memorygame.databinding.MemoryRecyclerSingleViewBinding
 import com.sera.memorygame.databinding.SizeRecyclerSingleViewBinding
 import com.sera.memorygame.databinding.TitleIconRecyclerSingleViewBinding
 import com.sera.memorygame.interfaces.Handlers
-import com.sera.memorygame.model.GameThemeObject
-import com.sera.memorygame.model.MemoryViewObject
-import com.sera.memorygame.model.SizeViewObject
-import com.sera.memorygame.model.TitleIconObject
+import com.sera.memorygame.database.model.GameThemeObject
+import com.sera.memorygame.database.model.MemoryViewObject
+import com.sera.memorygame.database.model.SizeViewObject
+import com.sera.memorygame.database.model.TitleIconObject
 import com.sera.memorygame.ui.view_holder.MemoryViewHolder
 import com.sera.memorygame.ui.view_holder.GameThemeViewHolder
 import com.sera.memorygame.ui.view_holder.SizeViewHolder

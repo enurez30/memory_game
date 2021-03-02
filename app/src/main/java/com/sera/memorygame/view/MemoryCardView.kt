@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.sera.memorygame.R
 import com.sera.memorygame.interfaces.Handlers
-import com.sera.memorygame.model.MemoryViewObject
+import com.sera.memorygame.database.model.MemoryViewObject
 import com.sera.memorygame.utils.Utils
 import com.yayandroid.rotatable.Rotatable
 

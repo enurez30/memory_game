@@ -5,7 +5,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.sera.memorygame.databinding.SizeRecyclerSingleViewBinding
 import com.sera.memorygame.interfaces.Handlers
-import com.sera.memorygame.model.SizeViewObject
+import com.sera.memorygame.database.model.SizeViewObject
 
 class SizeViewHolder(val binding: ViewDataBinding, val callback: Handlers? = null) : RecyclerView.ViewHolder(binding.root) {
 

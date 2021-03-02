@@ -4,7 +4,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.sera.memorygame.databinding.TitleIconRecyclerSingleViewBinding
 import com.sera.memorygame.interfaces.Handlers
-import com.sera.memorygame.model.TitleIconObject
+import com.sera.memorygame.database.model.TitleIconObject
 
 class TitleIconViewHolder(val binding: ViewDataBinding, val callback: Handlers? = null) : RecyclerView.ViewHolder(binding.root) {
 

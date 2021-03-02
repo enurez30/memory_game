@@ -14,8 +14,8 @@ import com.sera.memorygame.R
 import com.sera.memorygame.databinding.FragmentMemoryBinding
 import com.sera.memorygame.factory.MemoryViewModelFactory
 import com.sera.memorygame.interfaces.Handlers
-import com.sera.memorygame.model.IObject
-import com.sera.memorygame.model.SizeViewObject
+import com.sera.memorygame.database.model.IObject
+import com.sera.memorygame.database.model.SizeViewObject
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.adapter.CommonAdapter
 import com.sera.memorygame.view.MemoryCardView

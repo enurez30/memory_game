@@ -3,7 +3,7 @@ package com.sera.memorygame.ui.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sera.memorygame.interfaces.Handlers
-import com.sera.memorygame.model.IObject
+import com.sera.memorygame.database.model.IObject
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap

@@ -2,8 +2,8 @@ package com.sera.memorygame.viewModel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.sera.memorygame.model.GameThemeObject
-import com.sera.memorygame.model.IObject
+import com.sera.memorygame.database.model.GameThemeObject
+import com.sera.memorygame.database.model.IObject
 import com.sera.memorygame.utils.Utils
 import org.json.JSONObject
 

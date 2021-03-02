@@ -16,7 +16,7 @@ import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.CardsSizeChooseFragmentBinding
 import com.sera.memorygame.factory.CardSizeFactory
-import com.sera.memorygame.model.SizeViewObject
+import com.sera.memorygame.database.model.SizeViewObject
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.CommonAdapter
