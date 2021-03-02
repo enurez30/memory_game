@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
-import com.sera.memorygame.MessageEvent
+import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.R
 import com.sera.memorygame.utils.NetworkStatus
 import kotlinx.coroutines.Dispatchers

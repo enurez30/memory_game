@@ -1,4 +1,4 @@
-package com.sera.memorygame.ui
+package com.sera.memorygame.ui.view_holder
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView

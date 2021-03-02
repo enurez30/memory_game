@@ -1,4 +1,4 @@
-package com.sera.memorygame.ui
+package com.sera.memorygame.ui.start
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.StartFragmentBinding
 import com.sera.memorygame.factory.StartFragmentFactory
+import com.sera.memorygame.ui.BaseActivity
+import com.sera.memorygame.ui.BaseFragment
+import com.sera.memorygame.ui.MainActivity
+import com.sera.memorygame.ui.theme.GameThemeFragment
 import com.sera.memorygame.utils.AnimationHelper
 import com.sera.memorygame.utils.NetworkStatus
 import com.sera.memorygame.viewModel.StartViewModel

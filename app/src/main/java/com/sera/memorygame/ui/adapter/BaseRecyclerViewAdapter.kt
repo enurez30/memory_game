@@ -1,4 +1,4 @@
-package com.sera.memorygame
+package com.sera.memorygame.ui.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

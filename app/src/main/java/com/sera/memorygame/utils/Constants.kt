@@ -1,4 +1,4 @@
-package com.sera.memorygame
+package com.sera.memorygame.utils
 
 object Constants {
 

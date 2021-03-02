@@ -1,4 +1,4 @@
-package com.sera.memorygame.ui
+package com.sera.memorygame.ui.view_holder
 
 import android.annotation.SuppressLint
 import androidx.databinding.ViewDataBinding

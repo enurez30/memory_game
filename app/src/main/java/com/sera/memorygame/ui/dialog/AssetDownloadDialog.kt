@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.sera.memorygame.MessageEvent
+import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.AssetDialogLayoutBinding
 import com.sera.memorygame.service.AssetWorker

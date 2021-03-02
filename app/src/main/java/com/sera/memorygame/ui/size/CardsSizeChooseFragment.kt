@@ -1,4 +1,4 @@
-package com.sera.memorygame.ui
+package com.sera.memorygame.ui.size
 
 import android.os.Bundle
 import android.os.Handler
@@ -12,12 +12,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
-import com.sera.memorygame.BaseRecyclerViewAdapter
+import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.CardsSizeChooseFragmentBinding
 import com.sera.memorygame.factory.CardSizeFactory
 import com.sera.memorygame.model.SizeViewObject
-import com.sera.memorygame.ui.memory.CommonAdapter
+import com.sera.memorygame.ui.BaseFragment
+import com.sera.memorygame.ui.MainActivity
+import com.sera.memorygame.ui.adapter.CommonAdapter
 import com.sera.memorygame.ui.memory.MemoryFragment
 import com.sera.memorygame.viewModel.CardsSizeChooseViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator

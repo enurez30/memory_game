@@ -1,4 +1,4 @@
-package com.sera.memorygame.ui
+package com.sera.memorygame.viewModel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.sera.memorygame.BaseRecyclerViewAdapter
+import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.FragmentMemoryBinding
 import com.sera.memorygame.factory.MemoryViewModelFactory
@@ -17,6 +17,7 @@ import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.model.IObject
 import com.sera.memorygame.model.SizeViewObject
 import com.sera.memorygame.ui.BaseFragment
+import com.sera.memorygame.ui.adapter.CommonAdapter
 import com.sera.memorygame.view.MemoryCardView
 import com.sera.memorygame.viewModel.MemoryViewModel
 import java.util.*

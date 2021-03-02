@@ -1,4 +1,4 @@
-package com.sera.memorygame.ui
+package com.sera.memorygame.ui.theme
 
 import android.os.Bundle
 import android.os.Handler
@@ -12,12 +12,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
-import com.sera.memorygame.BaseRecyclerViewAdapter
+import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.GameThemeFragmentBinding
 import com.sera.memorygame.factory.GameThemeFactory
 import com.sera.memorygame.model.GameThemeObject
-import com.sera.memorygame.ui.memory.CommonAdapter
+import com.sera.memorygame.ui.BaseFragment
+import com.sera.memorygame.viewModel.GameThemeViewModel
+import com.sera.memorygame.ui.MainActivity
+import com.sera.memorygame.ui.adapter.CommonAdapter
+import com.sera.memorygame.ui.size.CardsSizeChooseFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 
 class GameThemeFragment : BaseFragment() {

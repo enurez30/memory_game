@@ -1,11 +1,9 @@
-package com.sera.memorygame.ui.memory
+package com.sera.memorygame.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.sera.memorygame.BaseRecyclerViewAdapter
-import com.sera.memorygame.Constants
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.GameThemeRecyclerSingleViewBinding
 import com.sera.memorygame.databinding.MemoryRecyclerSingleViewBinding
@@ -16,9 +14,11 @@ import com.sera.memorygame.model.GameThemeObject
 import com.sera.memorygame.model.MemoryViewObject
 import com.sera.memorygame.model.SizeViewObject
 import com.sera.memorygame.model.TitleIconObject
-import com.sera.memorygame.ui.GameThemeViewHolder
-import com.sera.memorygame.ui.SizeViewHolder
-import com.sera.memorygame.ui.TitleIconViewHolder
+import com.sera.memorygame.ui.view_holder.MemoryViewHolder
+import com.sera.memorygame.ui.view_holder.GameThemeViewHolder
+import com.sera.memorygame.ui.view_holder.SizeViewHolder
+import com.sera.memorygame.ui.view_holder.TitleIconViewHolder
+import com.sera.memorygame.utils.Constants
 
 class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callback = handlers) {
 

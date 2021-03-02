@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.ActivityMainBinding
 import com.sera.memorygame.interfaces.Handlers
+import com.sera.memorygame.ui.start.StartFragment
 
 class MainActivity : BaseActivity(), Handlers {
     private lateinit var mBinder: ActivityMainBinding

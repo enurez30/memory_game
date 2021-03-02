@@ -13,7 +13,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import com.sera.memorygame.MessageEvent
+import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.BaseDialogFragmentLayoutBinding
 import com.sera.memorygame.interfaces.Handlers

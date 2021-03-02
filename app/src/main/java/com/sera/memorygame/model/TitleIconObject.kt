@@ -1,6 +1,6 @@
 package com.sera.memorygame.model
 
-import com.sera.memorygame.Constants
+import com.sera.memorygame.utils.Constants
 
 data class TitleIconObject(
     var iconName: String,
