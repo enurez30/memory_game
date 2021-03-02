@@ -6,19 +6,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import com.sera.memorygame.MessageEvent
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.ActivityMainBinding
 import com.sera.memorygame.interfaces.Handlers
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
-class MainActivity : AppCompatActivity(), Handlers {
+class MainActivity : BaseActivity(), Handlers {
     private lateinit var mBinder: ActivityMainBinding
 
     /**
@@ -30,7 +24,6 @@ class MainActivity : AppCompatActivity(), Handlers {
         mBinder = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mBinder.handlers = this
         replaceFragment(fragment = StartFragment.newInstance())
-
     }
 
     /**
@@ -42,15 +35,6 @@ class MainActivity : AppCompatActivity(), Handlers {
         return true
     }
 
-    /**
-     *
-     */
-    fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment, fragment::class.java.simpleName)
-            .addToBackStack("fragment")
-            .commit()
-    }
 
     /**
      *
@@ -92,38 +76,8 @@ class MainActivity : AppCompatActivity(), Handlers {
         TODO("Not yet implemented")
     }
 
-    /**
-     *
-     */
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
 
-    /**
-     *
-     */
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
-    }
 
-    /**
-     *
-     */
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    fun onEvent(event: MessageEvent) {
-        if (event.reciever == this::class.java.simpleName) {
-            when (event.key) {
-                "test" -> {
-                    println("event bus test")
-                }
-                "assets_service" -> {
-                    println(event.message)
-                }
-            }
-        }
-    }
 
 
 }

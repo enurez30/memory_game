@@ -78,9 +78,6 @@ object ZipManager {
 
                 //Split on the '/' to separate folder name from file name
                 val filenames = filename.split("/")
-                if (filename.contains(".DS_Store")) {
-                    continue
-                }
 
                 // Need to create directories if not exists, or
                 // it will generate an Exception...

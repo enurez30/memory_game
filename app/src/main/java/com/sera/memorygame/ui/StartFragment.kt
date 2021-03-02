@@ -1,21 +1,22 @@
 package com.sera.memorygame.ui
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.StartFragmentBinding
 import com.sera.memorygame.factory.StartFragmentFactory
 import com.sera.memorygame.utils.AnimationHelper
+import com.sera.memorygame.utils.NetworkStatus
 import com.sera.memorygame.viewModel.StartViewModel
 
 class StartFragment : BaseFragment() {
     private lateinit var mBinder: StartFragmentBinding
+    private var snackbar: Snackbar? = null
 
     /**
      *
@@ -51,10 +52,48 @@ class StartFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
         prepareView()
-//        AssetDownloadDialog.newInstance().show(requireActivity().supportFragmentManager, "")
-        Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
-            releaseView()
-        }, 500)
+        addObserver()
+//        (requireActivity() as BaseActivity).getAssetWorkerExecutingStatus.observe(viewLifecycleOwner, {
+//            println("DOWNLOAD: status - $it")
+//        })
+//        Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
+//            releaseView()
+//        }, 500)
+
+    }
+
+    /**
+     *
+     */
+    private fun addObserver() {
+        with(requireActivity() as BaseActivity) {
+            this.getAssetWorkerExecutingStatus.observe(viewLifecycleOwner, {
+                when (it) {
+                    NetworkStatus.START.status -> {
+                        snackbar?.dismiss()
+                        this.showSnackBar("Downloading Assets", duration = Snackbar.LENGTH_INDEFINITE, view = mBinder.root) { sb ->
+                            snackbar = (sb as Snackbar)
+                        }
+                    }
+                    NetworkStatus.ERROR.status -> {
+                        snackbar?.dismiss()
+                        this.showSnackBar("Error", duration = Snackbar.LENGTH_INDEFINITE, view = mBinder.root) { sb ->
+                            snackbar = (sb as Snackbar)
+                        }
+                    }
+                    NetworkStatus.NO_INTERNET_CONNECTION.status -> {
+                        snackbar?.dismiss()
+                        this.showSnackBar("No internet connection, try again later", duration = Snackbar.LENGTH_INDEFINITE, view = mBinder.root) { sb ->
+                            snackbar = (sb as Snackbar)
+                        }
+                    }
+                    NetworkStatus.FINISH.status -> {
+                        snackbar?.dismiss()
+                        releaseView()
+                    }
+                }
+            })
+        }
 
     }
 

@@ -23,13 +23,8 @@
         <item name="android:windowExitAnimation">@anim/slide_out_down</item>
     </style>
 
-<!--    <style name="progressCircleStyle" parent="Widget.MaterialComponents.CircularProgressIndicator">-->
-<!--        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CircularProgressIndicator</item>-->
-<!--&lt;!&ndash;        <item name="trackThickness">19dp</item>&ndash;&gt;-->
-<!--    </style>-->
-
-<!--    <style name="ThemeOverlay.App.CircularProgressIndicator" parent="">-->
-<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
-<!--    </style>-->
-
+    <!-- The launcher theme. It sets the main window background to the launch_screen drawable -->
+    <style name="Launcher" parent="AppTheme">
+    <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
 </resources>

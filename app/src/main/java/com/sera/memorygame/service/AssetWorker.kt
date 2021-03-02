@@ -7,8 +7,9 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.sera.memorygame.Constants
 import com.sera.memorygame.MessageEvent
-import com.sera.memorygame.ui.dialog.AssetDownloadDialog
+import com.sera.memorygame.ui.BaseActivity
 import com.sera.memorygame.utils.FileUtils
+import com.sera.memorygame.utils.NetworkStatus
 import com.sera.memorygame.utils.ZipManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +29,7 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
      *
      */
     override fun doWork(): Result {
+        sendEvent(msg = "", ns = NetworkStatus.START.status)
         scope.launch {
             getConfiguration()
         }
@@ -42,14 +44,14 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
             val fileRef = Firebase.storage(Constants.BUCKET_ID).reference.child("configuration.json")
             val localFile = createTempFile("tmp", ".json")
             fileRef.getFile(localFile).addOnSuccessListener {
-                parseData(localFile = localFile)?.let { json ->
+                parseData(localFile = localFile)?.let { _ ->
                     localFile.delete()
                 }
                 scope.launch {
                     getAssets()
                 }
             }.addOnFailureListener {
-                sendEvent(key = "error", msg = "${it.message}")
+                sendEvent(msg = "${it.message}", ns = NetworkStatus.ERROR.status)
                 localFile.delete()
             }
         }
@@ -66,7 +68,7 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
                 unzipFiles(tempFile = localFile)
                 localFile.delete()
             }.addOnFailureListener {
-                sendEvent(key = "error", msg = "${it.message}")
+                sendEvent(msg = "${it.message}", ns = NetworkStatus.ERROR.status)
                 localFile.delete()
             }
         }
@@ -90,9 +92,9 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
                 ZipManager.unzip(tempFile.path, context.filesDir.toString() + "/" + dirName)
             }
         } catch (e: Exception) {
-            sendEvent(key = "error", msg = "${e.message}")
+            sendEvent(msg = "${e.message}", ns = NetworkStatus.ERROR.status)
         }
-        sendEvent(key = "finish", msg = "All set!")
+        sendEvent(msg = "", ns = NetworkStatus.FINISH.status)
     }
 
 
@@ -114,11 +116,12 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
     /**
      *
      */
-    private fun sendEvent(key: String, msg: String) {
+    private fun sendEvent(msg: String, ns: Int) {
         val event = MessageEvent().apply {
-            this.reciever = AssetDownloadDialog::class.java.simpleName
-            this.key = key
+            this.reciever = BaseActivity::class.java.simpleName
+            this.key = "network_status"
             this.message = msg
+            this.network_status = ns
         }
         println("DOWNLOAD: post event= ${event.key}")
         EventBus.getDefault().post(event)
