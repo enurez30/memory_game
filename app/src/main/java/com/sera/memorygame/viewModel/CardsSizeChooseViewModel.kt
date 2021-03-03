@@ -34,10 +34,7 @@ class CardsSizeChooseViewModel(private val context: Context, private val jsonRef
     private fun getSizeObjects(json: JSONObject): ArrayList<SizeViewObject> {
         return ArrayList<SizeViewObject>().apply {
 //            val jsonSize = (json.getJSONArray("images").length() * 2)
-            val size = Utils.getSizeByDirectoryReference(
-                context = context,
-                dirRef = json.getString("type")
-            )
+            val size = (Utils.getSizeByDirectoryReference(context = context, dirRef = json.getString("type")) * 2)
             Utils.loadJSONFromAsset(context = context, "game_size")?.getJSONArray("collection")
                 ?.let { arr ->
                     repeat(arr.length()) {
