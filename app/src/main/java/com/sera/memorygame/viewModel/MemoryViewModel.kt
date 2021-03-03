@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sera.memorygame.R
-import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.database.model.MemoryViewObject
 import com.sera.memorygame.database.model.SizeViewObject
+import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.utils.Utils
 import com.sera.memorygame.view.MemoryCardView
 import kotlin.random.Random
@@ -141,7 +141,10 @@ class MemoryViewModel(
      *
      */
     private fun getImagesObjects(): ArrayList<String> {
-        return Utils.loadJSONFromAsset(context = context, jsonFile = jsonRef)?.let { json ->
+
+//        val json = Utils.getJsonByReference(context = context, reference = jsonRef) ?: return ArrayList()
+
+        return Utils.getJsonByReference(context = context, reference = jsonRef)?.let { json ->
             val listArray = Utils.getImagesArrayByDirReference(
                 context = context,
                 dirRef = json.getString("type")

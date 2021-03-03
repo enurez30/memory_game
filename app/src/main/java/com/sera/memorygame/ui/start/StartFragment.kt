@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.R
+import com.sera.memorygame.database.repository.UserRepository
 import com.sera.memorygame.databinding.StartFragmentBinding
 import com.sera.memorygame.factory.StartFragmentFactory
 import com.sera.memorygame.ui.BaseActivity
@@ -57,13 +58,6 @@ class StartFragment : BaseFragment() {
         mBinder.handlers = this
         prepareView()
         addObserver()
-//        (requireActivity() as BaseActivity).getAssetWorkerExecutingStatus.observe(viewLifecycleOwner, {
-//            println("DOWNLOAD: status - $it")
-//        })
-//        Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
-//            releaseView()
-//        }, 500)
-
     }
 
     /**
@@ -127,8 +121,30 @@ class StartFragment : BaseFragment() {
     override fun delegateHandlerClick(view: View) {
         when (view.id) {
             R.id.playBtn -> {
+                UserRepository.deleteAllUsers()
                 (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
-//                AssetDownloadDialog.newInstance().show(requireActivity().supportFragmentManager, "")
+
+//                UserRepository.getAllUsers().subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe({ userEntity ->
+//                        if (userEntity.isNotEmpty()) {
+//                            println("USERNAME: FLOW = ${userEntity[0].userName}")
+//                        }else{
+//                            println("USERNAME: FLOW = EMPTY")
+//                        }
+//                    }, { error ->
+//                        println("USERNAME:  FLOW = $error")
+//                    })
+//
+//                println()
+//                UserRepository.getAllUsersLive().observe(viewLifecycleOwner, {
+//                    if (it.isNotEmpty()) {
+//                        println("USERNAME: LIVE = ${it[0].userName}")
+//                    }else{
+//                        println("USERNAME: LIVE = EMPTY")
+//                    }
+//
+//                })
             }
         }
     }

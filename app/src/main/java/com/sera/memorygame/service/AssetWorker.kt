@@ -7,7 +7,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.ui.BaseActivity
-import com.sera.memorygame.utils.*
+import com.sera.memorygame.utils.Constants
+import com.sera.memorygame.utils.FileUtils
+import com.sera.memorygame.utils.NetworkStatus
+import com.sera.memorygame.utils.ZipManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -42,18 +45,18 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
             val localFile = createTempFile("tmp", ".json")
             fileRef.getFile(localFile).addOnSuccessListener {
                 parseData(localFile = localFile)?.let { json ->
-                    val localAssetVersion = Prefs.getAssetVersion().toDouble()
-                    val serverAssetVersion = json.getString("asset_version").toDouble()
+//                    val localAssetVersion = Prefs.getAssetVersion().toDouble()
+//                    val serverAssetVersion = json.getString("asset_version").toDouble()
                     localFile.delete()
-                    if (localAssetVersion < serverAssetVersion) {
+//                    if (localAssetVersion < serverAssetVersion) {
                         sendEvent(msg = "", ns = NetworkStatus.DOWNLOAD.status)
-                        Prefs.setAssetVersion(version = serverAssetVersion.toString())
+//                        Prefs.setAssetVersion(version = serverAssetVersion.toString())
                         scope.launch {
                             getAssets()
                         }
-                    } else {
-                        sendEvent(msg = "", ns = NetworkStatus.FINISH.status)
-                    }
+//                    } else {
+//                        sendEvent(msg = "", ns = NetworkStatus.FINISH.status)
+//                    }
                 }
 
             }.addOnFailureListener {

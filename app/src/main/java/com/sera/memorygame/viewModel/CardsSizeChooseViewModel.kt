@@ -14,17 +14,19 @@ class CardsSizeChooseViewModel(private val context: Context, private val jsonRef
      *
      */
     fun getList(): ArrayList<IObject> {
-        val json = Utils.loadJSONFromAsset(context = context, jsonReference)!!
+//        val json = Utils.loadJSONFromAsset(context = context, jsonReference)!!
+
+        val json = Utils.getJsonByReference(context = context, reference = jsonReference) ?: return ArrayList()
 
         return ArrayList<IObject>().apply {
             val list = getSizeObjects(json = json)
             if (list.isNotEmpty()) {
-//                this.add(TitleIconObject(iconName = "", title = json.getString("title")))
                 this.addAll(list)
             }
 
         }
     }
+
 
     /**
      *

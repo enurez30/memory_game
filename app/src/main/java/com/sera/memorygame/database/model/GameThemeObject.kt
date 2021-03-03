@@ -4,6 +4,7 @@ import com.sera.memorygame.utils.Constants
 
 data class GameThemeObject(
     val title: String,
+    val category: String,
     val iconReference: String,
     val jsonReference: String
 ) : IObject() {

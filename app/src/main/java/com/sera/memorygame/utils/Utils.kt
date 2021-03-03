@@ -41,6 +41,22 @@ object Utils {
     /**
      *
      */
+    fun getJsonByReference(context: Context,reference: String): JSONObject? {
+        loadJSONFromAsset(context = context, jsonFile = "memory_game_themes")?.let {
+            val collection = it.getJSONArray("collection")
+            repeat(collection.length()) { index ->
+                val obj = collection[index] as JSONObject
+                if (obj.getString("json_ref") == reference) {
+                    return obj
+                }
+            }
+        }
+        return null
+    }
+
+    /**
+     *
+     */
     fun loadJSONFromAsset(context: Context, jsonFile: String, objectName: String? = null): JSONObject? {
         val json: String?
 
