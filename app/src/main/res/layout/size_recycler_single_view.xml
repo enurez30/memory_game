@@ -20,11 +20,12 @@
         android:layout_height="wrap_content"
         android:onClick="@{(view)->handlers.onHandleClickedWithPosition(view,position)}">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/searchCardViewHolder"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="5dp"
+            android:backgroundTint="?attr/colorSecondary"
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -45,6 +46,7 @@
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="@string/dummy_title"
+                    android:textColor="?attr/colorOnPrimary"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +56,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

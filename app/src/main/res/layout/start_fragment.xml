@@ -13,18 +13,33 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
+        android:background="?attr/colorPrimarySurface"
         tools:context=".ui.start.StartFragment">
 
         <Button
-            android:id="@+id/playBtn"
+            android:id="@+id/memoryBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/play"
+            android:backgroundTint="?attr/colorSecondary"
+            android:fontFamily="@font/roboto_regular"
             android:minWidth="160dp"
             android:onClick="@{handlers::onHandlerClicked}"
-            android:fontFamily="@font/roboto_regular"
+            android:text="@string/play_memory"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/quizBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:backgroundTint="?attr/colorSecondary"
+            android:fontFamily="@font/roboto_regular"
+            android:minWidth="160dp"
+            android:onClick="@{handlers::onHandlerClicked}"
+            android:text="@string/play_flag_quiz"
+            app:layout_constraintBottom_toTopOf="@+id/memoryBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

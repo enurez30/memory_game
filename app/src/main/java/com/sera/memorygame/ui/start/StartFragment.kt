@@ -56,9 +56,10 @@ class StartFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
-        prepareView()
         addObserver()
+        prepareView()
     }
+
 
     /**
      *
@@ -105,14 +106,20 @@ class StartFragment : BaseFragment() {
      *
      */
     private fun prepareView() {
-        mBinder.playBtn.animate().translationY(1000F).setDuration(0L).start()
+        mBinder.memoryBtn.animate().translationY(1000F).setDuration(0L).start()
+        mBinder.quizBtn.animate().translationY(1000F).setDuration(0L).start()
     }
 
     /**
      *
      */
     private fun releaseView() {
-        AnimationHelper.animateSpringY(targetView = mBinder.playBtn, finalPosition = 0F)
+//        AnimationHelper.animateSpringY(targetView = mBinder.memoryBtn, finalPosition = 0F)
+//        AnimationHelper.animateSpringY(targetView = mBinder.quizBtn, finalPosition = 0F)
+        AnimationHelper.animateGroup(list = ArrayList<View>().apply {
+            this.add(mBinder.memoryBtn)
+            this.add(mBinder.quizBtn)
+        })
     }
 
     /**
@@ -120,8 +127,8 @@ class StartFragment : BaseFragment() {
      */
     override fun delegateHandlerClick(view: View) {
         when (view.id) {
-            R.id.playBtn -> {
-                UserRepository.deleteAllUsers()
+            R.id.memoryBtn -> {
+
                 (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
 
 //                UserRepository.getAllUsers().subscribeOn(Schedulers.io())
@@ -145,6 +152,11 @@ class StartFragment : BaseFragment() {
 //                    }
 //
 //                })
+            }
+            R.id.quizBtn -> {
+                UserRepository(context = requireContext()).createUser().apply {
+                    UserRepository(context = requireContext()).persistUser(user = this)
+                }
             }
         }
     }

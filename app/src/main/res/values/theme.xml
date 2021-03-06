@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Pink" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/pink_200</item>
+        <item name="colorPrimaryVariant">@color/pink_200Dark</item>
+        <item name="colorPrimarySurface">@color/pink_200Light</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/pink_600</item>
+        <item name="colorSecondaryVariant">@color/pink_600Dark</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+    </style>
+
+    <style name="Theme.Red" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/red_700</item>
+        <item name="colorPrimaryVariant">@color/red_700Dark</item>
+        <item name="colorPrimarySurface">@color/red_700Light</item>
+        <item name="colorOnPrimary">@color/secondaryTextColor</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_900</item>
+        <item name="colorSecondaryVariant">@color/teal_900Dark</item>
+        <item name="colorOnSecondary">@color/primaryTextColor</item>
+
+    </style>
+
+</resources>

@@ -1,14 +1,14 @@
 package com.sera.memorygame.database.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
-import com.sera.memorygame.MemoryApplication
 import com.sera.memorygame.database.AppDatabase
 import com.sera.memorygame.database.entity.UserEntity
 import io.reactivex.Flowable
 
-object UserRepository {
+class UserRepository(context: Context) {
 
-    private val dao = AppDatabase.getDataBase(MemoryApplication.appContext).userDao()
+    private val dao = AppDatabase.getDataBase(context).userDao()
 
     /**
      *
@@ -39,7 +39,7 @@ object UserRepository {
     /**
      *
      */
-    fun deleteAllUsers(){
+    fun deleteAllUsers() {
         dao.deleteAllUsers()
     }
 }

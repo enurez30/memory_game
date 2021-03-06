@@ -12,4 +12,29 @@
     <color name="service_line_gray">#DDDDDD</color>
     <color name="colorGrayDark">#707070</color>
     <color name="colorDarkGrayBackground">#FF404040</color>
+
+    <!-- primary set-->
+    <color name="pink_200">#f48fb1</color>
+    <color name="pink_200Light">#ffc1e3</color>
+    <color name="pink_200Dark">#bf5f82</color>
+    <!-- scondary set-->
+    <color name="pink_600">#d81b60</color>
+    <color name="pink_600Light">#ff5c8d</color>
+    <color name="pink_600Dark">#a00037</color>
+
+    <color name="primaryTextColor">#212121</color>
+    <color name="secondaryTextColor">#eceff1</color>
+
+    <color name="red_700">#d32f2f</color>
+    <color name="red_700Light">#ff6659</color>
+    <color name="red_700Dark">#9a0007</color>
+    <color name="teal_900">#004d40</color>
+    <color name="teal_900Light">#39796b</color>
+    <color name="teal_900Dark">#00251a</color>
+
+    <color name="white_variant">#F3F2F2</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+
 </resources>

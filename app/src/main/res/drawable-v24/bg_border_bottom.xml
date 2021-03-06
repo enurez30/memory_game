@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:color="@color/colorPrimarySecondary"
+    android:color="?attr/colorPrimaryVariant"
     tools:targetApi="P"> <!-- ripple effect color -->
     <item
         android:id="@android:id/background"
@@ -11,9 +11,9 @@
         android:top="-3dp">
         <shape android:shape="rectangle">
             <stroke
-                android:width="1dp"
-                android:color="@color/colorDividerGreyLight" />
-            <solid android:color="@color/colorWhite" />
+                android:width="0.5dp"
+                android:color="?attr/colorOnPrimary" />
+            <solid android:color="?attr/colorPrimarySurface" />
         </shape>
     </item>
 </ripple>

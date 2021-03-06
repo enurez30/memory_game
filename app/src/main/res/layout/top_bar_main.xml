@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSecondary">
 
         <ImageView
             android:id="@+id/iconHamburger"
@@ -25,31 +26,30 @@
             android:src="@drawable/ic_hamburger"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorOnPrimary"
             tools:ignore="ContentDescription" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/mainTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/title"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/iconHamburger"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iconHamburger" />
 
-<!--        <View-->
-<!--            android:id="@+id/shadowView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:layout_marginTop="4dp"-->
-<!--            android:alpha="0.1"-->
-<!--            android:background="@color/colorDividerGrey"-->
-<!--            android:elevation="8dp"-->
-<!--            android:translationZ="2dp"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/iconHamburger" />-->
+        <View
+            android:id="@+id/shadowView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/colorPrimarySurface"
+            android:elevation="8dp"
+            android:translationZ="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/iconHamburger" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
