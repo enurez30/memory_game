@@ -21,6 +21,7 @@ import com.sera.memorygame.databinding.NavHeaderMainBinding
 import com.sera.memorygame.factory.MainActivityFactory
 import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.ui.start.StartFragment
+import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.MainActivityViewModel
 
 class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +40,7 @@ class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSe
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(Prefs.getTheme())
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         mBinder = DataBindingUtil.setContentView(this, R.layout.activity_main)
         hBinder = NavHeaderMainBinding.bind(mBinder.navView.getHeaderView(0))
@@ -136,7 +138,14 @@ class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_settings -> {
-                UserRepository(context = this).deleteAllUsers()
+//                UserRepository(context = this).deleteAllUsers()
+                val currTheme = Prefs.getTheme()
+                if (currTheme == R.style.Theme_Pink) {
+                    Prefs.setTheme(themeRes = R.style.Theme_Red)
+                } else {
+                    Prefs.setTheme(themeRes = R.style.Theme_Pink)
+                }
+                this.recreate()
             }
         }
 

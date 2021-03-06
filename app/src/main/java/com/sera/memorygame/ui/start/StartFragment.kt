@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.R
-import com.sera.memorygame.database.repository.UserRepository
 import com.sera.memorygame.databinding.StartFragmentBinding
 import com.sera.memorygame.factory.StartFragmentFactory
 import com.sera.memorygame.ui.BaseActivity
@@ -57,7 +56,18 @@ class StartFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
         addObserver()
-        prepareView()
+        when ((requireActivity() as BaseActivity).getAssetWorkerExecutingStatus.value) {
+            NetworkStatus.NONE.status -> {
+                releaseView()
+            }
+            NetworkStatus.NO_INTERNET_CONNECTION.status -> {
+                releaseView()
+            }
+            else -> {
+                prepareView()
+            }
+        }
+
     }
 
 
@@ -69,6 +79,7 @@ class StartFragment : BaseFragment() {
             this.getAssetWorkerExecutingStatus.observe(viewLifecycleOwner, {
                 when (it) {
                     NetworkStatus.START.status -> {
+                        prepareView()
                         snackbar?.dismiss()
                         this.showSnackBar("Check for updates", duration = Snackbar.LENGTH_INDEFINITE, view = mBinder.root) { sb ->
                             snackbar = (sb as Snackbar)
@@ -154,9 +165,9 @@ class StartFragment : BaseFragment() {
 //                })
             }
             R.id.quizBtn -> {
-                UserRepository(context = requireContext()).createUser().apply {
-                    UserRepository(context = requireContext()).persistUser(user = this)
-                }
+//                UserRepository(context = requireContext()).createUser().apply {
+//                    UserRepository(context = requireContext()).persistUser(user = this)
+//                }
             }
         }
     }

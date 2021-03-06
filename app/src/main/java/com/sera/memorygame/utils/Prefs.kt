@@ -3,6 +3,7 @@ package com.sera.memorygame.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.sera.memorygame.MemoryApplication
+import com.sera.memorygame.R
 
 object Prefs {
 
@@ -27,4 +28,10 @@ object Prefs {
      *
      */
     fun getAssetVersion(): String = getSharedPreference().getString("asset_version", "0.0") ?: "0.0"
+
+    fun setTheme(themeRes: Int) {
+        getEditor().putInt("theme", themeRes).apply()
+    }
+
+    fun getTheme(): Int = getSharedPreference().getInt("theme", R.style.Theme_Pink)
 }
