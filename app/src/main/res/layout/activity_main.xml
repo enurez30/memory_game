@@ -51,12 +51,31 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:background="?attr/colorPrimarySurface"
-                android:fitsSystemWindows="true"
-                app:headerLayout="@layout/nav_header_main"
-                app:menu="@menu/activity_main_drawer" />
+                android:fitsSystemWindows="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/navLayout"
+                        layout="@layout/custom_navigation_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        bind:handlers="@{handlers}" />
+                </LinearLayout>
+
+
+            </com.google.android.material.navigation.NavigationView>
         </androidx.drawerlayout.widget.DrawerLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
+
+    <!--
+    app:headerLayout="@layout/nav_header_main"
+                    app:menu="@menu/activity_main_drawer"
+    -->

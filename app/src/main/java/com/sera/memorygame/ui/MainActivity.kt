@@ -17,7 +17,6 @@ import com.google.android.material.navigation.NavigationView
 import com.sera.memorygame.R
 import com.sera.memorygame.database.repository.UserRepository
 import com.sera.memorygame.databinding.ActivityMainBinding
-import com.sera.memorygame.databinding.NavHeaderMainBinding
 import com.sera.memorygame.factory.MainActivityFactory
 import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.ui.start.StartFragment
@@ -26,7 +25,7 @@ import com.sera.memorygame.viewModel.MainActivityViewModel
 
 class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSelectedListener {
     private lateinit var mBinder: ActivityMainBinding
-    private lateinit var hBinder: NavHeaderMainBinding
+//    private lateinit var hBinder: NavHeaderMainBinding
 
     /**
      *
@@ -43,10 +42,10 @@ class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSe
         setTheme(Prefs.getTheme())
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         mBinder = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        hBinder = NavHeaderMainBinding.bind(mBinder.navView.getHeaderView(0))
-        hBinder.model = viewModel
+//        hBinder = NavHeaderMainBinding.bind(mBinder.navView.getHeaderView(0))
+//        hBinder.model = viewModel
         mBinder.handlers = this
-        mBinder.navView.setNavigationItemSelectedListener(this)
+//        mBinder.navView.setNavigationItemSelectedListener(this)
         replaceFragment(fragment = StartFragment.newInstance())
 
         addObservers()
@@ -79,7 +78,7 @@ class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSe
             } else {
                 viewModel.getUser.value = null
             }
-            hBinder.userName.text = viewModel.getName()
+            mBinder.navLayout.userName.text = viewModel.getName()
         })
     }
 
@@ -104,7 +103,27 @@ class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSe
                     mBinder.drawerLayout.openDrawer(GravityCompat.START)
                 }
             }
+            R.id.setttingsTV -> {
+//                val currTheme = Prefs.getTheme()
+//                if (currTheme == R.style.Theme_Pink) {
+//                    Prefs.setTheme(themeRes = R.style.Theme_Red)
+//                } else {
+//                    Prefs.setTheme(themeRes = R.style.Theme_Pink)
+//                }
+//                this.recreate()
+                addFragment(fragment = SettingsFragment.newInstance())
+                closeDrawer()
+            }
         }
+    }
+
+    /**
+     *
+     */
+    private fun closeDrawer() {
+        Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
+            mBinder.drawerLayout.closeDrawer(GravityCompat.START)
+        }, 230)
     }
 
     /**

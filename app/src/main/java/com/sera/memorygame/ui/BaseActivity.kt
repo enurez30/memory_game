@@ -61,6 +61,15 @@ abstract class BaseActivity : AppCompatActivity() {
             .commit()
     }
 
+    /**
+     *
+     */
+    fun addFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.container, fragment, fragment::class.java.simpleName)
+            .addToBackStack("fragment")
+            .commit()
+    }
 
     /**
      *

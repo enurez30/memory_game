@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.StartFragmentBinding
@@ -17,6 +18,8 @@ import com.sera.memorygame.ui.theme.GameThemeFragment
 import com.sera.memorygame.utils.AnimationHelper
 import com.sera.memorygame.utils.NetworkStatus
 import com.sera.memorygame.viewModel.StartViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class StartFragment : BaseFragment() {
     private lateinit var mBinder: StartFragmentBinding
@@ -56,18 +59,25 @@ class StartFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
         addObserver()
-        when ((requireActivity() as BaseActivity).getAssetWorkerExecutingStatus.value) {
-            NetworkStatus.NONE.status -> {
-                releaseView()
+        prepareView()
+        lifecycleScope.launch {
+            delay(1000)
+            when ((requireActivity() as BaseActivity).getAssetWorkerExecutingStatus.value) {
+                NetworkStatus.NONE.status -> {
+                    releaseView()
+                }
+                NetworkStatus.NO_INTERNET_CONNECTION.status -> {
+                    releaseView()
+                }
+                NetworkStatus.FINISH.status -> {
+                    // do nothing
+                }
+                else -> {
+                    prepareView()
+                }
             }
-            NetworkStatus.NO_INTERNET_CONNECTION.status -> {
-                releaseView()
-            }
-            else -> {
-                prepareView()
-            }
-        }
 
+        }
     }
 
 
