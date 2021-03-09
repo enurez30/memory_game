@@ -8,5 +8,7 @@ object Constants {
     const val SIZE_VIEW_OBJECT_VIEW_TYPE = 20
     const val TITLE_ICON_OBJECT_VIEW_TYPE = 30
     const val GAME_THEME_OBJECT_VIEW_TYPE = 40
+    const val USER_ENTITY_VIEW_TYPE = 50
+    const val APP_THEME_OBJECT_VIEW_TYPE = 60
 
 }

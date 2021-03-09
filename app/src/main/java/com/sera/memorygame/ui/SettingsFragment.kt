@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.SettingsFragmentBinding
 import com.sera.memorygame.factory.SettingsFactory
+import com.sera.memorygame.ui.dialog.AppThemeDialog
 
 class SettingsFragment : BaseFragment() {
     private lateinit var mBinder: SettingsFragmentBinding
@@ -43,5 +44,14 @@ class SettingsFragment : BaseFragment() {
         mBinder.handlers = this
     }
 
-
+    /**
+     *
+     */
+    override fun onHandlerClicked(view: View) {
+        when (view.id) {
+            R.id.themeChangeTV -> {
+                AppThemeDialog.newInstance().show(requireActivity().supportFragmentManager, AppThemeDialog::class.java.simpleName)
+            }
+        }
+    }
 }

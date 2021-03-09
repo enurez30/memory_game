@@ -5,19 +5,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sera.memorygame.R
-import com.sera.memorygame.databinding.GameThemeRecyclerSingleViewBinding
-import com.sera.memorygame.databinding.MemoryRecyclerSingleViewBinding
-import com.sera.memorygame.databinding.SizeRecyclerSingleViewBinding
-import com.sera.memorygame.databinding.TitleIconRecyclerSingleViewBinding
+import com.sera.memorygame.database.model.*
+import com.sera.memorygame.databinding.*
 import com.sera.memorygame.interfaces.Handlers
-import com.sera.memorygame.database.model.GameThemeObject
-import com.sera.memorygame.database.model.MemoryViewObject
-import com.sera.memorygame.database.model.SizeViewObject
-import com.sera.memorygame.database.model.TitleIconObject
-import com.sera.memorygame.ui.view_holder.MemoryViewHolder
-import com.sera.memorygame.ui.view_holder.GameThemeViewHolder
-import com.sera.memorygame.ui.view_holder.SizeViewHolder
-import com.sera.memorygame.ui.view_holder.TitleIconViewHolder
+import com.sera.memorygame.ui.view_holder.*
 import com.sera.memorygame.utils.Constants
 
 class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callback = handlers) {
@@ -63,6 +54,14 @@ class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callba
                 )
                 TitleIconViewHolder(binding, callback)
             }
+            Constants.APP_THEME_OBJECT_VIEW_TYPE -> {
+                val binding: AppThemeRecyclerSingleViewBinding = DataBindingUtil.inflate(
+                    LayoutInflater.from(parent?.context),
+                    R.layout.app_theme_recycler_single_view,
+                    parent, false
+                )
+                AppThemeViewHolder(binding, callback)
+            }
             else -> {
                 val binding: MemoryRecyclerSingleViewBinding = DataBindingUtil.inflate(
                     LayoutInflater.from(parent?.context),
@@ -85,11 +84,12 @@ class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callba
             is SizeViewHolder -> holder.bind(item = items[position] as SizeViewObject)
             is TitleIconViewHolder -> holder.bind(item = items[position] as TitleIconObject)
             is GameThemeViewHolder -> holder.bind(item = items[position] as GameThemeObject)
+            is AppThemeViewHolder -> holder.bind(item = items[position] as AppThemeObject)
         }
     }
 
     /**
      *
      */
-    override fun getType(position: Int): Int = items[position].getViewType()
+    override fun getType(position: Int): Int = items[position]?.getViewType() ?: (-1)
 }

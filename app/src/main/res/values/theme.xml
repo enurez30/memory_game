@@ -21,12 +21,39 @@
         <item name="colorPrimary">@color/red_700</item>
         <item name="colorPrimaryVariant">@color/red_700Dark</item>
         <item name="colorPrimarySurface">@color/red_700Light</item>
-        <item name="colorOnPrimary">@color/secondaryTextColor</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_900</item>
         <item name="colorSecondaryVariant">@color/teal_900Dark</item>
-        <item name="colorOnSecondary">@color/primaryTextColor</item>
+        <item name="colorOnSecondary">@color/black</item>
 
     </style>
 
+    <style name="Theme.Blue" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/blue_700</item>
+        <item name="colorPrimaryVariant">@color/blue_700Dark</item>
+        <item name="colorPrimarySurface">@color/blue_700Light</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/light_blue300</item>
+        <item name="colorSecondaryVariant">@color/light_blue300Dark</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+    </style>
+
+    <style name="Theme.Purple" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_400</item>
+        <item name="colorPrimaryVariant">@color/purple_400Light</item>
+        <item name="colorPrimarySurface">@color/purple_400Dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/deep_purple_500</item>
+        <item name="colorSecondaryVariant">@color/deep_purple_500Dark</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+    </style>
 </resources>

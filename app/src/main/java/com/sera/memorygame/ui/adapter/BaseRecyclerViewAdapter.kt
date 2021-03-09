@@ -2,14 +2,14 @@ package com.sera.memorygame.ui.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.database.model.IObject
+import com.sera.memorygame.interfaces.Handlers
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 abstract class BaseRecyclerViewAdapter(private val callback: Handlers? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var items: ArrayList<IObject> = ArrayList()
+    var items: ArrayList<IObject?> = ArrayList()
 
     /**
      *
@@ -52,7 +52,7 @@ abstract class BaseRecyclerViewAdapter(private val callback: Handlers? = null) :
     /**
      *
      */
-    open fun getData(): ArrayList<IObject>? {
+    open fun getData(): ArrayList<IObject?>? {
         return items
     }
 
@@ -68,13 +68,13 @@ abstract class BaseRecyclerViewAdapter(private val callback: Handlers? = null) :
     /**
      *  Returns selected [ArrayList] as List
      */
-    open fun getSelectedList(): ArrayList<IObject> {
-        val result: ArrayList<IObject> = ArrayList()
+    open fun getSelectedList(): ArrayList<IObject?> {
+        val result: ArrayList<IObject?> = ArrayList()
         if (items.isNullOrEmpty()) {
             return ArrayList()
         }
         items.forEach {
-            if (it.isItemSelected()) {
+            if (it?.isItemSelected() == true) {
                 result.add(it)
             }
         }
@@ -88,7 +88,7 @@ abstract class BaseRecyclerViewAdapter(private val callback: Handlers? = null) :
         val result = HashMap<Int, IObject>()
         repeat(items.size) {
             val card = items[it]
-            if (card.isItemSelected()) {
+            if (card?.isItemSelected() == true) {
                 result[it] = card
             }
         }
@@ -98,8 +98,8 @@ abstract class BaseRecyclerViewAdapter(private val callback: Handlers? = null) :
     /**
      * Returns all data as [HashMap]
      */
-    open fun getAllMapData(): HashMap<Int, IObject> {
-        val result = HashMap<Int, IObject>()
+    open fun getAllMapData(): HashMap<Int, IObject?> {
+        val result = HashMap<Int, IObject?>()
         repeat(items.size) {
             result[it] = items[it]
         }

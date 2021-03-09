@@ -3,6 +3,8 @@ package com.sera.memorygame.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sera.memorygame.database.model.IObject
+import com.sera.memorygame.utils.Constants
 import java.util.*
 
 @Entity(
@@ -17,7 +19,7 @@ class UserEntity(
     @ColumnInfo(name = "avatar") var avatar: String,
     @ColumnInfo(name = "last_time_log_in") val lastTimeLoggedIn: Long,
     @ColumnInfo(name = "created") val created: Long
-) {
+) : IObject() {
     constructor() : this(
         userId = UUID.randomUUID().toString(),
         userName = "",
@@ -25,4 +27,6 @@ class UserEntity(
         lastTimeLoggedIn = 0L,
         created = System.currentTimeMillis()
     )
+
+    override fun getViewType(): Int = Constants.USER_ENTITY_VIEW_TYPE
 }
