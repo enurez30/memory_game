@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,6 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainUserView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSecondary"
@@ -35,23 +37,36 @@
             android:text="Sera"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="?attr/colorOnPrimary"
-            app:layout_constraintEnd_toStartOf="@+id/changeTV"
+            app:layout_constraintEnd_toStartOf="@+id/updateIV"
             app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
-        <TextView
-            android:id="@+id/changeTV"
+        <!--        <TextView-->
+        <!--            android:id="@+id/changeTV"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="8dp"-->
+        <!--            android:onClick="@{handlers::onHandlerClicked}"-->
+        <!--            android:padding="4dp"-->
+        <!--            android:text="@string/change"-->
+        <!--            android:textColor="?attr/colorOnPrimarySurface"-->
+        <!--            android:textSize="16sp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/userName"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/title" />-->
+
+        <ImageView
+            android:id="@+id/updateIV"
+            style="?attr/actionButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:onClick="@{handlers::onHandlerClicked}"
-            android:padding="4dp"
-            android:text="@string/change"
-            android:textColor="?attr/colorOnPrimarySurface"
-            android:textSize="16sp"
+            android:src="@drawable/ic_baseline_create_24"
             app:layout_constraintBottom_toBottomOf="@+id/userName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/title" />
+            app:layout_constraintTop_toTopOf="@+id/title"
+            app:tint="?attr/colorOnPrimary"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

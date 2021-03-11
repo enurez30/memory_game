@@ -1,31 +1,53 @@
 package com.sera.memorygame.viewModel
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sera.memorygame.database.entity.UserEntity
 import com.sera.memorygame.database.repository.UserRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainActivityViewModel(private val context: Context, private val repo: UserRepository) : ViewModel() {
 
     /**
      *
      */
-    private var user = MutableLiveData<UserEntity?>().apply {
-        value = null
+    init {
+        fetchUser()
     }
 
     /**
      *
      */
-    var getUser: MutableLiveData<UserEntity?>
-        get() = user
-        set(value) {
-            user = value
+    private val sessionUser = MutableStateFlow<UserEntity?>(null)
+
+    /**
+     *
+     */
+    fun getName(): String = sessionUser.value?.userName ?: "hhhhhhhhh"
+
+    /**
+     *
+     */
+    fun getUserInSession(): StateFlow<UserEntity?> = sessionUser
+
+    /**
+     *
+     */
+    private fun fetchUser() {
+        viewModelScope.launch {
+            repo.getUserInSession()
+                .catch {
+                    println("error")
+                }
+                .collect {
+                    sessionUser.value = it
+                }
         }
+    }
 
-    fun getUsersFromDB(): LiveData<List<UserEntity>> = repo.getAllUsersLive()
-
-    fun getName(): String = getUser.value?.userName?:"hhhhhhhhh"
 }

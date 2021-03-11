@@ -7,25 +7,26 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.navigation.NavigationView
+import androidx.lifecycle.lifecycleScope
 import com.sera.memorygame.R
 import com.sera.memorygame.database.repository.UserRepository
 import com.sera.memorygame.databinding.ActivityMainBinding
 import com.sera.memorygame.factory.MainActivityFactory
+import com.sera.memorygame.factory.UserViewModelFactory
 import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.ui.start.StartFragment
 import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.MainActivityViewModel
+import com.sera.memorygame.viewModel.UserViewModel
+import kotlinx.coroutines.flow.collect
 
-class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), Handlers {
     private lateinit var mBinder: ActivityMainBinding
-//    private lateinit var hBinder: NavHeaderMainBinding
 
     /**
      *
@@ -37,18 +38,24 @@ class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSe
     /**
      *
      */
+    private val userViewModel by viewModels<UserViewModel> {
+        UserViewModelFactory(context = this, repo = UserRepository(context = this))
+    }
+
+    /**
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(Prefs.getTheme())
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         mBinder = DataBindingUtil.setContentView(this, R.layout.activity_main)
-//        hBinder = NavHeaderMainBinding.bind(mBinder.navView.getHeaderView(0))
-//        hBinder.model = viewModel
         mBinder.handlers = this
-//        mBinder.navView.setNavigationItemSelectedListener(this)
         replaceFragment(fragment = StartFragment.newInstance())
 
-        addObservers()
+        lifecycleScope.launchWhenCreated {
+            addObservers()
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -71,15 +78,10 @@ class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSe
     /**
      *
      */
-    private fun addObservers() {
-        viewModel.getUsersFromDB().observe(this, {
-            if (it.isNotEmpty()) {
-                viewModel.getUser.value = it[0]
-            } else {
-                viewModel.getUser.value = null
-            }
-            mBinder.navLayout.userName.text = viewModel.getName()
-        })
+    private suspend fun addObservers() {
+        userViewModel.getUserInSession().collect {
+            mBinder.navLayout.userName.text = userViewModel.getName()
+        }
     }
 
     /**
@@ -104,13 +106,6 @@ class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSe
                 }
             }
             R.id.setttingsTV -> {
-//                val currTheme = Prefs.getTheme()
-//                if (currTheme == R.style.Theme_Pink) {
-//                    Prefs.setTheme(themeRes = R.style.Theme_Red)
-//                } else {
-//                    Prefs.setTheme(themeRes = R.style.Theme_Pink)
-//                }
-//                this.recreate()
                 addFragment(fragment = SettingsFragment.newInstance())
                 closeDrawer()
             }
@@ -151,29 +146,29 @@ class MainActivity : BaseActivity(), Handlers, NavigationView.OnNavigationItemSe
         TODO("Not yet implemented")
     }
 
-    /**
-     *
-     */
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_settings -> {
-//                UserRepository(context = this).deleteAllUsers()
-                val currTheme = Prefs.getTheme()
-                if (currTheme == R.style.Theme_Pink) {
-                    Prefs.setTheme(themeRes = R.style.Theme_Red)
-                } else {
-                    Prefs.setTheme(themeRes = R.style.Theme_Pink)
-                }
-                this.recreate()
-            }
-        }
-
-        Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
-            mBinder.drawerLayout.closeDrawer(GravityCompat.START)
-        }, 230)
-
-        return false
-    }
+//    /**
+//     *
+//     */
+//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.nav_settings -> {
+////                UserRepository(context = this).deleteAllUsers()
+//                val currTheme = Prefs.getTheme()
+//                if (currTheme == R.style.Theme_Pink) {
+//                    Prefs.setTheme(themeRes = R.style.Theme_Red)
+//                } else {
+//                    Prefs.setTheme(themeRes = R.style.Theme_Pink)
+//                }
+//                this.recreate()
+//            }
+//        }
+//
+//        Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
+//            mBinder.drawerLayout.closeDrawer(GravityCompat.START)
+//        }, 230)
+//
+//        return false
+//    }
 
 
 }

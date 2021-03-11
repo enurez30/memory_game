@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Pink" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Pink" parent="AppTheme">
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/pink_200</item>
@@ -15,7 +15,7 @@
 
     </style>
 
-    <style name="Theme.Red" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Red" parent="AppTheme">
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/red_700</item>
@@ -29,7 +29,7 @@
 
     </style>
 
-    <style name="Theme.Blue" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Blue" parent="AppTheme">
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_700</item>
@@ -43,7 +43,7 @@
 
     </style>
 
-    <style name="Theme.Purple" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Purple" parent="AppTheme">
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_400</item>

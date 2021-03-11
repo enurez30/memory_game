@@ -37,6 +37,7 @@
                 android:orientation="vertical">
 
                 <include
+                    android:id="@+id/uLayout"
                     layout="@layout/settings_user_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,6 +52,7 @@
                     android:background="?attr/colorOnPrimary" />
 
                 <include
+                    android:id="@+id/tLayout"
                     layout="@layout/settings_theme_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

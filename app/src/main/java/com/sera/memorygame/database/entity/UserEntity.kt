@@ -17,6 +17,7 @@ class UserEntity(
     @ColumnInfo(name = "user_id") var userId: String,
     @ColumnInfo(name = "user_name") var userName: String,
     @ColumnInfo(name = "avatar") var avatar: String,
+    @ColumnInfo(name = "is_session") var inSession: Boolean,
     @ColumnInfo(name = "last_time_log_in") val lastTimeLoggedIn: Long,
     @ColumnInfo(name = "created") val created: Long
 ) : IObject() {
@@ -24,6 +25,7 @@ class UserEntity(
         userId = UUID.randomUUID().toString(),
         userName = "",
         avatar = "",
+        inSession = false,
         lastTimeLoggedIn = 0L,
         created = System.currentTimeMillis()
     )

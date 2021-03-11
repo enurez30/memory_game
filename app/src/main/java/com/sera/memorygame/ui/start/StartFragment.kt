@@ -149,30 +149,9 @@ class StartFragment : BaseFragment() {
     override fun delegateHandlerClick(view: View) {
         when (view.id) {
             R.id.memoryBtn -> {
-
+//                UserRepository(context = requireContext()).deleteAllUsers()
                 (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
 
-//                UserRepository.getAllUsers().subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe({ userEntity ->
-//                        if (userEntity.isNotEmpty()) {
-//                            println("USERNAME: FLOW = ${userEntity[0].userName}")
-//                        }else{
-//                            println("USERNAME: FLOW = EMPTY")
-//                        }
-//                    }, { error ->
-//                        println("USERNAME:  FLOW = $error")
-//                    })
-//
-//                println()
-//                UserRepository.getAllUsersLive().observe(viewLifecycleOwner, {
-//                    if (it.isNotEmpty()) {
-//                        println("USERNAME: LIVE = ${it[0].userName}")
-//                    }else{
-//                        println("USERNAME: LIVE = EMPTY")
-//                    }
-//
-//                })
             }
             R.id.quizBtn -> {
 //                UserRepository(context = requireContext()).createUser().apply {

@@ -4,35 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.sera.memorygame.database.entity.UserEntity
-import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class UserDao : BaseDao<UserEntity> {
 
-    /**
-     * Get a user by id.
-     * @return the user from the table with a specific id.
-     */
-    @Query("SELECT * FROM user_table WHERE user_id = :id")
-    protected abstract fun getUserByIdFlowable(id: String): Flowable<UserEntity>
 
+    // ----- Flow ----- //
     /**
-     * Get all users.
-     * @return the users from the table .
+     *
      */
     @Query("SELECT * FROM user_table")
-    protected abstract fun getAllUsersFlowable(): Flowable<List<UserEntity>>
+    abstract fun getAllUsersFlow(): Flow<List<UserEntity>>
 
     /**
      *
      */
-    fun getUserByIdDistinctFlowable(id: String): Flowable<UserEntity> = getUserByIdFlowable(id).distinctUntilChanged()
+    @Query("SELECT * FROM user_table WHERE is_session = 1")
+    abstract fun getUserInSession(): Flow<UserEntity?>
 
-    /**
-     *
-     */
-    fun getAllUsersDistinctFlowable(): Flowable<List<UserEntity>> = getAllUsersFlowable().distinctUntilChanged()
-
+    // ----- LiveData ----- //
     /**
      *
      */

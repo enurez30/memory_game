@@ -108,6 +108,7 @@ class AppThemeDialog : BaseDialogFragment() {
             R.id.mainView -> {
                 ((mBinder.recycler.adapter as BaseRecyclerViewAdapter).getItemByPosition(position = position) as? AppThemeObject)?.let {
                     Prefs.setTheme(themeRes = it.themeRes)
+                    Prefs.setThemeName(name = it.title)
                     requireActivity().recreate()
                 }
             }

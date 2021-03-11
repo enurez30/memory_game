@@ -6,10 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.sera.memorygame.R
+import com.sera.memorygame.database.repository.UserRepository
 import com.sera.memorygame.databinding.SettingsFragmentBinding
+import com.sera.memorygame.extentions.themeColor
 import com.sera.memorygame.factory.SettingsFactory
+import com.sera.memorygame.factory.UserViewModelFactory
 import com.sera.memorygame.ui.dialog.AppThemeDialog
+import com.sera.memorygame.utils.Prefs
+import com.sera.memorygame.viewModel.SettingsViewModel
+import com.sera.memorygame.viewModel.UserViewModel
+import kotlinx.coroutines.flow.collect
+
 
 class SettingsFragment : BaseFragment() {
     private lateinit var mBinder: SettingsFragmentBinding
@@ -25,7 +34,14 @@ class SettingsFragment : BaseFragment() {
      *
      */
     private val viewModel by viewModels<SettingsViewModel> {
-        SettingsFactory(context = requireContext())
+        SettingsFactory(context = requireContext(), repo = UserRepository(context = requireContext()))
+    }
+
+    /**
+     *
+     */
+    private val userViewModel by viewModels<UserViewModel> {
+        UserViewModelFactory(context = requireContext(), repo = UserRepository(context = requireContext()))
     }
 
     /**
@@ -42,6 +58,36 @@ class SettingsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
+        generateThemeView()
+        lifecycleScope.launchWhenCreated {
+            addObservers()
+        }
+    }
+
+    /**
+     *
+     */
+    private suspend fun addObservers() {
+        userViewModel.getUserInSession().collect {
+            generateUserView()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun generateUserView() {
+        mBinder.uLayout.userName.text = userViewModel.getName()
+    }
+
+    /**
+     *
+     */
+    private fun generateThemeView() {
+        val primaryColor = requireContext().themeColor(attrRes = R.attr.colorPrimary)
+        val secondaryColor = requireContext().themeColor(attrRes = R.attr.colorSecondaryVariant)
+        mBinder.tLayout.circleView.setColors(mainColor = primaryColor, secondaryColor = secondaryColor)
+        mBinder.tLayout.themeName.text = Prefs.getThemeName()
     }
 
     /**

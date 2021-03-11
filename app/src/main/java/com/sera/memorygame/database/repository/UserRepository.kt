@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.sera.memorygame.database.AppDatabase
 import com.sera.memorygame.database.entity.UserEntity
-import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 
 class UserRepository(context: Context) {
 
@@ -16,6 +16,7 @@ class UserRepository(context: Context) {
     fun createUser(userName: String = "Sergey"): UserEntity {
         return UserEntity().apply {
             this.userName = userName
+            this.inSession = true
         }
     }
 
@@ -29,7 +30,12 @@ class UserRepository(context: Context) {
     /**
      *
      */
-    fun getAllUsers(): Flowable<List<UserEntity>> = dao.getAllUsersDistinctFlowable()
+    fun getAllUsersFlow(): Flow<List<UserEntity>> = dao.getAllUsersFlow()
+
+    /**
+     *
+     */
+    fun getUserInSession(): Flow<UserEntity?> = dao.getUserInSession()
 
     /**
      *

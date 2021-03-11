@@ -21,7 +21,8 @@
     <string name="user">User</string>
     <string name="change">change</string>
     <string name="theme">Theme</string>
-    <string name="cancel">cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="dummy_text">text_text</string>
+    <string name="welcome">Welcome</string>
 
 </resources>

@@ -29,12 +29,13 @@
             app:tint="?attr/colorOnPrimary"
             tools:ignore="ContentDescription" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:id="@+id/mainTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/title"
+            android:text="@string/welcome"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textColor="?attr/colorOnPrimary"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/iconHamburger"
