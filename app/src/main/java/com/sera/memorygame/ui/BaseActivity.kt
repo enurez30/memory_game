@@ -81,7 +81,7 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      *
      */
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(sticky = true, threadMode = ThreadMode.BACKGROUND)
     fun onEvent(event: MessageEvent) {
         if (event.reciever == BaseActivity::class.java.simpleName) {
             when (event.key) {

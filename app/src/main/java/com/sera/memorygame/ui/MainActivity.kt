@@ -26,6 +26,7 @@ import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.MainActivityViewModel
 import com.sera.memorygame.viewModel.UserViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity(), Handlers {
 //    private lateinit var mBinder: ActivityMainBinding
@@ -57,7 +58,6 @@ class MainActivity : BaseActivity(), Handlers {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(Prefs.getTheme())
-//        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         mBinder.handlers = this
         mBinder.lifecycleOwner = this
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -68,9 +68,9 @@ class MainActivity : BaseActivity(), Handlers {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        replaceFragment(fragment = StartFragment.newInstance())
 
-        lifecycleScope.launchWhenCreated {
+        replaceFragment(fragment = StartFragment.newInstance())
+        lifecycleScope.launch {
             addObservers()
         }
     }

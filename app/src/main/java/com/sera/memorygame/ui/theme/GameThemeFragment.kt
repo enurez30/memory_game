@@ -12,16 +12,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
-import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.R
+import com.sera.memorygame.database.model.GameThemeObject
 import com.sera.memorygame.databinding.GameThemeFragmentBinding
 import com.sera.memorygame.factory.GameThemeFactory
-import com.sera.memorygame.database.model.GameThemeObject
 import com.sera.memorygame.ui.BaseFragment
-import com.sera.memorygame.viewModel.GameThemeViewModel
 import com.sera.memorygame.ui.MainActivity
+import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.ui.adapter.CommonAdapter
 import com.sera.memorygame.ui.size.CardsSizeChooseFragment
+import com.sera.memorygame.utils.Constants
+import com.sera.memorygame.viewModel.GameThemeViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 
 class GameThemeFragment : BaseFragment() {
@@ -59,7 +60,7 @@ class GameThemeFragment : BaseFragment() {
         generateAdapter()
         Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
             setList()
-        }, 150)
+        }, Constants.MIN_DELAY_TIME)
     }
 
     /**
@@ -81,6 +82,9 @@ class GameThemeFragment : BaseFragment() {
         (mBinder.recycler.adapter as BaseRecyclerViewAdapter).setList(list = viewModel.getList())
     }
 
+    /**
+     *
+     */
     override fun onHandleClickedWithPosition(view: View, position: Int) {
         when (view.id) {
             R.id.mainView -> {

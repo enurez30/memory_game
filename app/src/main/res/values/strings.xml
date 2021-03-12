@@ -23,10 +23,15 @@
     <string name="change">change</string>
     <string name="theme">Theme</string>
     <string name="cancel">Cancel</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="dummy_text">text_text</string>
     <string name="welcome">Welcome</string>
     <string name="empty_field">can not be empty</string>
     <string name="error_camera_permission">In order to proceed, camera permission should be granded</string>
 
+    <!-- asset worker -->
+    <string name="check_for_updates">Checking for updates</string>
+    <string name="downloading_assets">Downloading Assets</string>
+    <string name="error">Error</string>
+    <string name="no_internet_connection">No internet connection</string>
 </resources>

@@ -58,4 +58,19 @@ class UserViewModel(private val context: Context, private val repo: UserReposito
                 }
         }
     }
+
+    /**
+     * method to check if there is al least one user in DB, if not - create default
+     */
+    suspend fun checkUserExistance() {
+        repo.getAllUsersFlow()
+            .catch {
+                println("error getching all users")
+            }
+            .collect {
+                if (it.isEmpty()) {
+                    repo.persistUser(user = repo.createUser())
+                }
+            }
+    }
 }

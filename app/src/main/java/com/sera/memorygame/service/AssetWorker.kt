@@ -129,8 +129,8 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
             this.message = msg
             this.network_status = ns
         }
-        println("DOWNLOAD: post event= ${event.key}")
-        EventBus.getDefault().post(event)
+        println("DOWNLOAD: post event= ${event.network_status}")
+        EventBus.getDefault().postSticky(event)
     }
 
 }

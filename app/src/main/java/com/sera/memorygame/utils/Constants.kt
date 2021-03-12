@@ -1,10 +1,11 @@
 package com.sera.memorygame.utils
 
 object Constants {
-    const val THUMBNAIL_SIZE = 315f
+    const val MIN_DELAY_TIME = 50L
 
     const val APP_DATABAS_NAME ="memory_database"
     const val BUCKET_ID = "gs://memorygame-c6487.appspot.com"
+    const val DEFAULT_PLAYER_NAME = "Player1"
 
     const val MEMORY_VIEW_OBJECT_VIEW_TYPE = 10
     const val SIZE_VIEW_OBJECT_VIEW_TYPE = 20
