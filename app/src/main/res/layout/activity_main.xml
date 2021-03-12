@@ -9,6 +9,7 @@
         <variable
             name="handlers"
             type="com.sera.memorygame.interfaces.Handlers" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -63,7 +64,7 @@
                         layout="@layout/custom_navigation_layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        bind:handlers="@{handlers}" />
+                        bind:handlers="@{handlers}"/>
                 </LinearLayout>
 
 

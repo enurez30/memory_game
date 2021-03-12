@@ -3,11 +3,13 @@
 package com.sera.memorygame.ui
 
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Menu
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
@@ -26,7 +28,7 @@ import com.sera.memorygame.viewModel.UserViewModel
 import kotlinx.coroutines.flow.collect
 
 class MainActivity : BaseActivity(), Handlers {
-    private lateinit var mBinder: ActivityMainBinding
+//    private lateinit var mBinder: ActivityMainBinding
 
     /**
      *
@@ -45,12 +47,27 @@ class MainActivity : BaseActivity(), Handlers {
     /**
      *
      */
+    private val mBinder by lazy {
+        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+    }
+
+    /**
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(Prefs.getTheme())
-        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        mBinder = DataBindingUtil.setContentView(this, R.layout.activity_main)
+//        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         mBinder.handlers = this
+        mBinder.lifecycleOwner = this
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
         replaceFragment(fragment = StartFragment.newInstance())
 
         lifecycleScope.launchWhenCreated {
@@ -80,6 +97,7 @@ class MainActivity : BaseActivity(), Handlers {
      */
     private suspend fun addObservers() {
         userViewModel.getUserInSession().collect {
+            println()
             mBinder.navLayout.userName.text = userViewModel.getName()
         }
     }
@@ -136,39 +154,13 @@ class MainActivity : BaseActivity(), Handlers {
      *
      */
     override fun onHandleClickedWithPosition(view: View, position: Int) {
-        TODO("Not yet implemented")
+
     }
 
     /**
      *
      */
-    override fun onLongClicked(view: View, position: Int?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-//    /**
-//     *
-//     */
-//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.nav_settings -> {
-////                UserRepository(context = this).deleteAllUsers()
-//                val currTheme = Prefs.getTheme()
-//                if (currTheme == R.style.Theme_Pink) {
-//                    Prefs.setTheme(themeRes = R.style.Theme_Red)
-//                } else {
-//                    Prefs.setTheme(themeRes = R.style.Theme_Pink)
-//                }
-//                this.recreate()
-//            }
-//        }
-//
-//        Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
-//            mBinder.drawerLayout.closeDrawer(GravityCompat.START)
-//        }, 230)
-//
-//        return false
-//    }
+    override fun onLongClicked(view: View, position: Int?): Boolean = true
 
 
 }

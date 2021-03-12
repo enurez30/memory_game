@@ -31,4 +31,6 @@ class UserEntity(
     )
 
     override fun getViewType(): Int = Constants.USER_ENTITY_VIEW_TYPE
+
+    override fun getAvatarReference(): String = avatar
 }

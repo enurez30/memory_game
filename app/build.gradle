@@ -55,19 +55,20 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.3.0"
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
+    // Recycler View
     implementation 'androidx.recyclerview:recyclerview:1.2.0-beta02'
     implementation 'androidx.fragment:fragment-ktx:1.3.0'
-    // rotatable image
+    // Rotatable Image
     implementation 'com.yayandroid:Rotatable:1.1.1'
-    // recycler animation
+    // Recycler Animation
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
-    // gravity animation
+    // Gravity Animation
     implementation 'com.github.rubensousa:gravitysnaphelper:2.2.0'
-    // firebase
+    // Firebase
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
@@ -79,5 +80,7 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.6'
     implementation 'androidx.room:room-ktx:2.2.6'
     kapt 'androidx.room:room-compiler:2.2.6'
+    // Circle Image View
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
 }

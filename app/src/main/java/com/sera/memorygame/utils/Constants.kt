@@ -1,7 +1,9 @@
 package com.sera.memorygame.utils
 
 object Constants {
+    const val THUMBNAIL_SIZE = 315f
 
+    const val APP_DATABAS_NAME ="memory_database"
     const val BUCKET_ID = "gs://memorygame-c6487.appspot.com"
 
     const val MEMORY_VIEW_OBJECT_VIEW_TYPE = 10

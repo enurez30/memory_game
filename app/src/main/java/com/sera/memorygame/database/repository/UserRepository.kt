@@ -1,7 +1,6 @@
 package com.sera.memorygame.database.repository
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import com.sera.memorygame.database.AppDatabase
 import com.sera.memorygame.database.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
@@ -40,7 +39,9 @@ class UserRepository(context: Context) {
     /**
      *
      */
-    fun getAllUsersLive(): LiveData<List<UserEntity>> = dao.getAllUsersLive()
+    fun updateUser(user: UserEntity) {
+        dao.update(obj = user)
+    }
 
     /**
      *

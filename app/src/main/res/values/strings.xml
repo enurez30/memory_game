@@ -12,6 +12,7 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="title">Title</string>
+    <string name="user_name">Name</string>
 
     <string name="play_memory">Memory Game</string>
     <string name="play_flag_quiz">Quiz Game</string>
@@ -22,7 +23,10 @@
     <string name="change">change</string>
     <string name="theme">Theme</string>
     <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
     <string name="dummy_text">text_text</string>
     <string name="welcome">Welcome</string>
+    <string name="empty_field">can not be empty</string>
+    <string name="error_camera_permission">In order to proceed, camera permission should be granded</string>
 
 </resources>

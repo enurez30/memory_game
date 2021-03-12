@@ -3,7 +3,6 @@ package com.sera.memorygame.ui
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -11,29 +10,20 @@ import com.sera.memorygame.R
 import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.utils.NetworkStatus
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.*
 
 abstract class BaseActivity : AppCompatActivity() {
 
     /**
      *
      */
-    private var assetWorkerExecutingStatus = MutableLiveData<Int>().apply {
-        value = NetworkStatus.NONE.status
+    protected val workerState: MutableStateFlow<Int> by lazy {
+        MutableStateFlow(NetworkStatus.NONE.status)
     }
-
-    /**
-     *
-     */
-    var getAssetWorkerExecutingStatus: MutableLiveData<Int>
-        get() = assetWorkerExecutingStatus
-        set(value) {
-            assetWorkerExecutingStatus = value
-        }
 
     /**
      *
@@ -65,27 +55,27 @@ abstract class BaseActivity : AppCompatActivity() {
      *
      */
     fun addFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.container, fragment, fragment::class.java.simpleName)
-            .addToBackStack("fragment")
-            .commit()
+        with(supportFragmentManager) {
+            findFragmentByTag(fragment::class.java.simpleName)?.let {
+                beginTransaction().remove(it).commit()
+            }
+            beginTransaction()
+                .add(R.id.container, fragment, fragment::class.java.simpleName)
+                .addToBackStack("fragment")
+                .commit()
+        }
+
+
     }
 
     /**
      *
      */
-    fun showSnackBar(content: String, view: View, duration: Int = Snackbar.LENGTH_SHORT, map: HashMap<String, Any>? = null, callback: (Any) -> Unit) {
-        val snack = Snackbar.make(view, content, duration)
+    fun showSnackBar(content: String, view: View = window.decorView.rootView, duration: Int = Snackbar.LENGTH_SHORT) {
+        Snackbar.make(view, content, duration)
             .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
             .setBackgroundTint(view.context.resources.getColor(R.color.colorDarkGrayBackground, null))
-        map?.let {
-            val action = map["action_text"] as String
-            snack.setAction(action) {
-
-            }
-        }
-        snack.show()
-        callback(snack)
+            .show()
     }
 
     /**
@@ -100,7 +90,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
                 "network_status" -> {
                     lifecycleScope.launch(Dispatchers.Main) {
-                        getAssetWorkerExecutingStatus.value = event.network_status
+                        workerState.value = event.network_status
                     }
                 }
             }

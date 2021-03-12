@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.sera.memorygame.database.entity.UserEntity
+import com.sera.memorygame.utils.Constants
 
 @Database(
     exportSchema = false,
@@ -32,7 +33,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "memory_database"
+                    Constants.APP_DATABAS_NAME
                 )
                     .setJournalMode(JournalMode.TRUNCATE)
                     .allowMainThreadQueries()

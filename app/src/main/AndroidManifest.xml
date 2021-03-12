@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sera.memorygame">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".MemoryApplication"
         android:allowBackup="false"
@@ -28,6 +30,15 @@
             android:theme="@style/Theme.Pink">
 
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.sera.memorygame.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
+        </provider>
     </application>
 
 </manifest>

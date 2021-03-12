@@ -13,36 +13,36 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(private val context: Context, private val repo: UserRepository) : ViewModel() {
 
-//    /**
-//     *
-//     */
-//    init {
-//        fetchUser()
-//    }
-
     /**
      *
      */
-//    private val sessionUser = MutableStateFlow<Resource<UserEntity>?>(Resource.loading(null))
-//    private val sessionUser = MutableStateFlow<UserEntity?>(null).apply {
-//        fetchUser()
-//    }
-
     private val sessionUser: MutableStateFlow<UserEntity?> by lazy {
-        MutableStateFlow<UserEntity?>(null).also {
-            fetchUser()
-        }
+        MutableStateFlow<UserEntity?>(null)
+            .also {
+                fetchUser()
+            }
     }
 
     /**
      *
      */
-    fun getName(): String = sessionUser.value?.userName ?: "hhhhhhhhh"
+    fun getName(): String {
+        return sessionUser.value?.userName ?: "NO NAME"
+    }
 
     /**
      *
      */
     fun getUserInSession(): StateFlow<UserEntity?> = sessionUser
+
+    /**
+     *
+     */
+    fun updateUser() {
+        sessionUser.value?.let { user ->
+            repo.updateUser(user = user)
+        }
+    }
 
     /**
      *

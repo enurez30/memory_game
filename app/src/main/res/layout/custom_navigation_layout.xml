@@ -7,6 +7,7 @@
         <variable
             name="handlers"
             type="com.sera.memorygame.interfaces.Handlers" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

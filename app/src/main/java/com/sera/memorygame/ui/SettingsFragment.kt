@@ -14,6 +14,7 @@ import com.sera.memorygame.extentions.themeColor
 import com.sera.memorygame.factory.SettingsFactory
 import com.sera.memorygame.factory.UserViewModelFactory
 import com.sera.memorygame.ui.dialog.AppThemeDialog
+import com.sera.memorygame.ui.dialog.UserDialog
 import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.SettingsViewModel
 import com.sera.memorygame.viewModel.UserViewModel
@@ -97,6 +98,9 @@ class SettingsFragment : BaseFragment() {
         when (view.id) {
             R.id.themeChangeTV -> {
                 AppThemeDialog.newInstance().show(requireActivity().supportFragmentManager, AppThemeDialog::class.java.simpleName)
+            }
+            R.id.updateIV -> {
+                UserDialog.newInstance().show(requireActivity().supportFragmentManager, UserDialog::class.java.simpleName)
             }
         }
     }

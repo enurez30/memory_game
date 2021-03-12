@@ -41,6 +41,8 @@
                     layout="@layout/settings_user_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     bind:handlers="@{handlers}" />
 
                 <View
@@ -56,6 +58,8 @@
                     layout="@layout/settings_theme_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     bind:handlers="@{handlers}" />
 
                 <View
