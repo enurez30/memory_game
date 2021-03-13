@@ -23,7 +23,7 @@ class UserRepository(context: Context) {
     /**
      *
      */
-    fun persistUser(user: UserEntity) {
+    suspend fun persistUser(user: UserEntity) {
         dao.insert(obj = user)
     }
 
@@ -40,7 +40,7 @@ class UserRepository(context: Context) {
     /**
      *
      */
-    fun updateUser(user: UserEntity) {
+    suspend fun updateUser(user: UserEntity) {
         dao.update(obj = user)
     }
 

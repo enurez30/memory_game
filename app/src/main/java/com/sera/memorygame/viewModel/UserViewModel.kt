@@ -40,7 +40,9 @@ class UserViewModel(private val context: Context, private val repo: UserReposito
      */
     fun updateUser() {
         sessionUser.value?.let { user ->
-            repo.updateUser(user = user)
+            viewModelScope.launch {
+                repo.updateUser(user = user)
+            }
         }
     }
 
