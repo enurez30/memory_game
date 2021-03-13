@@ -16,6 +16,7 @@ import com.sera.memorygame.interfaces.Handlers
 abstract class BaseFragment : Fragment(), FragmentResultListener, Handlers {
     private lateinit var mBinder: BaseFragmentLayoutBinding
 
+
     /**
      *
      */

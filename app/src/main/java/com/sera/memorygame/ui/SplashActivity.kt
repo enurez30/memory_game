@@ -2,34 +2,34 @@ package com.sera.memorygame.ui
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.MemoryApplication
 import com.sera.memorygame.R
-import com.sera.memorygame.database.repository.UserRepository
-import com.sera.memorygame.factory.UserViewModelFactory
+import com.sera.memorygame.di.SplashComponent
 import com.sera.memorygame.service.AssetWorker
 import com.sera.memorygame.utils.NetworkStatus
 import com.sera.memorygame.viewModel.UserViewModel
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
 class SplashActivity : BaseActivity() {
 
-    /**
-     *
-     */
-    private val userViewModel by viewModels<UserViewModel> {
-        UserViewModelFactory(context = this, repo = UserRepository(context = this))
-    }
+    @Inject
+    lateinit var userViewModel: UserViewModel
+
+    // Stores an instance of RegistrationComponent so that its Fragments can access it
+    lateinit var splashComponenet: SplashComponent
 
     /**
      *
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as? MemoryApplication?)?.appComponent?.inject(activity = this)
+        splashComponenet = (application as MemoryApplication).appComponent.splashComponent().create()
+        splashComponenet.inject(activity = this)
+
         super.onCreate(savedInstanceState)
         lifecycleScope.launchWhenCreated {
             addObserver()
@@ -38,6 +38,7 @@ class SplashActivity : BaseActivity() {
             userViewModel.checkUserExistance()
         }
         WorkManager.getInstance(this).enqueue(OneTimeWorkRequestBuilder<AssetWorker>().build())
+        userViewModel.print(caller = this::class.java.simpleName)
     }
 
     /**

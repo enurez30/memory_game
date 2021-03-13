@@ -5,8 +5,9 @@ import com.sera.memorygame.database.AppDatabase
 import com.sera.memorygame.database.entity.UserEntity
 import com.sera.memorygame.utils.Constants
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class UserRepository(context: Context) {
+class UserRepository @Inject constructor(val context: Context) {
 
     private val dao = AppDatabase.getDataBase(context).userDao()
 

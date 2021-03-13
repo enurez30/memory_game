@@ -1,12 +1,12 @@
 package com.sera.memorygame.di
 
 import android.content.Context
-import com.sera.memorygame.ui.MainActivity
-import com.sera.memorygame.ui.SplashActivity
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Singleton
 
-@Component
+@Singleton
+@Component(modules = [AppSubcomponents::class])
 interface AppComponent {
 
     // Factory to create instances of the AppComponent
@@ -16,7 +16,11 @@ interface AppComponent {
         fun create(@BindsInstance context: Context): AppComponent
     }
 
+    // Expose SplashComponent factory from the graph
+    fun splashComponent(): SplashComponent.Factory
+    fun mainComponene(): MainComponent.Factory
 
-    fun inject(activity: MainActivity)
-    fun inject(activity: SplashActivity)
+//    fun inject(activity: MainActivity)
+//    fun inject(fragment: BaseFragment)
+//    fun inject(fragment: StartFragment)
 }

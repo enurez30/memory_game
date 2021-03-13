@@ -1,28 +1,29 @@
 package com.sera.memorygame.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.sera.memorygame.R
-import com.sera.memorygame.database.repository.UserRepository
 import com.sera.memorygame.databinding.SettingsFragmentBinding
 import com.sera.memorygame.extentions.themeColor
-import com.sera.memorygame.factory.SettingsFactory
-import com.sera.memorygame.factory.UserViewModelFactory
 import com.sera.memorygame.ui.dialog.AppThemeDialog
 import com.sera.memorygame.ui.dialog.UserDialog
 import com.sera.memorygame.utils.Prefs
-import com.sera.memorygame.viewModel.SettingsViewModel
 import com.sera.memorygame.viewModel.UserViewModel
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
 
 class SettingsFragment : BaseFragment() {
+
     private lateinit var mBinder: SettingsFragmentBinding
+
+    @Inject
+    lateinit var userViewModel: UserViewModel
 
     /**
      *
@@ -34,15 +35,9 @@ class SettingsFragment : BaseFragment() {
     /**
      *
      */
-    private val viewModel by viewModels<SettingsViewModel> {
-        SettingsFactory(context = requireContext(), repo = UserRepository(context = requireContext()))
-    }
-
-    /**
-     *
-     */
-    private val userViewModel by viewModels<UserViewModel> {
-        UserViewModelFactory(context = requireContext(), repo = UserRepository(context = requireContext()))
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity() as? MainActivity?)?.mainComponent?.inject(fragment = this)
     }
 
     /**
@@ -63,6 +58,7 @@ class SettingsFragment : BaseFragment() {
         lifecycleScope.launchWhenCreated {
             addObservers()
         }
+        userViewModel.print(caller = this::class.java.simpleName)
     }
 
     /**

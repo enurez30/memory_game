@@ -7,8 +7,7 @@ import com.sera.memorygame.database.model.SizeViewObject
 import com.sera.memorygame.utils.Utils
 import org.json.JSONObject
 
-class CardsSizeChooseViewModel(private val context: Context, private val jsonReference: String) :
-    ViewModel() {
+class CardsSizeChooseViewModel(private val context: Context, private val jsonReference: String) : ViewModel() {
 
     /**
      *

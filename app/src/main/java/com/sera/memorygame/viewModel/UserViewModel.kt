@@ -4,13 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sera.memorygame.database.entity.UserEntity
 import com.sera.memorygame.database.repository.UserRepository
+import com.sera.memorygame.di.ActivityScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserViewModel(private val repo: UserRepository) : ViewModel() {
+@ActivityScope
+class UserViewModel @Inject constructor(private val repo: UserRepository) : ViewModel() {
 
     /**
      *
@@ -26,7 +29,7 @@ class UserViewModel(private val repo: UserRepository) : ViewModel() {
      *
      */
     fun getName(): String {
-        return sessionUser.value?.userName ?: "NO NAME"
+        return sessionUser.value?.userName ?: ""
     }
 
     /**
@@ -73,5 +76,9 @@ class UserViewModel(private val repo: UserRepository) : ViewModel() {
                     repo.persistUser(user = repo.createUser())
                 }
             }
+    }
+
+    fun print(caller: String) {
+        println("DAGGER_WTF: $caller called user VM")
     }
 }

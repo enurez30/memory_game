@@ -1,5 +1,6 @@
 package com.sera.memorygame.ui.theme
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,13 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
 import com.sera.memorygame.R
 import com.sera.memorygame.database.model.GameThemeObject
 import com.sera.memorygame.databinding.GameThemeFragmentBinding
-import com.sera.memorygame.factory.GameThemeFactory
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
@@ -24,6 +23,7 @@ import com.sera.memorygame.ui.size.CardsSizeChooseFragment
 import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.viewModel.GameThemeViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
+import javax.inject.Inject
 
 class GameThemeFragment : BaseFragment() {
     private lateinit var mBinder: GameThemeFragmentBinding
@@ -35,13 +35,19 @@ class GameThemeFragment : BaseFragment() {
         fun newInstance() = GameThemeFragment()
     }
 
-    /**
-     *
-     */
-    private val viewModel: GameThemeViewModel by viewModels {
-        GameThemeFactory(context = requireContext())
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity() as? MainActivity?)?.mainComponent?.inject(fragment = this)
     }
+//    /**
+//     *
+//     */
+//    private val viewModel: GameThemeViewModel by viewModels {
+//        GameThemeFactory(context = requireContext())
+//    }
 
+    @Inject
+    lateinit var viewModel: GameThemeViewModel
 
     /**
      *

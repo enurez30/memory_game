@@ -11,43 +11,30 @@ import android.view.Menu
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.sera.memorygame.MemoryApplication
 import com.sera.memorygame.R
-import com.sera.memorygame.database.repository.UserRepository
 import com.sera.memorygame.databinding.ActivityMainBinding
-import com.sera.memorygame.factory.UserViewModelFactory
+import com.sera.memorygame.di.MainComponent
 import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.ui.start.StartFragment
 import com.sera.memorygame.utils.Prefs
-import com.sera.memorygame.viewModel.MainActivityViewModel
 import com.sera.memorygame.viewModel.UserViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), Handlers {
-//    private lateinit var mBinder: ActivityMainBinding
 
-//    /**
-//     *
-//     */
-//    private val viewModel by viewModels<MainActivityViewModel> {
-//        MainActivityFactory(context = this, repo = UserRepository(context = this))
-//    }
+//    @Inject
+//    lateinit var viewModel: MainActivityViewModel
 
     @Inject
-    lateinit var viewModel: MainActivityViewModel
+    lateinit var userViewModel: UserViewModel
 
-    /**
-     *
-     */
-    private val userViewModel by viewModels<UserViewModel> {
-        UserViewModelFactory(context = this, repo = UserRepository(context = this))
-    }
+    lateinit var mainComponent: MainComponent
 
     /**
      *
@@ -61,7 +48,8 @@ class MainActivity : BaseActivity(), Handlers {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         // Ask Dagger to inject our dependencies
-        (application as? MemoryApplication?)?.appComponent?.inject(activity = this)
+        mainComponent = (application as MemoryApplication).appComponent.mainComponene().create()
+        mainComponent.inject(activity = this)
 
         super.onCreate(savedInstanceState)
         setTheme(Prefs.getTheme())
@@ -80,7 +68,8 @@ class MainActivity : BaseActivity(), Handlers {
         lifecycleScope.launch {
             addObservers()
         }
-        viewModel.print()
+
+        userViewModel.print(caller = this::class.java.simpleName)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
