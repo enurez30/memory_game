@@ -1,6 +1,5 @@
 package com.sera.memorygame.viewModel
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sera.memorygame.database.entity.UserEntity
@@ -11,7 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class UserViewModel(private val context: Context, private val repo: UserRepository) : ViewModel() {
+class UserViewModel(private val repo: UserRepository) : ViewModel() {
 
     /**
      *

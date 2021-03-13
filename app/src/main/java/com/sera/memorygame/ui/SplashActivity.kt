@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.android.material.snackbar.Snackbar
+import com.sera.memorygame.MemoryApplication
 import com.sera.memorygame.R
 import com.sera.memorygame.database.repository.UserRepository
 import com.sera.memorygame.factory.UserViewModelFactory
@@ -28,6 +29,7 @@ class SplashActivity : BaseActivity() {
      *
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as? MemoryApplication?)?.appComponent?.inject(activity = this)
         super.onCreate(savedInstanceState)
         lifecycleScope.launchWhenCreated {
             addObserver()

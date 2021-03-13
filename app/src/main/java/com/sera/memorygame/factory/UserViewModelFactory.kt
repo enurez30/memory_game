@@ -12,7 +12,7 @@ import com.sera.memorygame.viewModel.UserViewModel
 class UserViewModelFactory (private val context: Context, private val repo: UserRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
-            return UserViewModel(context = context, repo = repo) as T
+            return UserViewModel(repo = repo) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
