@@ -39,7 +39,7 @@ object Prefs {
     /**
      *
      */
-    fun getTheme(): Int = getSharedPreference().getInt("theme", R.style.Theme_Pink)
+    fun getTheme(): Int = getSharedPreference().getInt("theme", R.style.Theme_Grey)
 
     /**
      *
@@ -49,5 +49,5 @@ object Prefs {
     /**
      *
      */
-    fun getThemeName(): String = getSharedPreference().getString("theme_name", "Pink") ?: "Pink"
+    fun getThemeName(): String = getSharedPreference().getString("theme_name", "Grey") ?: "Grey"
 }

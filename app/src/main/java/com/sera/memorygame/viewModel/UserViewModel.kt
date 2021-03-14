@@ -78,7 +78,4 @@ class UserViewModel @Inject constructor(private val repo: UserRepository) : View
             }
     }
 
-    fun print(caller: String) {
-        println("DAGGER_WTF: $caller called user VM")
-    }
 }

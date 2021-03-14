@@ -55,7 +55,6 @@ class StartFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
-        viewModel.print()
     }
 
 
@@ -65,15 +64,11 @@ class StartFragment : BaseFragment() {
     override fun delegateHandlerClick(view: View) {
         when (view.id) {
             R.id.memoryBtn -> {
-//                UserRepository(context = requireContext()).deleteAllUsers()
                 (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
 
             }
             R.id.quizBtn -> {
-//                UserRepository(context = requireContext()).createUser().apply {
-//                    UserRepository(context = requireContext()).persistUser(user = this)
-//                }
-                (requireActivity() as? BaseActivity)?.showSnackBar("in development", view = mBinder.mainView)
+                (requireActivity() as? BaseActivity)?.showSnackBar("working on it", view = mBinder.mainView)
             }
         }
     }

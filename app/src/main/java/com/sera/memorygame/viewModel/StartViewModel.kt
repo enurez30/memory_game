@@ -5,7 +5,5 @@ import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
 class StartViewModel @Inject constructor(val context: Context) : ViewModel() {
-    fun print() {
-        println("DAGGER_WTF: ${this::class.java.simpleName}")
-    }
+
 }

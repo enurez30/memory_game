@@ -96,6 +96,14 @@ class AppThemeDialog : BaseDialogFragment() {
                     themeRes = R.style.Theme_Purple
                 )
             )
+            this.add(
+                AppThemeObject(
+                    title = "Grey",
+                    mainColor = ContextCompat.getColor(requireContext(), R.color.grey_200),
+                    secondaryColor = ContextCompat.getColor(requireContext(), R.color.grey_800Dark),
+                    themeRes = R.style.Theme_Grey
+                )
+            )
         }
         (mBinder.recycler.adapter as BaseRecyclerViewAdapter).setList(list = list)
     }

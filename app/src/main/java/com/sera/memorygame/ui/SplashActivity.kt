@@ -12,33 +12,38 @@ import com.sera.memorygame.di.SplashComponent
 import com.sera.memorygame.service.AssetWorker
 import com.sera.memorygame.utils.NetworkStatus
 import com.sera.memorygame.viewModel.UserViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class SplashActivity : BaseActivity() {
 
     @Inject
     lateinit var userViewModel: UserViewModel
 
     // Stores an instance of RegistrationComponent so that its Fragments can access it
-    lateinit var splashComponenet: SplashComponent
+    private lateinit var splashComponenet: SplashComponent
 
     /**
      *
      */
+    @FlowPreview
     override fun onCreate(savedInstanceState: Bundle?) {
         splashComponenet = (application as MemoryApplication).appComponent.splashComponent().create()
         splashComponenet.inject(activity = this)
 
         super.onCreate(savedInstanceState)
-        lifecycleScope.launchWhenCreated {
-            addObserver()
-        }
-        lifecycleScope.launchWhenStarted {
-            userViewModel.checkUserExistance()
+        lifecycleScope.launch {
+            val flowA = flow { emit(addObserver()) }
+            val flowB = flow { emit(userViewModel.checkUserExistance()) }
+            merge(flowA, flowB).collect()
         }
         WorkManager.getInstance(this).enqueue(OneTimeWorkRequestBuilder<AssetWorker>().build())
-        userViewModel.print(caller = this::class.java.simpleName)
     }
 
     /**

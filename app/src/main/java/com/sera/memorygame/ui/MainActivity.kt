@@ -19,6 +19,7 @@ import com.sera.memorygame.R
 import com.sera.memorygame.databinding.ActivityMainBinding
 import com.sera.memorygame.di.MainComponent
 import com.sera.memorygame.interfaces.Handlers
+import com.sera.memorygame.ui.settings.SettingsFragment
 import com.sera.memorygame.ui.start.StartFragment
 import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.UserViewModel
@@ -27,9 +28,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), Handlers {
-
-//    @Inject
-//    lateinit var viewModel: MainActivityViewModel
 
     @Inject
     lateinit var userViewModel: UserViewModel
@@ -47,7 +45,7 @@ class MainActivity : BaseActivity(), Handlers {
      *
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Ask Dagger to inject our dependencies
+
         mainComponent = (application as MemoryApplication).appComponent.mainComponene().create()
         mainComponent.inject(activity = this)
 
@@ -69,9 +67,11 @@ class MainActivity : BaseActivity(), Handlers {
             addObservers()
         }
 
-        userViewModel.print(caller = this::class.java.simpleName)
     }
 
+    /**
+     *
+     */
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {

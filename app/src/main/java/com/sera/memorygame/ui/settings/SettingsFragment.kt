@@ -1,4 +1,4 @@
-package com.sera.memorygame.ui
+package com.sera.memorygame.ui.settings
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.SettingsFragmentBinding
 import com.sera.memorygame.extentions.themeColor
+import com.sera.memorygame.ui.BaseFragment
+import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.dialog.AppThemeDialog
 import com.sera.memorygame.ui.dialog.UserDialog
 import com.sera.memorygame.utils.Prefs
@@ -58,7 +60,6 @@ class SettingsFragment : BaseFragment() {
         lifecycleScope.launchWhenCreated {
             addObservers()
         }
-        userViewModel.print(caller = this::class.java.simpleName)
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.sera.memorygame.di
 
 import com.sera.memorygame.ui.MainActivity
-import com.sera.memorygame.ui.SettingsFragment
+import com.sera.memorygame.ui.settings.SettingsFragment
 import com.sera.memorygame.ui.start.StartFragment
 import com.sera.memorygame.ui.theme.GameThemeFragment
 import dagger.Subcomponent

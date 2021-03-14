@@ -20,7 +20,4 @@ interface AppComponent {
     fun splashComponent(): SplashComponent.Factory
     fun mainComponene(): MainComponent.Factory
 
-//    fun inject(activity: MainActivity)
-//    fun inject(fragment: BaseFragment)
-//    fun inject(fragment: StartFragment)
 }

@@ -56,4 +56,18 @@
         <item name="colorOnSecondary">@color/white</item>
 
     </style>
+
+    <style name="Theme.Grey" parent="AppTheme">
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/grey_500</item>
+        <item name="colorPrimaryVariant">@color/grey_200Light</item>
+        <item name="colorPrimarySurface">@color/grey_50</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/grey_300</item>
+        <item name="colorSecondaryVariant">@color/grey_800Dark</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+    </style>
 </resources>
