@@ -87,6 +87,6 @@ dependencies {
     // Circle Image View
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     // Dagger
-    implementation "com.google.dagger:dagger:2.27"
-    kapt "com.google.dagger:dagger-compiler:2.27"
+    implementation "com.google.dagger:dagger:2.31.2"
+    kapt "com.google.dagger:dagger-compiler:2.31.2"
 }
