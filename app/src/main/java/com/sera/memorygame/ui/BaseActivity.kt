@@ -8,7 +8,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.R
 import com.sera.memorygame.event.MessageEvent
-import com.sera.memorygame.utils.NetworkStatus
+import com.sera.memorygame.utils.status_callback.NetworkStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

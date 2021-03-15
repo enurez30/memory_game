@@ -16,6 +16,7 @@ import com.sera.memorygame.R
 import com.sera.memorygame.database.model.SizeViewObject
 import com.sera.memorygame.databinding.CardsSizeChooseFragmentBinding
 import com.sera.memorygame.factory.CardSizeFactory
+import com.sera.memorygame.providers.ResourcesProvider
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
@@ -43,7 +44,7 @@ class CardsSizeChooseFragment : BaseFragment() {
      *
      */
     private val viewModel: CardsSizeChooseViewModel by viewModels {
-        CardSizeFactory(context = requireContext(), jsonReference = requireArguments().getString("json_ref", ""))
+        CardSizeFactory(resourcesProvider = ResourcesProvider(requireContext()), jsonReference = requireArguments().getString("json_ref", ""))
     }
 
     /**

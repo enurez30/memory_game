@@ -8,6 +8,7 @@ import com.google.firebase.storage.ktx.storage
 import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.ui.BaseActivity
 import com.sera.memorygame.utils.*
+import com.sera.memorygame.utils.status_callback.NetworkStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope

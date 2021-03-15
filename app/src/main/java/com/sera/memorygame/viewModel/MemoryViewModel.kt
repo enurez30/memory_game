@@ -4,17 +4,17 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sera.memorygame.R
+import com.sera.memorygame.custom.MemoryCardView
 import com.sera.memorygame.database.model.MemoryViewObject
 import com.sera.memorygame.database.model.SizeViewObject
 import com.sera.memorygame.interfaces.Handlers
-import com.sera.memorygame.utils.Utils
-import com.sera.memorygame.view.MemoryCardView
+import com.sera.memorygame.providers.ResourcesProvider
 import kotlin.random.Random
 
 class MemoryViewModel(
-    private val context: Context,
     private val jsonRef: String,
-    private val sizeViewObject: SizeViewObject
+    private val sizeViewObject: SizeViewObject,
+    private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {
 
     /**
@@ -54,27 +54,14 @@ class MemoryViewModel(
             pair = value
         }
 
-//    /**
-//     *
-//     */
-//    fun getLinearContainer(): LinearLayout {
-//        return LinearLayout(context).apply {
-//            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-//            orientation = LinearLayout.HORIZONTAL
-//        }
-//    }
 
     /**
      *
      */
-    fun generateMemoryViewObject(
-        memoryObjeList: ArrayList<MemoryViewObject>,
-        handlers: Handlers
-    ): ArrayList<MemoryViewObject> {
+    fun generateMemoryViewObject(context: Context, memoryObjeList: ArrayList<MemoryViewObject>, handlers: Handlers): ArrayList<MemoryViewObject> {
         return ArrayList<MemoryViewObject>().apply {
             memoryObjeList.map {
-                val card =
-                    MemoryCardView(mContext = context, memoryViewObject = it, callback = handlers)
+                val card = MemoryCardView(mContext = context, memoryViewObject = it, callback = handlers)
                 it.memoryView = card
                 this.add(it)
             }
@@ -87,10 +74,6 @@ class MemoryViewModel(
      *
      */
     fun generateMemoryObjects(containerW: Int, containerH: Int): ArrayList<MemoryViewObject> {
-//        val withInDp = Utils.pxToDp(resource = context.resources, px = Resources.getSystem().displayMetrics.widthPixels.toFloat())
-//        val heightInDp = Utils.pxToDp(resource = context.resources, px = Resources.getSystem().displayMetrics.heightPixels.toFloat())
-//        val width = ((containerW / (4)) - (4 * 4)).toFloat()
-//        val height = ((containerH / (6)) - (4 * 4)).toFloat()
 
         val width = ((containerW / (sizeViewObject.xAxis)) - (4 * 4)).toFloat()
         val height = ((containerH / (sizeViewObject.yAxis)) - (4 * 4)).toFloat()
@@ -108,8 +91,7 @@ class MemoryViewModel(
                             id = counter,
                             width = width,
                             height = height,
-                            frontResource = Utils.getDrawableFromAssets(
-                                context = context,
+                            frontResource = resourcesProvider.getDrawableFromAssets(
                                 reference = imgRef,
                                 dirRef = jsonRef
                             ),
@@ -141,12 +123,8 @@ class MemoryViewModel(
      *
      */
     private fun getImagesObjects(): ArrayList<String> {
-
-//        val json = Utils.getJsonByReference(context = context, reference = jsonRef) ?: return ArrayList()
-
-        return Utils.getJsonByReference(context = context, reference = jsonRef)?.let { json ->
-            val listArray = Utils.getImagesArrayByDirReference(
-                context = context,
+        return resourcesProvider.getJsonByReference(reference = jsonRef)?.let { json ->
+            val listArray = resourcesProvider.getImagesArrayByDirReference(
                 dirRef = json.getString("type")
             )
             ArrayList<String>().apply {

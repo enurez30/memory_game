@@ -1,25 +1,24 @@
 package com.sera.memorygame.viewModel
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.sera.memorygame.database.model.GameThemeObject
 import com.sera.memorygame.database.model.IObject
 import com.sera.memorygame.di.ActivityScope
-import com.sera.memorygame.utils.Utils
+import com.sera.memorygame.providers.ResourcesProvider
 import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 @ActivityScope
-class GameThemeViewModel @Inject constructor ( val context: Context) : ViewModel() {
+class GameThemeViewModel @Inject constructor ( private val resourcesProvider: ResourcesProvider) : ViewModel() {
 
     /**
      *
      */
     fun getList(): ArrayList<IObject> {
         return ArrayList<GameThemeObject>().apply {
-            Utils.loadJSONFromAsset(context = context, jsonFile = "memory_game_themes")?.let {
+            resourcesProvider.loadJSONFromAsset(jsonFile = "memory_game_themes")?.let {
                 val collection = it.getJSONArray("collection")
                 repeat(collection.length()) { counter ->
                     val obj = collection[counter] as JSONObject

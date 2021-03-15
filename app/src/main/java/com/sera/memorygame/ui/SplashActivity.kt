@@ -10,7 +10,7 @@ import com.sera.memorygame.MemoryApplication
 import com.sera.memorygame.R
 import com.sera.memorygame.di.SplashComponent
 import com.sera.memorygame.service.AssetWorker
-import com.sera.memorygame.utils.NetworkStatus
+import com.sera.memorygame.utils.status_callback.NetworkStatus
 import com.sera.memorygame.viewModel.UserViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview

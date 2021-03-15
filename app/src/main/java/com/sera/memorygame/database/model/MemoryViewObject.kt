@@ -1,8 +1,8 @@
 package com.sera.memorygame.database.model
 
-import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.R
-import com.sera.memorygame.view.MemoryCardView
+import com.sera.memorygame.custom.MemoryCardView
+import com.sera.memorygame.utils.Constants
 
 data class MemoryViewObject(
     val id: Int,

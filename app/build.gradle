@@ -89,4 +89,6 @@ dependencies {
     // Dagger
     implementation "com.google.dagger:dagger:2.31.2"
     kapt "com.google.dagger:dagger-compiler:2.31.2"
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 }

@@ -3,6 +3,7 @@
 package com.sera.memorygame.ui
 
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -11,9 +12,11 @@ import android.view.Menu
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.sera.memorygame.MemoryApplication
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.ActivityMainBinding
@@ -96,7 +99,21 @@ class MainActivity : BaseActivity(), Handlers {
         userViewModel.getUserInSession().collect {
             println()
             mBinder.navLayout.userName.text = userViewModel.getName()
+            it?.avatar?.toUri()?.let { uri ->
+                setImage(uri = uri)
+            }
         }
+    }
+
+    /**
+     *
+     */
+    private fun setImage(uri: Uri) {
+        Glide.with(this)
+            .load(uri)
+            .error(R.drawable.bckg_squires)
+            .fallback(R.drawable.bckg_squires)
+            .into(mBinder.navLayout.userIV)
     }
 
     /**
@@ -140,10 +157,12 @@ class MainActivity : BaseActivity(), Handlers {
      *
      */
     override fun onBackPressed() {
-        if (supportFragmentManager.fragments[supportFragmentManager.fragments.size - 1] is StartFragment) {
-            // nothing, add exit dialog
-        } else {
-            supportFragmentManager.popBackStack()
+        with(supportFragmentManager) {
+            if (this.fragments.size <= 2 && this.findFragmentByTag(StartFragment::class.java.simpleName)?.isVisible == true) {
+                // nothing, add exit dialog
+            } else {
+                this.popBackStack()
+            }
         }
     }
 

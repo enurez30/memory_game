@@ -2,30 +2,41 @@ package com.sera.memorygame.ui.dialog
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.graphics.ImageDecoder
+import android.content.Context
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.viewModels
+import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.R
-import com.sera.memorygame.database.repository.UserRepository
 import com.sera.memorygame.databinding.UserDialogLayoutBinding
-import com.sera.memorygame.factory.UserViewModelFactory
 import com.sera.memorygame.ui.BaseActivity
-import com.sera.memorygame.utils.PictureLifecycleObserver
+import com.sera.memorygame.ui.MainActivity
+import com.sera.memorygame.utils.FileUtils
+import com.sera.memorygame.utils.observers.PictureLifecycleObserver
 import com.sera.memorygame.viewModel.UserViewModel
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
 class UserDialog : BaseDialogFragment() {
     private lateinit var mBinder: UserDialogLayoutBinding
     private lateinit var pictureObserver: PictureLifecycleObserver
+
+    @Inject
+    lateinit var userViewModel: UserViewModel
+
+    /**
+     *
+     */
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity() as? MainActivity?)?.mainComponent?.inject(dialog = this)
+    }
 
     /**
      *
@@ -40,13 +51,6 @@ class UserDialog : BaseDialogFragment() {
                 duration = Snackbar.LENGTH_LONG
             )
         }
-    }
-
-    /**
-     *
-     */
-    private val userViewModel by viewModels<UserViewModel> {
-        UserViewModelFactory(context = requireContext(), repo = UserRepository(context = requireContext()))
     }
 
     /**
@@ -87,21 +91,11 @@ class UserDialog : BaseDialogFragment() {
             when {
                 result.isSuccess -> {
                     (result.getOrNull() as? Uri?)?.let {
-                        val img = when {
-                            Build.VERSION.SDK_INT < Build.VERSION_CODES.P -> {
-                                @Suppress("DEPRECATION")
-                                MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it)
-                            }
-                            else -> {
-                                val source = ImageDecoder.createSource(requireActivity().contentResolver, it)
-                                ImageDecoder.decodeBitmap(source)
-                            }
+                        userViewModel.getUserInSession().value?.let { userEntity ->
+                            FileUtils.deleteFileByUri(pCtx = requireContext(), path = userEntity.avatar)
+                            userEntity.avatar = it.toString()
                         }
-                        mBinder.image.setImageBitmap(img)
-//                        userViewModel.getUserInSession().value?.let { userEntity ->
-//                            val fName = FileUtils.saveAndDeleteOldImage(img, requireContext(), userEntity)
-//                            userEntity.avatar = fName
-//                        }
+                        setImage(uri = it)
                     }
                 }
                 result.isFailure -> {
@@ -113,6 +107,17 @@ class UserDialog : BaseDialogFragment() {
             lifecycle.addObserver(it)
             pictureObserver = it
         }
+    }
+
+    /**
+     *
+     */
+    private fun setImage(uri: Uri) {
+        Glide.with(requireContext())
+            .load(uri)
+            .error(R.drawable.bckg_squires)
+            .fallback(R.drawable.bckg_squires)
+            .into(mBinder.image)
     }
 
     /**
@@ -132,6 +137,9 @@ class UserDialog : BaseDialogFragment() {
         userViewModel.getUserInSession().collect {
             println()
             mBinder.textField.editText?.setText(userViewModel.getName())
+            it?.avatar?.toUri()?.let { uri ->
+                setImage(uri = uri)
+            }
         }
     }
 
