@@ -51,7 +51,7 @@
                 android:layout_marginBottom="4dp"
                 android:backgroundTint="?attr/colorSecondary"
                 android:onClick="@{handlers::onHandlerClicked}"
-                android:text="@string/cancel"
+                android:text="@string/close"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
