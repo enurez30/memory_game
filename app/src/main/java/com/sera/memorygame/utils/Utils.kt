@@ -122,7 +122,7 @@ object Utils {
         var inputStream: InputStream? = null
         try {
             val assetsPath = context.filesDir.toString() + "/assets/files/$dirRef/"
-            Utils.getValidFile(path = assetsPath, reference = reference)?.let { imagePath ->
+            getValidFile(path = assetsPath, reference = reference)?.let { imagePath ->
                 inputStream = imagePath.inputStream()
                 drawable = Drawable.createFromStream(inputStream, null)
             }
