@@ -62,6 +62,14 @@ class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callba
                 )
                 AppThemeViewHolder(binding, callback)
             }
+            Constants.FLAG_QUIZ_SINGLE_OBJECT_VIEW_TYPE -> {
+                val binding: FlagQuizSingleViewBinding = DataBindingUtil.inflate(
+                    LayoutInflater.from(parent?.context),
+                    R.layout.flag_quiz_single_view,
+                    parent, false
+                )
+                FlagQuizSingleViewHolder(binding, callback)
+            }
             else -> {
                 val binding: MemoryRecyclerSingleViewBinding = DataBindingUtil.inflate(
                     LayoutInflater.from(parent?.context),
@@ -85,6 +93,7 @@ class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callba
             is TitleIconViewHolder -> holder.bind(item = items[position] as TitleIconObject)
             is GameThemeViewHolder -> holder.bind(item = items[position] as GameThemeObject)
             is AppThemeViewHolder -> holder.bind(item = items[position] as AppThemeObject)
+            is FlagQuizSingleViewHolder -> holder.bind(item = items[position] as FlagQuizSingleObject)
         }
     }
 

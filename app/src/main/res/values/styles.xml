@@ -36,4 +36,8 @@
     <style name="CustomTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/annie_use_your_telescope</item>
     </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

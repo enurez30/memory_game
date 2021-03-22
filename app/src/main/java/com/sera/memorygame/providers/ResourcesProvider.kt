@@ -124,4 +124,23 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
 
         return drawable
     }
+
+    /**
+     *
+     */
+    fun getStreamFromRaw(fName: String): InputStream {
+        return context.resources.openRawResource(
+            context.resources.getIdentifier(
+                fName,
+                "raw", context.packageName
+            )
+        )
+    }
+
+    /**
+     *
+     */
+    fun getResurceFromRaw(fName: String): Int {
+        return context.resources.getIdentifier(fName, "raw", context.packageName)
+    }
 }

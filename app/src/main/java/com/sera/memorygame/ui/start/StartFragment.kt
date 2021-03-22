@@ -11,9 +11,11 @@ import com.sera.memorygame.databinding.StartFragmentBinding
 import com.sera.memorygame.ui.BaseActivity
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.MainActivity
+import com.sera.memorygame.ui.flag_quiz.FlagQuizContainerFragment
 import com.sera.memorygame.ui.theme.GameThemeFragment
 import com.sera.memorygame.viewModel.StartViewModel
 import javax.inject.Inject
+
 
 class StartFragment : BaseFragment() {
     private lateinit var mBinder: StartFragmentBinding
@@ -68,7 +70,7 @@ class StartFragment : BaseFragment() {
 
             }
             R.id.quizBtn -> {
-                (requireActivity() as? BaseActivity)?.showSnackBar("working on it", view = mBinder.mainView)
+                (requireActivity() as? BaseActivity?)?.replaceFragment(fragment = FlagQuizContainerFragment.newInstance())
             }
         }
     }

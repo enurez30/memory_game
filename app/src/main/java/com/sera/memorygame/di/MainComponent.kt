@@ -2,6 +2,8 @@ package com.sera.memorygame.di
 
 import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.dialog.UserDialog
+import com.sera.memorygame.ui.flag_quiz.FlagQuizContainerFragment
+import com.sera.memorygame.ui.flag_quiz.FlagQuizFragment
 import com.sera.memorygame.ui.settings.SettingsFragment
 import com.sera.memorygame.ui.start.StartFragment
 import com.sera.memorygame.ui.theme.GameThemeFragment
@@ -22,5 +24,7 @@ interface MainComponent {
     fun inject(fragment: StartFragment)
     fun inject(fragment: SettingsFragment)
     fun inject(fragment: GameThemeFragment)
+    fun inject(fragment: FlagQuizFragment)
+    fun inject(fragment: FlagQuizContainerFragment)
     fun inject(dialog: UserDialog)
 }
