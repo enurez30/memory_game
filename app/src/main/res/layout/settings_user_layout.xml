@@ -35,6 +35,7 @@
             android:layout_marginTop="4dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="?attr/colorOnPrimary"
+            android:textDirection="locale"
             app:layout_constraintEnd_toStartOf="@+id/updateIV"
             app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/title" />

@@ -1,5 +1,7 @@
 package com.sera.memorygame.ui
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -8,6 +10,8 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.R
 import com.sera.memorygame.event.MessageEvent
+import com.sera.memorygame.utils.ContextUtils
+import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.utils.status_callback.NetworkStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +19,16 @@ import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 abstract class BaseActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+
+        val localeToSwitchTo = Prefs.getAppLanguage()
+        val localeUpdatedContext: ContextWrapper = ContextUtils.updateLocale(newBase, Locale(localeToSwitchTo))
+        super.attachBaseContext(localeUpdatedContext)
+    }
 
     /**
      *

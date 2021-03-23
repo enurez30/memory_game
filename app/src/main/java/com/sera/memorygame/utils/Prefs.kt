@@ -50,4 +50,14 @@ object Prefs {
      *
      */
     fun getThemeName(): String = getSharedPreference().getString("theme_name", "Grey") ?: "Grey"
+
+    /**
+     *
+     */
+    fun setAppLanguage(appLanguage:String) = getEditor().putString("app_language", appLanguage).apply()
+
+    /**
+     *
+     */
+    fun getAppLanguage():String = getSharedPreference().getString("app_language", "en") ?: "en"
 }

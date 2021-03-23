@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.StartFragmentBinding
-import com.sera.memorygame.ui.BaseActivity
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.MainActivity
-import com.sera.memorygame.ui.flag_quiz.FlagQuizContainerFragment
-import com.sera.memorygame.ui.theme.GameThemeFragment
+import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.StartViewModel
 import javax.inject.Inject
 
@@ -66,14 +64,17 @@ class StartFragment : BaseFragment() {
     override fun delegateHandlerClick(view: View) {
         when (view.id) {
             R.id.memoryBtn -> {
-                (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
+                //(requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
+                Prefs.setAppLanguage(appLanguage = "en")
+                requireActivity().recreate()
 
             }
             R.id.quizBtn -> {
-                (requireActivity() as? BaseActivity?)?.replaceFragment(fragment = FlagQuizContainerFragment.newInstance())
+                //(requireActivity() as? BaseActivity?)?.replaceFragment(fragment = FlagQuizContainerFragment.newInstance())
+                Prefs.setAppLanguage(appLanguage = "iw")
+                requireActivity().recreate()
             }
         }
     }
-
 
 }
