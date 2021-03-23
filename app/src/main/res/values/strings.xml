@@ -40,6 +40,7 @@
     <string name="quiz_total">Total: %d /%d</string>
     <string name="quiz_correct">Correct: %d</string>
     <string name="quiz_wrong">Wrong: %d</string>
+    <string name="wikipedia_country_chooser_text">Please choose</string>
 
     <!-- country names -->
     <string name="ad">Andorra</string>

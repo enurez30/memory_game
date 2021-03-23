@@ -7,6 +7,7 @@ object Constants {
     const val APP_DATABAS_NAME ="memory_database"
     const val BUCKET_ID = "gs://memorygame-c6487.appspot.com"
     const val DEFAULT_PLAYER_NAME = "Player1"
+    const val WIKIPEDIA_COUNTRY_BASE_URL = "https://en.wikipedia.org/wiki/"
 
     const val MEMORY_VIEW_OBJECT_VIEW_TYPE = 10
     const val SIZE_VIEW_OBJECT_VIEW_TYPE = 20

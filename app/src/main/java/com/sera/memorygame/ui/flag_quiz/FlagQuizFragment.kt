@@ -1,12 +1,15 @@
 package com.sera.memorygame.ui.flag_quiz
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -24,11 +27,14 @@ import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.ui.adapter.CommonAdapter
 import com.sera.memorygame.utils.AnimationHelper
+import com.sera.memorygame.utils.Constants
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
+@ExperimentalCoroutinesApi
 class FlagQuizFragment : BaseFragment() {
     private lateinit var mBinder: FlagQuizFragmentBinding
 
@@ -85,10 +91,12 @@ class FlagQuizFragment : BaseFragment() {
         keyLiveData.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 mBinder.overlayView.visibility = View.VISIBLE
+                mBinder.infoIcon.visibility = View.VISIBLE
                 AnimationHelper.animateSpringY(mBinder.newxBtn, 0F)
             } else {
                 mBinder.newxBtn.animate().translationY(1000F).setDuration(0L).start()
                 mBinder.overlayView.visibility = View.GONE
+                mBinder.infoIcon.visibility = View.GONE
             }
         })
     }
@@ -101,6 +109,13 @@ class FlagQuizFragment : BaseFragment() {
             with(ResourcesProvider(context = requireContext())) {
                 val rId = this.getResurceFromRaw(fName = fqm.flagReference)
                 mBinder.flagIV.setImageResource(rId)
+                mBinder.flagIV.post {
+                    val drawable = mBinder.flagIV.drawable
+                    val ratio = drawable.intrinsicWidth.toDouble() / drawable.intrinsicHeight.toDouble()
+                    mBinder.flagIV.layoutParams.height = (drawable.intrinsicHeight / 1.5).toInt()
+                    mBinder.flagIV.layoutParams.width = ((drawable.intrinsicHeight / 1.5) * ratio).toInt()
+                    mBinder.flagIV.scaleType = ImageView.ScaleType.FIT_XY
+                }
             }
         }
     }
@@ -155,10 +170,6 @@ class FlagQuizFragment : BaseFragment() {
                             this.notifyItemChanged(index)
                         }
                         sendEvent(key = keyLiveData.value ?: "", message = (requireArguments().getSerializable("entity") as? FlagQuizMainObject?)?.countryId ?: "")
-//                    if (!it.animate) {
-//                        it.animate = !it.animate
-//                        (mBinder.recycler.adapter as BaseRecyclerViewAdapter).notifyItemChanged(position)
-//                    }
                     }
                 }
             }
@@ -173,7 +184,24 @@ class FlagQuizFragment : BaseFragment() {
             R.id.newxBtn -> {
                 sendEvent(key = "next", message = (requireArguments().getSerializable("entity") as? FlagQuizMainObject?)?.countryId ?: "")
             }
+            R.id.infoIcon -> {
+                val searchCriteria = "${Constants.WIKIPEDIA_COUNTRY_BASE_URL}${getCountryName()}"
+                val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(searchCriteria))
+                requireActivity().startActivity(Intent.createChooser(webIntent, requireContext().getString(R.string.wikipedia_country_chooser_text)))
+            }
         }
+    }
+
+    /**
+     *
+     */
+    private fun getCountryName(): String {
+        (mBinder.recycler.adapter as BaseRecyclerViewAdapter).items.map {
+            if ((it as? FlagQuizSingleObject?)?.isRight == true) {
+                return it.flagName
+            }
+        }
+        return ""
     }
 
     /**

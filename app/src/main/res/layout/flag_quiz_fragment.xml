@@ -27,7 +27,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline4"
-            app:layout_constraintWidth_percent=".7"
+            app:layout_constraintWidth_percent=".75"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/infoIcon"
+            style="?attr/actionButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:onClick="@{handlers::onHandlerClicked}"
+            android:src="@drawable/ic_baseline_info"
+            app:layout_constraintStart_toEndOf="@+id/flagIV"
+            app:layout_constraintTop_toTopOf="@+id/flagIV"
+            app:tint="?attr/colorSecondary"
             tools:ignore="ContentDescription" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -35,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".05" />
+            app:layout_constraintGuide_percent=".0" />
 
 
         <androidx.constraintlayout.widget.Guideline
