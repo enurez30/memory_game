@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -15,9 +16,15 @@ import com.sera.memorygame.databinding.FragmentFlagQuizContainerBinding
 import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.MainActivity
+import com.sera.memorygame.utils.AnimationHelper
 import com.sera.memorygame.viewModel.CountryViewModel
 import com.transitionseverywhere.ChangeText
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
@@ -26,6 +33,7 @@ import org.greenrobot.eventbus.ThreadMode
 import javax.inject.Inject
 
 
+@ExperimentalCoroutinesApi
 class FlagQuizContainerFragment : BaseFragment() {
     private lateinit var mBinder: FragmentFlagQuizContainerBinding
 
@@ -61,21 +69,26 @@ class FlagQuizContainerFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
-        addObserver()
+        lifecycleScope.launch {
+            addObserver()
+        }
     }
 
     /**
      *
      */
-    private fun addObserver() {
+    private suspend fun addObserver() {
         countryViewModel.getRemainCountriesLive.observe(viewLifecycleOwner, {
             if (it?.isNotEmpty() == true) {
-                lifecycleScope.launch {
-                    updateScoreValues()
-                }
                 setNextItem()
             }
         })
+
+        val flowA = flow { emitAll(countryViewModel.getCorrectCountries()) }
+        val flowB = flow { emitAll(countryViewModel.getWrongCountries()) }
+        merge(flowA, flowB).collect {
+            updateScoreValues()
+        }
 
     }
 
@@ -97,6 +110,7 @@ class FlagQuizContainerFragment : BaseFragment() {
                     val oldValue = countryViewModel.getCorrectCountries().value
                     val newValue = oldValue + 1
                     countryViewModel.setCorrectValue(newValue = newValue)
+                    mBinder.scoreInclude.correctTV.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.bounce))
                 }
             }
             "wrong" -> {
@@ -104,15 +118,21 @@ class FlagQuizContainerFragment : BaseFragment() {
                     val oldValue = countryViewModel.getWrongCountries().value
                     val newValue = oldValue + 1
                     countryViewModel.setWrongCountries(newValue = newValue)
+                    AnimationHelper.shakeView(view = mBinder.scoreInclude.incorrectTV, 100, 5)
                 }
             }
         }
 
+    }
+
+    /**
+     *
+     */
+    private fun goNext(message: String) {
         lifecycleScope.launch(Dispatchers.Main) {
             (countryViewModel.getRemainCountriesLive.value as ArrayList<CountryEntity>).removeIf { it.id == message }
             countryViewModel.getRemainCountriesLive.value = countryViewModel.getRemainCountriesLive.value
         }
-
     }
 
     /**
@@ -121,9 +141,9 @@ class FlagQuizContainerFragment : BaseFragment() {
     private suspend fun updateScoreValues() = withContext(Dispatchers.Main) {
         with(countryViewModel) {
             val totalCountries = getAllCountries().value?.size ?: 0
-            val total = totalCountries - (getRemainCountriesLive.value?.size ?: 0)
             val correct = getCorrectCountries().value
             val wrong = getWrongCountries().value
+            val total = totalCountries - (totalCountries - (correct + wrong))
 
             with(mBinder.scoreInclude) {
                 totalTV.text = resources.getString(R.string.quiz_total, total, totalCountries)
@@ -170,7 +190,12 @@ class FlagQuizContainerFragment : BaseFragment() {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun onEvent(event: MessageEvent) {
         if (event.reciever == FlagQuizContainerFragment::class.java.simpleName) {
-            getResult(key = event.key, message = event.message)
+            when (event.key) {
+                "next" -> {
+                    goNext(message = event.message)
+                }
+                else -> getResult(key = event.key, message = event.message)
+            }
         }
     }
 

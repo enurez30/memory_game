@@ -26,7 +26,7 @@ class FlagQuizSingleViewHolder(val binding: ViewDataBinding, val callback: Handl
                 if (item.isRight) {
                     AnimationHelper.animateColorBackground(target = mainView, fromColor = fromColor, toColor = ContextCompat.getColor(root.context, R.color.green_700), duration = 250L)
                 } else {
-                    AnimationHelper.animateColorBackground(target = mainView, fromColor = fromColor, toColor = ContextCompat.getColor(root.context, R.color.red_700), duration = 250L)
+                    AnimationHelper.animateColorBackground(target = mainView, fromColor = fromColor, toColor = ContextCompat.getColor(root.context, R.color.red_700Dark), duration = 250L)
                 }
             }
         }

@@ -38,7 +38,7 @@
                 android:maxLines="1"
                 android:text="@string/dummy_title"
                 android:textColor="?attr/colorOnPrimary"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/iconView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iconView" />

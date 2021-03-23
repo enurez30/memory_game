@@ -84,9 +84,11 @@ class FlagQuizFragment : BaseFragment() {
     private fun addObserver() {
         keyLiveData.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
+                mBinder.overlayView.visibility = View.VISIBLE
                 AnimationHelper.animateSpringY(mBinder.newxBtn, 0F)
             } else {
                 mBinder.newxBtn.animate().translationY(1000F).setDuration(0L).start()
+                mBinder.overlayView.visibility = View.GONE
             }
         })
     }
@@ -134,19 +136,29 @@ class FlagQuizFragment : BaseFragment() {
     override fun onHandleClickedWithPosition(view: View, position: Int) {
         when (view.id) {
             R.id.mainView -> {
-                ((mBinder.recycler.adapter as BaseRecyclerViewAdapter).getItemByPosition(position = position) as? FlagQuizSingleObject?)?.let {
+                with(mBinder.recycler.adapter as BaseRecyclerViewAdapter) {
+                    (this.getItemByPosition(position = position) as? FlagQuizSingleObject?)?.let {
 
-                    if (keyLiveData.value?.isEmpty() == true) {
-                        val key = if (it.isRight) {
-                            "correct"
-                        } else {
-                            "wrong"
+                        if (keyLiveData.value?.isEmpty() == true) {
+                            val key = if (it.isRight) {
+                                "correct"
+                            } else {
+                                "wrong"
+                            }
+                            keyLiveData.value = key
                         }
-                        keyLiveData.value = key
-                    }
-                    if (!it.animate) {
-                        it.animate = !it.animate
-                        (mBinder.recycler.adapter as BaseRecyclerViewAdapter).notifyItemChanged(position)
+
+                        this.items.mapIndexed { index, iObject ->
+                            (iObject as? FlagQuizSingleObject?)?.let { fqo ->
+                                fqo.animate = true
+                            }
+                            this.notifyItemChanged(index)
+                        }
+                        sendEvent(key = keyLiveData.value ?: "", message = (requireArguments().getSerializable("entity") as? FlagQuizMainObject?)?.countryId ?: "")
+//                    if (!it.animate) {
+//                        it.animate = !it.animate
+//                        (mBinder.recycler.adapter as BaseRecyclerViewAdapter).notifyItemChanged(position)
+//                    }
                     }
                 }
             }
@@ -159,7 +171,7 @@ class FlagQuizFragment : BaseFragment() {
     override fun onHandlerClicked(view: View) {
         when (view.id) {
             R.id.newxBtn -> {
-                sendEvent(key = keyLiveData.value ?: "", countryId = (requireArguments().getSerializable("entity") as? FlagQuizMainObject?)?.countryId ?: "")
+                sendEvent(key = "next", message = (requireArguments().getSerializable("entity") as? FlagQuizMainObject?)?.countryId ?: "")
             }
         }
     }
@@ -167,11 +179,11 @@ class FlagQuizFragment : BaseFragment() {
     /**
      *
      */
-    private fun sendEvent(key: String, countryId: String) {
+    private fun sendEvent(key: String, message: String) {
         val event = MessageEvent().apply {
             this.reciever = FlagQuizContainerFragment::class.java.simpleName
             this.key = key
-            this.message = countryId
+            this.message = message
         }
         EventBus.getDefault().post(event)
     }

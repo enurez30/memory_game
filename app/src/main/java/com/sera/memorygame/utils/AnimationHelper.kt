@@ -6,10 +6,13 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnticipateOvershootInterpolator
+import android.view.animation.TranslateAnimation
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
+
 
 object AnimationHelper {
 
@@ -54,5 +57,17 @@ object AnimationHelper {
             target.backgroundTintList = ColorStateList.valueOf(value)
         }
         animator.start()
+    }
+
+    /**
+     *
+     */
+    fun shakeView(view: View, duration: Int, offset: Int): View {
+        val anim: Animation = TranslateAnimation((-offset).toFloat(), offset.toFloat(), 0F, 0F)
+        anim.duration = duration.toLong()
+        anim.repeatMode = Animation.REVERSE
+        anim.repeatCount = 2
+        view.startAnimation(anim)
+        return view
     }
 }
