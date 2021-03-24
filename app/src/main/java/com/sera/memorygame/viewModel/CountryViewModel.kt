@@ -34,6 +34,7 @@ class CountryViewModel @Inject constructor(private val repo: CountryRepository, 
     var getRemainCountriesLive: MutableLiveData<List<CountryEntity>>
         get() = remainCountriesLive
         set(value) {
+            println("CountryViewModel: size = ${remainCountriesLive.value?.size}")
             remainCountriesLive = value
         }
 

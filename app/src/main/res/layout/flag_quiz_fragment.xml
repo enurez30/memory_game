@@ -32,13 +32,16 @@
 
         <ImageView
             android:id="@+id/infoIcon"
-            style="?attr/actionButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/circle_white_transparent"
+            android:elevation="1dp"
             android:onClick="@{handlers::onHandlerClicked}"
+            android:padding="6dp"
             android:src="@drawable/ic_baseline_info"
-            app:layout_constraintStart_toEndOf="@+id/flagIV"
+            app:layout_constraintEnd_toEndOf="@+id/flagIV"
             app:layout_constraintTop_toTopOf="@+id/flagIV"
             app:tint="?attr/colorSecondary"
             tools:ignore="ContentDescription" />

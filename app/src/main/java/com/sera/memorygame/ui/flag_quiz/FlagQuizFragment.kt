@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -33,6 +35,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
+
 
 @ExperimentalCoroutinesApi
 class FlagQuizFragment : BaseFragment() {
@@ -107,15 +110,18 @@ class FlagQuizFragment : BaseFragment() {
     private fun setFlag() {
         (requireArguments().getSerializable("entity") as? FlagQuizMainObject?)?.let { fqm ->
             with(ResourcesProvider(context = requireContext())) {
+
                 val rId = this.getResurceFromRaw(fName = fqm.flagReference)
-                mBinder.flagIV.setImageResource(rId)
-                mBinder.flagIV.post {
-                    val drawable = mBinder.flagIV.drawable
-                    val ratio = drawable.intrinsicWidth.toDouble() / drawable.intrinsicHeight.toDouble()
-                    mBinder.flagIV.layoutParams.height = (drawable.intrinsicHeight / 1.5).toInt()
-                    mBinder.flagIV.layoutParams.width = ((drawable.intrinsicHeight / 1.5) * ratio).toInt()
+                ResourcesCompat.getDrawable(resources, rId, requireContext().theme)?.toBitmap()?.let {
+                    val ratio = it.width.toDouble() / it.height.toDouble()
+                    mBinder.flagIV.layoutParams.height = (it.height * 2)
+                    mBinder.flagIV.layoutParams.width = ((it.height * 2) * ratio).toInt()
                     mBinder.flagIV.scaleType = ImageView.ScaleType.FIT_XY
+                    mBinder.flagIV.setImageBitmap(it)
+                } ?: kotlin.run {
+                    mBinder.flagIV.setImageResource(rId)
                 }
+
             }
         }
     }

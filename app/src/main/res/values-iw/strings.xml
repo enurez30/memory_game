@@ -24,6 +24,7 @@
     <string name="welcome">ברוך הבא</string>
     <string name="empty_field">שדה חובה</string>
     <string name="error_camera_permission">על מנת להמשיך יש לתת הרשאת המצלמה </string>
+    <string name="settings_language">שפה</string>
 
     <!-- asset worker -->
     <string name="check_for_updates">בודק עדכונים</string>
@@ -343,5 +344,6 @@
     <string name="za">South Africa</string>
     <string name="zm">Zambia</string>
     <string name="zw">Zimbabwe"</string>
+
 
 </resources>

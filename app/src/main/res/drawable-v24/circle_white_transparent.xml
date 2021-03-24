@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="?attr/colorSecondary"
+    tools:targetApi="P"> <!-- ripple effect color -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="?attr/colorOnPrimary" />
+            <size
+                android:width="25dp"
+                android:height="25dp" />
+            <corners android:radius="0dp" />
+        </shape>
+    </item>
+</ripple>

@@ -22,6 +22,7 @@
     <string name="welcome">Welcome</string>
     <string name="empty_field">can not be empty</string>
     <string name="error_camera_permission">In order to proceed, camera permission should be granded</string>
+    <string name="settings_language">language</string>
 
     <!-- asset worker -->
     <string name="check_for_updates">Checking for updates</string>

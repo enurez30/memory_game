@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.sera.memorygame.ui.settings
 
 import android.content.Context
@@ -5,13 +7,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.sera.memorygame.R
+import com.sera.memorygame.database.model.IObject
+import com.sera.memorygame.database.model.LanguageObject
 import com.sera.memorygame.databinding.SettingsFragmentBinding
 import com.sera.memorygame.extentions.themeColor
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.MainActivity
+import com.sera.memorygame.ui.adapter.IObjectAutocompleteAdapter
 import com.sera.memorygame.ui.dialog.AppThemeDialog
 import com.sera.memorygame.ui.dialog.UserDialog
 import com.sera.memorygame.utils.Prefs
@@ -57,6 +63,7 @@ class SettingsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
         generateThemeView()
+        generateLanguageView()
         lifecycleScope.launchWhenCreated {
             addObservers()
         }
@@ -87,6 +94,49 @@ class SettingsFragment : BaseFragment() {
         mBinder.tLayout.circleView.setColors(mainColor = primaryColor, secondaryColor = secondaryColor)
         mBinder.tLayout.themeName.text = Prefs.getThemeName()
     }
+
+    /**
+     *
+     */
+    private fun generateLanguageView() {
+        println()
+        requireContext().resources.assets.locales
+        val list = ArrayList<IObject>().apply {
+            this.add(
+                LanguageObject(
+                    iconRefrerence = "gb",
+                    languageRefrence = "en",
+                    name = "English"
+                )
+            )
+            this.add(
+                LanguageObject(
+                    iconRefrerence = "il",
+                    languageRefrence = "iw",
+                    name = "Hebrew"
+                )
+            )
+        }
+        val appLanguage = when (Prefs.getAppLanguage()) {
+            "en" -> "English"
+            else -> "Hebrew"
+        }
+
+        val adapter = IObjectAutocompleteAdapter(requireContext(), list, this)
+        with(mBinder.languageLayout.textField.editText as? AutoCompleteTextView) {
+            this?.setAdapter(adapter)
+            this?.setText(appLanguage)
+            this?.setOnItemClickListener { adapterView, _, i, _ ->
+                println()
+                (adapterView.adapter.getItem(i) as? LanguageObject)?.let { item ->
+                    this.setText(item.name)
+                    Prefs.setAppLanguage(appLanguage = item.languageRefrence)
+                    requireActivity().recreate()
+                }
+            }
+        }
+    }
+
 
     /**
      *
