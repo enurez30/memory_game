@@ -62,5 +62,5 @@
 
     <color name="green_700">#388e3c</color>
     <color name="white_transparent">#BFFFFFFF</color>
-    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">?attr/colorOnPrimary</color>
+<!--    <color name="mtrl_textinput_default_box_stroke_color" >?attr/colorOnPrimary</color>-->
 </resources>
