@@ -15,6 +15,7 @@ import com.sera.memorygame.database.model.IObject
 import com.sera.memorygame.database.model.LanguageObject
 import com.sera.memorygame.databinding.SettingsFragmentBinding
 import com.sera.memorygame.extentions.themeColor
+import com.sera.memorygame.providers.ResourcesProvider
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.IObjectAutocompleteAdapter
@@ -22,10 +23,15 @@ import com.sera.memorygame.ui.dialog.AppThemeDialog
 import com.sera.memorygame.ui.dialog.UserDialog
 import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.UserViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 
+@ExperimentalCoroutinesApi
 class SettingsFragment : BaseFragment() {
 
     private lateinit var mBinder: SettingsFragmentBinding
@@ -63,9 +69,11 @@ class SettingsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
         generateThemeView()
-        generateLanguageView()
         lifecycleScope.launchWhenCreated {
-            addObservers()
+            merge(
+                flow { emit(addObservers()) },
+                flow { emit(generateLanguageView()) }
+            ).collect()
         }
     }
 
@@ -98,45 +106,55 @@ class SettingsFragment : BaseFragment() {
     /**
      *
      */
-    private fun generateLanguageView() {
+    private suspend fun generateLanguageView() {
         println()
-        requireContext().resources.assets.locales
+        getLanguageViewData().collect {
+            val (lang, list) = it
+            val adapter = IObjectAutocompleteAdapter(requireContext(), list as ArrayList<IObject>, this)
+            with(mBinder.languageLayout.textField.editText as? AutoCompleteTextView) {
+                this?.setAdapter(adapter)
+                this?.setText((lang as String))
+                this?.setOnItemClickListener { adapterView, _, i, _ ->
+                    println()
+                    (adapterView.adapter.getItem(i) as? LanguageObject)?.let { item ->
+                        this.setText(item.name)
+                        Prefs.setAppLanguage(appLanguage = item.languageRefrence)
+                        requireActivity().recreate()
+                    }
+                }
+            }
+        }
+
+    }
+
+    /**
+     *
+     */
+    private fun getLanguageViewData(): Flow<List<Any>> = flow {
+        val provider = ResourcesProvider(context = requireContext())
         val list = ArrayList<IObject>().apply {
             this.add(
                 LanguageObject(
                     iconRefrerence = "gb",
                     languageRefrence = "en",
-                    name = "English"
+                    name = provider.getString(reference = "english")
                 )
             )
             this.add(
                 LanguageObject(
                     iconRefrerence = "il",
                     languageRefrence = "iw",
-                    name = "Hebrew"
+                    name = provider.getString(reference = "hebrew")
                 )
             )
         }
         val appLanguage = when (Prefs.getAppLanguage()) {
-            "en" -> "English"
-            else -> "Hebrew"
+            "en" -> provider.getString(reference = "english")
+            else -> provider.getString(reference = "hebrew")
         }
 
-        val adapter = IObjectAutocompleteAdapter(requireContext(), list, this)
-        with(mBinder.languageLayout.textField.editText as? AutoCompleteTextView) {
-            this?.setAdapter(adapter)
-            this?.setText(appLanguage)
-            this?.setOnItemClickListener { adapterView, _, i, _ ->
-                println()
-                (adapterView.adapter.getItem(i) as? LanguageObject)?.let { item ->
-                    this.setText(item.name)
-                    Prefs.setAppLanguage(appLanguage = item.languageRefrence)
-                    requireActivity().recreate()
-                }
-            }
-        }
+        emit(listOf<Any>(appLanguage, list))
     }
-
 
     /**
      *

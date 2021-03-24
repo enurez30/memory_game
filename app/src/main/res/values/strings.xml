@@ -1,4 +1,8 @@
 <resources>
+
+    <string name="english">English</string>
+    <string name="hebrew">עברית</string>
+
     <string name="app_name">Memory game</string>
     <string name="action_settings">Settings</string>
 
