@@ -24,6 +24,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="4dp"
+            android:background="@color/white"
             android:elevation="2dp"
             android:padding="5dp"
             android:scaleType="centerCrop"
@@ -39,8 +40,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="4dp"
             android:gravity="center_vertical"
-            android:textSize="17sp"
             android:textDirection="locale"
+            android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/icon" />
 

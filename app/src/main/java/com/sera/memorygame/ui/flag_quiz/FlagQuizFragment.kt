@@ -114,8 +114,8 @@ class FlagQuizFragment : BaseFragment() {
                 val rId = this.getResurceFromRaw(fName = fqm.flagReference)
                 ResourcesCompat.getDrawable(resources, rId, requireContext().theme)?.toBitmap()?.let {
                     val ratio = it.width.toDouble() / it.height.toDouble()
-                    mBinder.flagIV.layoutParams.height = (it.height * 2)
-                    mBinder.flagIV.layoutParams.width = ((it.height * 2) * ratio).toInt()
+                    mBinder.flagContainer.layoutParams.height = (it.height * 2)
+                    mBinder.flagContainer.layoutParams.width = ((it.height * 2) * ratio).toInt()
                     mBinder.flagIV.scaleType = ImageView.ScaleType.FIT_XY
                     mBinder.flagIV.setImageBitmap(it)
                 } ?: kotlin.run {

@@ -24,10 +24,12 @@ import com.sera.memorygame.ui.dialog.UserDialog
 import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.UserViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -119,12 +121,14 @@ class SettingsFragment : BaseFragment() {
                     (adapterView.adapter.getItem(i) as? LanguageObject)?.let { item ->
                         this.setText(item.name)
                         Prefs.setAppLanguage(appLanguage = item.languageRefrence)
-                        requireActivity().recreate()
+                        lifecycleScope.launch {
+                            delay(500)
+                            requireActivity().recreate()
+                        }
                     }
                 }
             }
         }
-
     }
 
     /**

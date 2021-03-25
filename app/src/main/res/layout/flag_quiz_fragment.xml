@@ -13,22 +13,32 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_200"
         tools:context=".ui.flag_quiz.FlagQuizFragment">
 
-
-        <ImageView
-            android:id="@+id/flagIV"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/flagContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/ca"
+            android:elevation="4dp"
+            app:cardCornerRadius="5dp"
             app:layout_constraintBottom_toTopOf="@+id/middleGL"
             app:layout_constraintDimensionRatio="2:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline4"
             app:layout_constraintWidth_percent=".75"
-            tools:ignore="ContentDescription" />
+            app:strokeColor="@color/grey_50"
+            app:strokeWidth="0.5dp">
+
+            <ImageView
+                android:id="@+id/flagIV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ca"
+                tools:ignore="ContentDescription" />
+
+        </com.google.android.material.card.MaterialCardView>
+
 
         <ImageView
             android:id="@+id/infoIcon"
@@ -41,8 +51,8 @@
             android:onClick="@{handlers::onHandlerClicked}"
             android:padding="6dp"
             android:src="@drawable/ic_baseline_info"
-            app:layout_constraintEnd_toEndOf="@+id/flagIV"
-            app:layout_constraintTop_toTopOf="@+id/flagIV"
+            app:layout_constraintEnd_toEndOf="@+id/flagContainer"
+            app:layout_constraintTop_toTopOf="@+id/flagContainer"
             app:tint="?attr/colorSecondary"
             tools:ignore="ContentDescription" />
 
