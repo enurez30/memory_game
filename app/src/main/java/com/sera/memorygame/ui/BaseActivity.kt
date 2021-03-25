@@ -23,6 +23,9 @@ import java.util.*
 
 abstract class BaseActivity : AppCompatActivity() {
 
+    /**
+     *
+     */
     override fun attachBaseContext(newBase: Context) {
 
         val localeToSwitchTo = Prefs.getAppLanguage()

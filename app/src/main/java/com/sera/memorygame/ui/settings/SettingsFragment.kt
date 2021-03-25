@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.sera.memorygame.R
+import com.sera.memorygame.database.datastore.UserPreferences
 import com.sera.memorygame.database.model.IObject
 import com.sera.memorygame.database.model.LanguageObject
 import com.sera.memorygame.databinding.SettingsFragmentBinding
@@ -25,10 +26,7 @@ import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.UserViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,6 +38,12 @@ class SettingsFragment : BaseFragment() {
 
     @Inject
     lateinit var userViewModel: UserViewModel
+
+    @Inject
+    lateinit var userPrefs: UserPreferences
+
+    @Inject
+    lateinit var provider: ResourcesProvider
 
     /**
      *
@@ -74,7 +78,7 @@ class SettingsFragment : BaseFragment() {
         lifecycleScope.launchWhenCreated {
             merge(
                 flow { emit(addObservers()) },
-                flow { emit(generateLanguageView()) }
+                flow { emitAll(test()) }
             ).collect()
         }
     }
@@ -108,34 +112,45 @@ class SettingsFragment : BaseFragment() {
     /**
      *
      */
-    private suspend fun generateLanguageView() {
-        println()
-        getLanguageViewData().collect {
-            val (lang, list) = it
-            val adapter = IObjectAutocompleteAdapter(requireContext(), list as ArrayList<IObject>, this)
+    private suspend fun test(): Flow<Unit> = flow {
+        val flowA = userPrefs.appLanguage
+        val flowB = getLanguageViewData()
+        flowA.combine(flowB) { lang, list ->
+            println(lang)
+            println(list)
+
+            val appLanguage = when (lang) {
+                "en" -> provider.getString(reference = "english")
+                else -> provider.getString(reference = "hebrew")
+            }
+
+            val adapter = IObjectAutocompleteAdapter(requireContext(), list, this@SettingsFragment)
             with(mBinder.languageLayout.textField.editText as? AutoCompleteTextView) {
                 this?.setAdapter(adapter)
-                this?.setText((lang as String))
+                this?.setText(appLanguage)
                 this?.setOnItemClickListener { adapterView, _, i, _ ->
                     println()
                     (adapterView.adapter.getItem(i) as? LanguageObject)?.let { item ->
                         this.setText(item.name)
-                        Prefs.setAppLanguage(appLanguage = item.languageRefrence)
                         lifecycleScope.launch {
+                            Prefs.setAppLanguage(appLanguage = item.languageRefrence)
+                            userPrefs.saveAppLanguage(item.languageRefrence)
                             delay(500)
                             requireActivity().recreate()
                         }
                     }
                 }
             }
-        }
+
+        }.collect()
     }
+
 
     /**
      *
      */
-    private fun getLanguageViewData(): Flow<List<Any>> = flow {
-        val provider = ResourcesProvider(context = requireContext())
+    private fun getLanguageViewData(): Flow<ArrayList<IObject>> = flow {
+//        val provider = ResourcesProvider(context = requireContext())
         val list = ArrayList<IObject>().apply {
             this.add(
                 LanguageObject(
@@ -152,12 +167,12 @@ class SettingsFragment : BaseFragment() {
                 )
             )
         }
-        val appLanguage = when (Prefs.getAppLanguage()) {
-            "en" -> provider.getString(reference = "english")
-            else -> provider.getString(reference = "hebrew")
-        }
+//        val appLanguage = when (Prefs.getAppLanguage()) {
+//            "en" -> provider.getString(reference = "english")
+//            else -> provider.getString(reference = "hebrew")
+//        }
 
-        emit(listOf<Any>(appLanguage, list))
+        emit(list)
     }
 
     /**
