@@ -9,9 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.sera.memorygame.R
-import com.sera.memorygame.database.datastore.UserPreferences
+import com.sera.memorygame.database.datastore.AppPreferences
 import com.sera.memorygame.database.model.IObject
 import com.sera.memorygame.database.model.LanguageObject
 import com.sera.memorygame.databinding.SettingsFragmentBinding
@@ -40,7 +41,7 @@ class SettingsFragment : BaseFragment() {
     lateinit var userViewModel: UserViewModel
 
     @Inject
-    lateinit var userPrefs: UserPreferences
+    lateinit var appPrefs: AppPreferences
 
     @Inject
     lateinit var provider: ResourcesProvider
@@ -77,7 +78,7 @@ class SettingsFragment : BaseFragment() {
         generateThemeView()
         lifecycleScope.launchWhenCreated {
             merge(
-                flow { emit(addObservers()) },
+//                flow { emit(addObservers()) },
                 flow { emitAll(test()) }
             ).collect()
         }
@@ -86,10 +87,10 @@ class SettingsFragment : BaseFragment() {
     /**
      *
      */
-    private suspend fun addObservers() {
-        userViewModel.getUserInSession().collect {
+    private fun addObservers() {
+        userViewModel.getUserInSession().asLiveData().observe(viewLifecycleOwner,{
             generateUserView()
-        }
+        })
     }
 
     /**
@@ -113,7 +114,7 @@ class SettingsFragment : BaseFragment() {
      *
      */
     private suspend fun test(): Flow<Unit> = flow {
-        val flowA = userPrefs.appLanguage
+        val flowA = appPrefs.appLanguage
         val flowB = getLanguageViewData()
         flowA.combine(flowB) { lang, list ->
             println(lang)
@@ -134,7 +135,7 @@ class SettingsFragment : BaseFragment() {
                         this.setText(item.name)
                         lifecycleScope.launch {
                             Prefs.setAppLanguage(appLanguage = item.languageRefrence)
-                            userPrefs.saveAppLanguage(item.languageRefrence)
+                            appPrefs.saveAppLanguage(item.languageRefrence)
                             delay(500)
                             requireActivity().recreate()
                         }

@@ -32,6 +32,7 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity(), Handlers {
 
+
     @Inject
     lateinit var userViewModel: UserViewModel
 
