@@ -79,9 +79,6 @@ class SettingsFragment : BaseFragment() {
         addObservers()
         lifecycleScope.launchWhenCreated {
             flow { emitAll(test()) }.collect()
-//            merge(
-//                flow { emitAll(test()) }
-//            ).collect()
         }
     }
 
