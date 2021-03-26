@@ -119,8 +119,8 @@ class SettingsFragment : BaseFragment() {
         val flowB = getLanguageViewData()
         flowA.combine(flowB) { lang, list ->
             val appLanguage = when (lang) {
-                "en" -> provider.getString(reference = "english")
-                else -> provider.getString(reference = "hebrew")
+                "iw" -> provider.getString(reference = "hebrew")
+                else -> provider.getString(reference = "english")
             }
 
             val adapter = IObjectAutocompleteAdapter(requireContext(), list, this@SettingsFragment)

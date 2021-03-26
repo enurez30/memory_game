@@ -38,6 +38,7 @@
     <string name="quiz_correct">Correct: %d</string>
     <string name="quiz_wrong">Wrong: %d</string>
     <string name="wikipedia_country_chooser_text">Please choose</string>
+    <string name="cards">%d cards</string>
 
     <!-- country names -->
     <string name="ad">Andorra</string>
@@ -95,7 +96,7 @@
     <string name="cw">Curaçao</string>
     <string name="cx">Christmas Island</string>
     <string name="cy">Cyprus</string>
-    <string name="cz">Czechia</string>
+    <string name="cz">Czech</string>
     <string name="de">Germany</string>
     <string name="dj">Djibouti</string>
     <string name="dk">Denmark</string>
@@ -265,7 +266,7 @@
     <string name="th">Thailand</string>
     <string name="tj">Tajikistan</string>
     <string name="tk">Tokelau</string>
-    <string name="tl">Timor_Leste</string>
+    <string name="tl">Timor Leste</string>
     <string name="tm">Turkmenistan</string>
     <string name="tn">Tunisia</string>
     <string name="to">Tonga</string>
@@ -276,7 +277,6 @@
     <string name="tz">Tanzania</string>
     <string name="ua">Ukraine</string>
     <string name="ug">Uganda</string>
-    <string name="um">United States Minor Outlying Islands</string>
     <string name="un">United Nations</string>
     <string name="us">United States</string>
     <string name="us_ak">Alaska</string>

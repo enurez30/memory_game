@@ -1,6 +1,7 @@
 package com.sera.memorygame.providers
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.drawable.Drawable
 import androidx.appcompat.content.res.AppCompatResources
 import com.sera.memorygame.utils.Utils
@@ -8,7 +9,10 @@ import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+
 
 class ResourcesProvider @Inject constructor(private val context: Context) {
 
@@ -16,9 +20,23 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
      *
      */
     fun getString(reference: String): String {
+//        val resId: Int = context.resources.getIdentifier(reference, "string", context.packageName)
+//        return context.resources.getString(resId)
+
         val resId: Int = context.resources.getIdentifier(reference, "string", context.packageName)
-        return context.resources.getString(resId)
+        val configuration = Configuration(context.resources.configuration)
+        configuration.setLocale(Locale.getDefault())
+        return context.createConfigurationContext(configuration).resources.getString(resId)
+
     }
+
+//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+//    fun getStringByLocal(reference: String): String {
+//        val resId: Int = context.resources.getIdentifier(reference, "string", context.packageName)
+//        val configuration = Configuration(context.resources.configuration)
+//        configuration.setLocale(Locale.getDefault())
+//        return context.createConfigurationContext(configuration).resources.getString(resId)
+//    }
 
     /**
      *

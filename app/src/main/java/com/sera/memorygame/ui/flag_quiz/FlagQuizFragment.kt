@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
 import com.sera.memorygame.R
+import com.sera.memorygame.database.datastore.AppPreferences
 import com.sera.memorygame.database.model.FlagQuizMainObject
 import com.sera.memorygame.database.model.FlagQuizSingleObject
 import com.sera.memorygame.database.model.IObject
@@ -33,14 +34,24 @@ import com.sera.memorygame.utils.Constants
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
+import javax.inject.Inject
 
 
 @ExperimentalCoroutinesApi
 class FlagQuizFragment : BaseFragment() {
     private lateinit var mBinder: FlagQuizFragmentBinding
 
+
+    @Inject
+    lateinit var appPrefs: AppPreferences
+
+    /**
+     *
+     */
     private val keyLiveData by lazy {
         MutableLiveData("")
     }
@@ -191,10 +202,39 @@ class FlagQuizFragment : BaseFragment() {
                 sendEvent(key = "next", message = (requireArguments().getSerializable("entity") as? FlagQuizMainObject?)?.countryId ?: "")
             }
             R.id.infoIcon -> {
-                val searchCriteria = "${Constants.WIKIPEDIA_COUNTRY_BASE_URL}${getCountryName()}"
-                val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(searchCriteria))
-                requireActivity().startActivity(Intent.createChooser(webIntent, requireContext().getString(R.string.wikipedia_country_chooser_text)))
+                lifecycleScope.launch {
+                    executeWebCall()
+                }
             }
+        }
+    }
+
+    /**
+     *
+     */
+    private suspend fun executeWebCall() {
+        buildBaseUrl().collect { baseUrl ->
+            val searchCriteria = "$baseUrl${getCountryName()}"
+            val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(searchCriteria))
+            requireActivity().startActivity(Intent.createChooser(webIntent, requireContext().getString(R.string.wikipedia_country_chooser_text)))
+        }
+    }
+
+    /**
+     *
+     */
+    private suspend fun buildBaseUrl() = flow {
+        appPrefs.appLanguage.collect { result ->
+            val prefix = result?.let {
+                when(it){
+                    "iw"->"https://he."
+                    else->"https://$it."
+                }
+            } ?: kotlin.run {
+                "https://en."
+            }
+
+            emit("$prefix${Constants.WIKIPEDIA_COUNTRY_BASE_URL}")
         }
     }
 
