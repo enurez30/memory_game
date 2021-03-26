@@ -26,10 +26,12 @@ import com.sera.memorygame.ui.settings.SettingsFragment
 import com.sera.memorygame.ui.start.StartFragment
 import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.UserViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class MainActivity : BaseActivity(), Handlers {
 
 

@@ -92,7 +92,7 @@
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:text="@string/action_settings"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="?attr/colorOnPrimary"
+            android:textColor="@drawable/text_view_selector"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/userNameUndeLine"
             app:layout_constraintTop_toBottomOf="@+id/space" />

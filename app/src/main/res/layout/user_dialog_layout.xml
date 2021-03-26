@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
                 app:srcCompat="@mipmap/ic_launcher"
-                app:strokeColor="?attr/colorSecondary"
+                app:strokeColor="?attr/colorOnPrimary"
                 app:strokeWidth="2dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -59,7 +59,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textField"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/UserDialogStyle.Box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -70,10 +70,9 @@
                 tools:layout_editor_absoluteX="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/AutocompleteStyle"
+                    style="@style/UserDialogStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="?attr/colorOnSecondary" />
+                    android:layout_height="wrap_content"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

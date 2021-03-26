@@ -55,7 +55,7 @@
             android:onClick="@{handlers::onHandlerClicked}"
             android:padding="4dp"
             android:text="@string/change"
-            android:textColor="?attr/colorOnPrimarySurface"
+            android:textColor="@drawable/text_view_selector"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/themeName"
             app:layout_constraintEnd_toEndOf="parent"

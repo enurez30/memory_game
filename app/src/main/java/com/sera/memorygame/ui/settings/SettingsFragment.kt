@@ -76,11 +76,12 @@ class SettingsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
         generateThemeView()
+        addObservers()
         lifecycleScope.launchWhenCreated {
-            merge(
-//                flow { emit(addObservers()) },
-                flow { emitAll(test()) }
-            ).collect()
+            flow { emitAll(test()) }.collect()
+//            merge(
+//                flow { emitAll(test()) }
+//            ).collect()
         }
     }
 
@@ -117,9 +118,6 @@ class SettingsFragment : BaseFragment() {
         val flowA = appPrefs.appLanguage
         val flowB = getLanguageViewData()
         flowA.combine(flowB) { lang, list ->
-            println(lang)
-            println(list)
-
             val appLanguage = when (lang) {
                 "en" -> provider.getString(reference = "english")
                 else -> provider.getString(reference = "hebrew")

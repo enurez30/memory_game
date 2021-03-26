@@ -52,4 +52,16 @@
         <item name="android:background">@null</item>
 
     </style>
+
+    <style name="UserDialogStyle">
+        <item name="android:textColor">?attr/colorSecondaryVariant</item>
+        <item name="android:background">@null</item>
+
+    </style>
+
+    <style name="UserDialogStyle.Box" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@drawable/user_dialog_box_stroke_color</item>
+        <item name="android:textColorHint">?attr/colorSecondaryVariant</item>
+        <item name="endIconTint">?attr/colorSecondaryVariant</item>
+    </style>
 </resources>
