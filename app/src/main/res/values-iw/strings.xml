@@ -41,6 +41,12 @@
     <string name="wikipedia_country_chooser_text">אנא בחר</string>
     <string name="cards">כרטיסים %d </string>
 
+    <string name="pink">ורוד</string>
+    <string name="grey">אפור</string>
+    <string name="blue">כּחול</string>
+    <string name="red">אדום</string>
+    <string name="purple">סגול</string>
+
     <!-- country names -->
     <string name="ad">אנדורה</string>
     <string name="ae">איחוד האמירויות הערביות</string>

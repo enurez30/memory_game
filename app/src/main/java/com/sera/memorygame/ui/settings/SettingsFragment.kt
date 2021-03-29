@@ -105,7 +105,7 @@ class SettingsFragment : BaseFragment() {
         val primaryColor = requireContext().themeColor(attrRes = R.attr.colorPrimary)
         val secondaryColor = requireContext().themeColor(attrRes = R.attr.colorSecondaryVariant)
         mBinder.tLayout.circleView.setColors(mainColor = primaryColor, secondaryColor = secondaryColor)
-        mBinder.tLayout.themeName.text = Prefs.getThemeName()
+        mBinder.tLayout.themeName.text =provider.getString(reference =  Prefs.getThemeName())
     }
 
     /**
@@ -146,7 +146,6 @@ class SettingsFragment : BaseFragment() {
      *
      */
     private fun getLanguageViewData(): Flow<ArrayList<IObject>> = flow {
-//        val provider = ResourcesProvider(context = requireContext())
         val list = ArrayList<IObject>().apply {
             this.add(
                 LanguageObject(
@@ -163,11 +162,6 @@ class SettingsFragment : BaseFragment() {
                 )
             )
         }
-//        val appLanguage = when (Prefs.getAppLanguage()) {
-//            "en" -> provider.getString(reference = "english")
-//            else -> provider.getString(reference = "hebrew")
-//        }
-
         emit(list)
     }
 

@@ -66,7 +66,7 @@ class AppThemeDialog : BaseDialogFragment() {
         val list = ArrayList<IObject>().apply {
             this.add(
                 AppThemeObject(
-                    title = "Pink",
+                    title = "pink",
                     mainColor = ContextCompat.getColor(requireContext(), R.color.pink_200),
                     secondaryColor = ContextCompat.getColor(requireContext(), R.color.pink_600Dark),
                     themeRes = R.style.Theme_Pink
@@ -74,7 +74,7 @@ class AppThemeDialog : BaseDialogFragment() {
             )
             this.add(
                 AppThemeObject(
-                    title = "Red",
+                    title = "red",
                     mainColor = ContextCompat.getColor(requireContext(), R.color.red_700),
                     secondaryColor = ContextCompat.getColor(requireContext(), R.color.teal_900Dark),
                     themeRes = R.style.Theme_Red
@@ -82,7 +82,7 @@ class AppThemeDialog : BaseDialogFragment() {
             )
             this.add(
                 AppThemeObject(
-                    title = "Blue",
+                    title = "blue",
                     mainColor = ContextCompat.getColor(requireContext(), R.color.blue_700),
                     secondaryColor = ContextCompat.getColor(requireContext(), R.color.light_blue300Dark),
                     themeRes = R.style.Theme_Blue
@@ -90,7 +90,7 @@ class AppThemeDialog : BaseDialogFragment() {
             )
             this.add(
                 AppThemeObject(
-                    title = "Purple",
+                    title = "purple",
                     mainColor = ContextCompat.getColor(requireContext(), R.color.purple_400),
                     secondaryColor = ContextCompat.getColor(requireContext(), R.color.deep_purple_500Dark),
                     themeRes = R.style.Theme_Purple
@@ -98,7 +98,7 @@ class AppThemeDialog : BaseDialogFragment() {
             )
             this.add(
                 AppThemeObject(
-                    title = "Grey",
+                    title = "grey",
                     mainColor = ContextCompat.getColor(requireContext(), R.color.grey_200),
                     secondaryColor = ContextCompat.getColor(requireContext(), R.color.grey_800Dark),
                     themeRes = R.style.Theme_Grey

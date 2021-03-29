@@ -49,7 +49,7 @@ object Prefs {
     /**
      *
      */
-    fun getThemeName(): String = getSharedPreference().getString("theme_name", "Grey") ?: "Grey"
+    fun getThemeName(): String = getSharedPreference().getString("theme_name", "grey") ?: "grey"
 
     /**
      *
