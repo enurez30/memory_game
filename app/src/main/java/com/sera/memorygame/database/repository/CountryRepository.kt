@@ -9,6 +9,9 @@ import javax.inject.Inject
 
 class CountryRepository @Inject constructor(val context: Context) {
 
+    /**
+     *
+     */
     private val dao: CoutryDao by lazy {
         AppDatabase.getDataBase(context).countryDao()
     }
@@ -41,4 +44,9 @@ class CountryRepository @Inject constructor(val context: Context) {
      *
      */
     suspend fun getAllCountriesOnly(): List<CountryEntity> = dao.getAllCountriesOnly()
+
+    /**
+     *
+     */
+    suspend fun getCountirsNotInRange(list: List<String>) = dao.getCountirsNotInRange(list = list)
 }

@@ -20,9 +20,11 @@ import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.utils.FileUtils
 import com.sera.memorygame.utils.observers.PictureLifecycleObserver
 import com.sera.memorygame.viewModel.UserViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class UserDialog : BaseDialogFragment() {
     private lateinit var mBinder: UserDialogLayoutBinding
     private lateinit var pictureObserver: PictureLifecycleObserver

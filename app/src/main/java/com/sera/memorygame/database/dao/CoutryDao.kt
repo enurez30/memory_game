@@ -19,4 +19,10 @@ abstract class CoutryDao : BaseDao<CountryEntity> {
      */
     @Query("SELECT * FROM country_table")
     abstract suspend fun getAllCountriesOnly(): List<CountryEntity>
+
+    /**
+     *
+     */
+    @Query("SELECT * FROM country_table WHERE id NOT IN (:list)")
+    abstract suspend fun getCountirsNotInRange(list: List<String>): List<CountryEntity>
 }

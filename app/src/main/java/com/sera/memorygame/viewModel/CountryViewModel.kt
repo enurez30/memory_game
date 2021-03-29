@@ -4,26 +4,33 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sera.memorygame.database.entity.CountryEntity
+import com.sera.memorygame.database.entity.HistoryEntity
 import com.sera.memorygame.database.model.FlagQuizMainObject
 import com.sera.memorygame.database.model.FlagQuizSingleObject
+import com.sera.memorygame.database.model.ScoreObject
 import com.sera.memorygame.database.repository.CountryRepository
+import com.sera.memorygame.database.repository.HistoryRepository
 import com.sera.memorygame.providers.ResourcesProvider
 import com.sera.memorygame.utils.Constants
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import javax.inject.Inject
 import kotlin.random.Random
 
-class CountryViewModel @Inject constructor(private val repo: CountryRepository, private val resourcesProvider: ResourcesProvider) : ViewModel() {
+@ExperimentalCoroutinesApi
+class CountryViewModel @Inject constructor(private val repo: CountryRepository, private val historyRepo: HistoryRepository, private val resourcesProvider: ResourcesProvider) : ViewModel() {
 
     init {
         println("CountryViewModel: init called")
         viewModelScope.launch(Dispatchers.Default) {
-            checkCountries()
+            merge(
+                flow { emit(checkCountries()) },
+                flow { emit(checkHistory()) }
+            ).collect()
         }
     }
 
@@ -37,6 +44,10 @@ class CountryViewModel @Inject constructor(private val repo: CountryRepository, 
             println("CountryViewModel: size = ${remainCountriesLive.value?.size}")
             remainCountriesLive = value
         }
+
+    private val historyEntity: MutableLiveData<HistoryEntity?> by lazy {
+        MutableLiveData(null)
+    }
 
     /**
      *
@@ -65,7 +76,7 @@ class CountryViewModel @Inject constructor(private val repo: CountryRepository, 
     /**
      *
      */
-    fun getAllCountries(): StateFlow<List<CountryEntity>?> = allCountries
+    private fun getAllCountries(): StateFlow<List<CountryEntity>?> = allCountries
 
     /**
      *
@@ -94,6 +105,29 @@ class CountryViewModel @Inject constructor(private val repo: CountryRepository, 
     /**
      *
      */
+    suspend fun updateHistoryObject(countryId: String) {
+        val (_, correct, wrong, total) = getScoreValues()
+        historyEntity.value?.score = ScoreObject(total = total, correct = correct, wrong = wrong)
+        (historyEntity.value?.countryIds as? ArrayList)?.add(countryId)
+        historyEntity.value?.let { historyRepo.updateHistoryEntity(historyEntity = it) }
+    }
+
+    /**
+     *
+     */
+    suspend fun getScoreValues(): List<Int> = withContext(Dispatchers.Main) {
+
+        val totalCountries = getAllCountries().value?.size ?: 0
+        val correct = getCorrectCountries().value
+        val wrong = getWrongCountries().value
+        val total = totalCountries - (totalCountries - (correct + wrong))
+
+        return@withContext listOf(totalCountries, correct, wrong, total)
+    }
+
+    /**
+     *
+     */
     private suspend fun checkCountries() {
         repo.getAllCountries().collect {
             println("CountryViewModel: it = ${it.size}")
@@ -103,13 +137,57 @@ class CountryViewModel @Inject constructor(private val repo: CountryRepository, 
                 }
             } else {
                 allCountries.value = it
-                viewModelScope.launch {
-                    getRemainCountriesLive.value = repo.getAllCountriesOnly()
-                }
+//                viewModelScope.launch {
+//                    getRemainCountriesLive.value = repo.getAllCountriesOnly()
+//                }
             }
         }
 
+    }
 
+    /**
+     *
+     */
+    private suspend fun checkHistory() {
+        val historyObject = historyRepo.getHistoryEntityByType(Constants.HISTORY_QUIZ_GAME_TYPE)
+
+        if (historyObject == null) {
+            historyRepo.getEmptyHistoryEntity().apply {
+                this.type = Constants.HISTORY_QUIZ_GAME_TYPE
+            }.run {
+                viewModelScope.launch {
+
+                }
+                setHistoryObject(obj = this)
+                historyRepo.persistHistoryEntity(historyEntity = this)
+            }
+//            viewModelScope.launch {
+//                getRemainCountriesLive.value = repo.getAllCountriesOnly()
+//            }
+        } else {
+            setHistoryObject(obj = historyObject)
+            populateRemainCountriesFromHistoryObject(historyObject = historyObject)
+        }
+    }
+
+    /**
+     *
+     */
+    private fun setHistoryObject(obj: HistoryEntity) {
+        viewModelScope.launch(Dispatchers.Main) {
+            historyEntity.value = obj
+        }
+    }
+
+    /**
+     *
+     */
+    private suspend fun populateRemainCountriesFromHistoryObject(historyObject: HistoryEntity) {
+        viewModelScope.launch(Dispatchers.Main) {
+            getRemainCountriesLive.value = repo.getCountirsNotInRange(list = historyObject.countryIds)
+            setCorrectValue(newValue = historyObject.score.correct)
+            setWrongCountries(newValue = historyObject.score.wrong)
+        }
     }
 
     /**

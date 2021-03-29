@@ -19,14 +19,11 @@ import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.utils.AnimationHelper
 import com.sera.memorygame.viewModel.CountryViewModel
 import com.transitionseverywhere.ChangeText
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -70,6 +67,7 @@ class FlagQuizContainerFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
         lifecycleScope.launch {
+            delay(100)
             addObserver()
         }
     }
@@ -122,7 +120,9 @@ class FlagQuizContainerFragment : BaseFragment() {
                 }
             }
         }
-
+        lifecycleScope.launch {
+            countryViewModel.updateHistoryObject(countryId = message)
+        }
     }
 
     /**
@@ -140,10 +140,13 @@ class FlagQuizContainerFragment : BaseFragment() {
      */
     private suspend fun updateScoreValues() = withContext(Dispatchers.Main) {
         with(countryViewModel) {
-            val totalCountries = getAllCountries().value?.size ?: 0
-            val correct = getCorrectCountries().value
-            val wrong = getWrongCountries().value
-            val total = totalCountries - (totalCountries - (correct + wrong))
+//            val totalCountries = getAllCountries().value?.size ?: 0
+//            val correct = getCorrectCountries().value
+//            val wrong = getWrongCountries().value
+//            val total = totalCountries - (totalCountries - (correct + wrong))
+
+
+            val (totalCountries, correct, wrong, total) = getScoreValues()
 
             with(mBinder.scoreInclude) {
                 totalTV.text = resources.getString(R.string.quiz_total, total, totalCountries)
