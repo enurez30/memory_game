@@ -13,6 +13,7 @@ import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.flag_quiz.FlagQuizContainerFragment
 import com.sera.memorygame.ui.theme.GameThemeFragment
+import com.sera.memorygame.ui.trivia.TriviaContainerFragment
 import com.sera.memorygame.viewModel.StartViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -69,14 +70,12 @@ class StartFragment : BaseFragment() {
         when (view.id) {
             R.id.memoryBtn -> {
                 (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
-//                Prefs.setAppLanguage(appLanguage = "en")
-//                requireActivity().recreate()
-
             }
             R.id.quizBtn -> {
                 (requireActivity() as? BaseActivity?)?.replaceFragment(fragment = FlagQuizContainerFragment.newInstance())
-//                Prefs.setAppLanguage(appLanguage = "iw")
-//                requireActivity().recreate()
+            }
+            R.id.triviaBtn -> {
+                (requireActivity() as? BaseActivity?)?.replaceFragment(fragment = TriviaContainerFragment.newInstance())
             }
         }
     }

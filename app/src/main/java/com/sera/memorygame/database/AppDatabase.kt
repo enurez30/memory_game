@@ -7,9 +7,11 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.sera.memorygame.database.dao.CoutryDao
 import com.sera.memorygame.database.dao.HistoryDao
+import com.sera.memorygame.database.dao.TriviaDao
 import com.sera.memorygame.database.dao.UserDao
 import com.sera.memorygame.database.entity.CountryEntity
 import com.sera.memorygame.database.entity.HistoryEntity
+import com.sera.memorygame.database.entity.TriviaEntity
 import com.sera.memorygame.database.entity.UserEntity
 import com.sera.memorygame.utils.Constants
 
@@ -18,7 +20,8 @@ import com.sera.memorygame.utils.Constants
     entities = [
         UserEntity::class,
         CountryEntity::class,
-        HistoryEntity::class
+        HistoryEntity::class,
+        TriviaEntity::class
     ],
     version = 1
 )
@@ -27,6 +30,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun countryDao(): CoutryDao
     abstract fun historyDao(): HistoryDao
+    abstract fun triviaDao(): TriviaDao
 
     companion object {
         @Volatile

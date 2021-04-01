@@ -8,5 +8,8 @@ data class FlagQuizSingleObject(
     val isRight: Boolean = false,
     var animate: Boolean = false
 ) : IObject(), Serializable {
+    /**
+     *
+     */
     override fun getViewType(): Int = Constants.FLAG_QUIZ_SINGLE_OBJECT_VIEW_TYPE
 }

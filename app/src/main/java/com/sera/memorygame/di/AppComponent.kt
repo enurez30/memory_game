@@ -3,8 +3,10 @@ package com.sera.memorygame.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Singleton
 
+@ExperimentalCoroutinesApi
 @Singleton
 @Component(modules = [AppSubcomponents::class])
 interface AppComponent {

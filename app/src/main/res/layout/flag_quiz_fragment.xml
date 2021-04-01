@@ -91,7 +91,7 @@
             android:orientation="horizontal" />
 
         <Button
-            android:id="@+id/newxBtn"
+            android:id="@+id/nextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"

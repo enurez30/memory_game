@@ -70,6 +70,14 @@ class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callba
                 )
                 FlagQuizSingleViewHolder(binding, callback)
             }
+            Constants.TRIVIA_ANSWER_SINGLE_OBJECT_VIEW_TYPE -> {
+                val binding: FlagQuizSingleViewBinding = DataBindingUtil.inflate(
+                    LayoutInflater.from(parent?.context),
+                    R.layout.flag_quiz_single_view,
+                    parent, false
+                )
+                TriviaAnswerSingleViewHolder(binding, callback)
+            }
             else -> {
                 val binding: MemoryRecyclerSingleViewBinding = DataBindingUtil.inflate(
                     LayoutInflater.from(parent?.context),
@@ -94,6 +102,7 @@ class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callba
             is GameThemeViewHolder -> holder.bind(item = items[position] as GameThemeObject)
             is AppThemeViewHolder -> holder.bind(item = items[position] as AppThemeObject)
             is FlagQuizSingleViewHolder -> holder.bind(item = items[position] as FlagQuizSingleObject)
+            is TriviaAnswerSingleViewHolder -> holder.bind(item = items[position] as TriviaAnswerSingleObject)
         }
     }
 

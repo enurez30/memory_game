@@ -106,9 +106,9 @@ class FlagQuizFragment : BaseFragment() {
             if (it.isNotEmpty()) {
                 mBinder.overlayView.visibility = View.VISIBLE
                 mBinder.infoIcon.visibility = View.VISIBLE
-                AnimationHelper.animateSpringY(mBinder.newxBtn, 0F)
+                AnimationHelper.animateSpringY(mBinder.nextBtn, 0F)
             } else {
-                mBinder.newxBtn.animate().translationY(1000F).setDuration(0L).start()
+                mBinder.nextBtn.animate().translationY(1000F).setDuration(0L).start()
                 mBinder.overlayView.visibility = View.GONE
                 mBinder.infoIcon.visibility = View.GONE
             }
@@ -198,7 +198,7 @@ class FlagQuizFragment : BaseFragment() {
      */
     override fun onHandlerClicked(view: View) {
         when (view.id) {
-            R.id.newxBtn -> {
+            R.id.nextBtn -> {
                 sendEvent(key = "next", message = (requireArguments().getSerializable("entity") as? FlagQuizMainObject?)?.countryId ?: "")
             }
             R.id.infoIcon -> {

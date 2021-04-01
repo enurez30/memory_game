@@ -33,6 +33,7 @@ android {
         jvmTarget = '1.8'
     }
 
+
     dataBinding {
         enabled = true
         androidExtensions {
@@ -40,6 +41,17 @@ android {
         }
     }
 }
+
+final networkDependencies = [
+        retrofit     : "com.squareup.retrofit2:retrofit:2.5.0",
+        retrofitMoshi: "com.squareup.retrofit2:converter-moshi:2.0.0",
+        retrofitGson : "com.squareup.retrofit2:converter-gson:2.4.0",
+        retrofitRx   : "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
+        scalars      : "com.squareup.retrofit2:converter-scalars:2.5.0",
+        okHttp3      : "com.squareup.okhttp3:okhttp:4.9.0",
+        interceptor  : "com.squareup.okhttp3:logging-interceptor:4.4.1",
+        gson         : "com.google.code.gson:gson:2.8.6"
+]
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -90,12 +102,19 @@ dependencies {
     implementation "com.google.dagger:dagger:2.31.2"
     kapt "com.google.dagger:dagger-compiler:2.31.2"
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
     // Transition
     implementation "com.andkulikov:transitionseverywhere:2.1.0"
-    //DataStore
+    // DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha08"
     implementation "androidx.datastore:datastore-core:1.0.0-alpha08"
-    // Gson
-    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
+    // Network
+    implementation networkDependencies.values()
+    // Rx
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.9"
+    implementation "android.arch.persistence.room:rxjava2:1.1.1"
+    // Spinner
+    implementation 'com.gmail.samehadar:iosdialog:1.0'
 }
+

@@ -9,6 +9,7 @@ object Constants {
     const val DEFAULT_PLAYER_NAME = "Player1"
     const val WIKIPEDIA_COUNTRY_BASE_URL = "wikipedia.org/wiki/"
     const val HISTORY_QUIZ_GAME_TYPE = "history_quiz_game_type"
+    const val HISTORY_TRIVIA_GAME_TYPE = "history_trivia_game_type"
 
     const val MEMORY_VIEW_OBJECT_VIEW_TYPE = 10
     const val SIZE_VIEW_OBJECT_VIEW_TYPE = 20
@@ -20,5 +21,7 @@ object Constants {
     const val FLAG_QUIZ_MAIN_OBJECT_VIEW_TYPE = 80
     const val FLAG_QUIZ_SINGLE_OBJECT_VIEW_TYPE = 90
     const val HISTORY_OBJECT_VIEW_TYPE = 100
+    const val TRIVIA_OBJECT_VIEW_TYPE = 110
+    const val TRIVIA_ANSWER_SINGLE_OBJECT_VIEW_TYPE = 120
 
 }

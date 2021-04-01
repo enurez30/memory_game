@@ -12,6 +12,7 @@
 
     <string name="play_memory">Memory Game</string>
     <string name="play_flag_quiz">Quiz Game</string>
+    <string name="play_trivia">Trivia</string>
     <string name="flag_next">Next -></string>
     <string name="dummy_title">dummy title</string>
     <string name="notice">Notice</string>
@@ -23,6 +24,7 @@
     <string name="close">Close</string>
     <string name="ok">OK</string>
     <string name="dummy_text">text_text</string>
+    <string name="category">Category:</string>
     <string name="welcome">Welcome</string>
     <string name="empty_field">can not be empty</string>
     <string name="error_camera_permission">In order to proceed, camera permission should be granded</string>
@@ -352,4 +354,6 @@
     <string name="za">South Africa</string>
     <string name="zm">Zambia</string>
     <string name="zw">Zimbabwe"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

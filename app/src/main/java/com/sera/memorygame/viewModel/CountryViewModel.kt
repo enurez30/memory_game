@@ -108,7 +108,7 @@ class CountryViewModel @Inject constructor(private val repo: CountryRepository, 
     suspend fun updateHistoryObject(countryId: String) {
         val (_, correct, wrong, total) = getScoreValues()
         historyEntity.value?.score = ScoreObject(total = total, correct = correct, wrong = wrong)
-        (historyEntity.value?.countryIds as? ArrayList)?.add(countryId)
+        (historyEntity.value?.ids as? ArrayList)?.add(countryId)
         historyEntity.value?.let { historyRepo.updateHistoryEntity(historyEntity = it) }
     }
 
@@ -184,7 +184,7 @@ class CountryViewModel @Inject constructor(private val repo: CountryRepository, 
      */
     private suspend fun populateRemainCountriesFromHistoryObject(historyObject: HistoryEntity) {
         viewModelScope.launch(Dispatchers.Main) {
-            getRemainCountriesLive.value = repo.getCountirsNotInRange(list = historyObject.countryIds)
+            getRemainCountriesLive.value = repo.getCountirsNotInRange(list = historyObject.ids)
             setCorrectValue(newValue = historyObject.score.correct)
             setWrongCountries(newValue = historyObject.score.wrong)
         }

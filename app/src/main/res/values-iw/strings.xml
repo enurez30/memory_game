@@ -13,6 +13,7 @@
 
     <string name="play_memory">משחק זיכרון</string>
     <string name="play_flag_quiz">חידון</string>
+    <string name="play_trivia">טריוויה</string>
     <string name="flag_next">הבא -> </string>
     <string name="dummy_title">בלה בלה</string>
     <string name="notice">שם לב</string>
@@ -28,6 +29,7 @@
     <string name="empty_field">שדה חובה</string>
     <string name="error_camera_permission">על מנת להמשיך יש לתת הרשאת המצלמה </string>
     <string name="settings_language">שפה</string>
+    <string name="category">קטגוריה:</string>
 
     <!-- asset worker -->
     <string name="check_for_updates">בודק עדכונים</string>

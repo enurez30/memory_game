@@ -20,7 +20,8 @@ class HistoryEntity(
     @ColumnInfo(name = "category") var category: String,
     @ColumnInfo(name = "type") var type: String,
     @ColumnInfo(name = "score") var score: ScoreObject,
-    @ColumnInfo(name = "country_ids") var countryIds: List<String> = ArrayList(),
+    @ColumnInfo(name = "ids") var ids: List<String> = ArrayList(),
+    @ColumnInfo(name = "is_alive") var isAlive: Boolean,
     @ColumnInfo(name = "created") var created: Long
 ) : IObject() {
 
@@ -29,7 +30,8 @@ class HistoryEntity(
         category = "",
         type = "",
         score = ScoreObject(),
-        countryIds = ArrayList(),
+        ids = ArrayList(),
+        isAlive = true,
         created = System.currentTimeMillis()
     )
 
