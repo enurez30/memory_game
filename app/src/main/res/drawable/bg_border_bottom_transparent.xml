@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="?attr/colorPrimaryVariant"
+    tools:targetApi="P"> <!-- ripple effect color -->
+    <item
+        android:id="@android:id/background"
+        android:bottom="1dp"
+        android:left="-3dp"
+        android:right="-3dp"
+        android:top="-3dp">
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="0.5dp"
+                android:color="@color/grey_700" />
+            <solid android:color="@color/colorTransparent" />
+        </shape>
+    </item>
+</ripple>

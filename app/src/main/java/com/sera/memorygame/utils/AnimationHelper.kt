@@ -8,6 +8,7 @@ import android.content.res.ColorStateList
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnticipateOvershootInterpolator
+import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
@@ -69,5 +70,17 @@ object AnimationHelper {
         anim.repeatCount = 2
         view.startAnimation(anim)
         return view
+    }
+
+    /**
+     *
+     */
+    fun scaleViewAnimation(target: View, scaleTo: Float = 1.5F, duration: Long = 500L) {
+        ScaleAnimation(scaleTo, 1F, scaleTo, 1F, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F).also {
+            it.duration = duration
+            it.fillAfter = true
+        }.run {
+            target.startAnimation(this)
+        }
     }
 }

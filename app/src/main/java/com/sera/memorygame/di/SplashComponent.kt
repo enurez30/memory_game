@@ -2,8 +2,10 @@ package com.sera.memorygame.di
 
 import com.sera.memorygame.ui.SplashActivity
 import dagger.Subcomponent
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
+@ExperimentalCoroutinesApi
 @ActivityScope
 @Subcomponent
 interface SplashComponent {

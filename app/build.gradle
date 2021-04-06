@@ -116,5 +116,7 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
     // Spinner
     implementation 'com.gmail.samehadar:iosdialog:1.0'
+    // Confetti
+    implementation 'nl.dionsegijn:konfetti:1.3.2'
 }
 

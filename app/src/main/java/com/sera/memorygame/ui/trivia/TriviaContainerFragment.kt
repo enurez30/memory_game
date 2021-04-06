@@ -2,17 +2,30 @@ package com.sera.memorygame.ui.trivia
 
 import android.content.Context
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.sera.memorygame.R
+import com.sera.memorygame.database.entity.HistoryEntity
+import com.sera.memorygame.database.entity.TriviaEntity
+import com.sera.memorygame.database.model.ScoreObject
 import com.sera.memorygame.databinding.FragmentTriviaContainerBinding
 import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.MainActivity
+import com.sera.memorygame.utils.AnimationHelper
+import com.sera.memorygame.viewModel.TriviaViewModel
+import com.transitionseverywhere.ChangeText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -25,6 +38,9 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class TriviaContainerFragment : BaseFragment() {
     private lateinit var mBinder: FragmentTriviaContainerBinding
+    private var firstRun: Boolean = true
+    private var isAnimated: Boolean = false
+    private var timer: CountDownTimer? = null
 
     @Inject
     lateinit var viewModel: TriviaViewModel
@@ -58,6 +74,11 @@ class TriviaContainerFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
+        if (firstRun) {
+            showChooseFragment()
+        }
+        viewModel.checkHistory()
+        animateScore()
         lifecycleScope.launch {
             addObservers()
         }
@@ -66,55 +87,163 @@ class TriviaContainerFragment : BaseFragment() {
     /**
      *
      */
-    private suspend fun addObservers() {
-//        viewModel.getTriviaObjects.observe(viewLifecycleOwner, {
-//            it?.let { list ->
-//                mBinder.camomileSpinner.visibility = View.GONE
-//                // do something
-//                if (list.isEmpty()) {
-//                    // game over
-//                } else {
-//                    setNextItem()
-//                }
-//            } ?: kotlin.run {
-//                // make a call
-//                mBinder.camomileSpinner.visibility = View.VISIBLE
-//                mBinder.camomileSpinner.start()
-//                viewModel.getTriviaObjects()
-//            }
-//        })
-        viewModel.getMediator().observe(viewLifecycleOwner, {
-            it?.let { list ->
-                println("TRIVIA: list size = ${it.size}")
-                mBinder.camomileSpinner.visibility = View.GONE
-                // do something
-                if (list.isEmpty()) {
-                    // game over
-                    call()
-                } else {
-                    setNextItem()
-                }
-            } ?: kotlin.run {
-                // make a call
-                call()
-            }
-        })
+    private fun showChooseFragment() {
+        replaceFragment(fragment = TriviaChooseFragment.newInstance())
     }
 
     /**
      *
      */
-    private fun call() {
-        mBinder.camomileSpinner.visibility = View.VISIBLE
-        mBinder.camomileSpinner.start()
-        viewModel.getTriviaObjects()
+    private suspend fun addObservers() {
+        viewModel.getMediator().observe(viewLifecycleOwner, {
+            when (it.first) {
+                "trivia" -> {
+                    println("TRIVIA: list size = ${it.second}")
+                    mBinder.camomileSpinner.visibility = View.GONE
+
+                    if ((it.second as? List<*>)?.isEmpty() == true) {
+                        // game over
+                        if (!firstRun) {
+                            // add some animation
+                            if (!isAnimated) {
+                                isAnimated = true
+                                animateView(konfettiView = mBinder.viewKonfetti)
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    lifecycleScope.launch {
+                                        isAnimated = false
+                                        startOver()
+                                    }
+                                }, 4000)
+                            }
+                        }
+                    } else {
+                        animateScore(show = true)
+                        firstRun = false
+                        viewModel.updateHistoryTotal(total = (it.second as? List<*>)?.size ?: 0)
+                        setNextItem()
+                    }
+
+                }
+                "history" -> {
+                    it.second?.let { he ->
+                        (he as? HistoryEntity)?.let { history ->
+                            updateScoreView(score = history.score)
+                        }
+                    } ?: kotlin.run {
+                        viewModel.checkHistory()
+                    }
+                }
+            }
+        })
     }
+
+
+    /**
+     *
+     */
+    private fun updateScoreView(score: ScoreObject) {
+        with(mBinder.scoreInclude) {
+            val answered = score.correct + score.wrong
+            totalTV.text = resources.getString(R.string.quiz_total, answered, score.total)
+            correctTV.text = score.correct.toString()
+            incorrectTV.text = score.wrong.toString()
+
+            TransitionManager.beginDelayedTransition(quizScoreMainView, ChangeText().setChangeBehavior(ChangeText.CHANGE_BEHAVIOR_KEEP))
+        }
+    }
+
 
     /**
      *
      */
     private fun setNextItem() {
-        replaceFragment(fragment = TriviaFragment.newInstance(entity = viewModel.getTriviaObject()))
+        val item = viewModel.getTriviaObject()
+        updateCategoryView(item = item)
+        replaceFragment(fragment = TriviaFragment.newInstance(entity = item))
+    }
+
+    /**
+     *
+     */
+    private fun updateCategoryView(item: TriviaEntity) {
+        with(mBinder.triviaInclude) {
+            categoryTV.text = item.category
+        }
+        startTimer()
+    }
+
+    /**
+     *
+     */
+    private fun startTimer() {
+        if (timer == null) {
+            timer = object : CountDownTimer(20000, 1000) {
+                override fun onTick(p0: Long) {
+                    if (isAdded) {
+                        setTimerValue(value = (p0 / 1000).toInt())
+                    }
+                }
+
+                override fun onFinish() {
+                    notifyFinishTimer()
+                    cancel()
+                    timer = null
+                }
+
+            }
+        }
+        timer?.start()
+    }
+
+    /**
+     *
+     */
+    private fun setTimerValue(value: Int) {
+        val color = when (value) {
+            in 8..12 -> {
+                AnimationHelper.scaleViewAnimation(target = mBinder.triviaInclude.timerTV, scaleTo = 1.25F)
+                ContextCompat.getColor(requireContext(), R.color.yellow)
+            }
+            in 0..7 -> {
+                AnimationHelper.scaleViewAnimation(target = mBinder.triviaInclude.timerTV)
+                ContextCompat.getColor(requireContext(), R.color.red_700Dark)
+            }
+            else -> {
+                ContextCompat.getColor(requireContext(), R.color.grey_700)
+            }
+        }
+
+        mBinder.triviaInclude.timerTV.setTextColor(color)
+        mBinder.triviaInclude.timerTV.text = value.toString()
+
+    }
+
+    /**
+     *
+     */
+    private fun notifyFinishTimer() {
+        if (isAdded) {
+            (childFragmentManager.findFragmentByTag(TriviaFragment::class.java.simpleName) as? TriviaFragment)?.notifyOnTimerFinish()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun animateScore(show: Boolean = false) {
+        with(mBinder) {
+            if (show) {
+                if (scoreInclude.quizScoreMainView.visibility == View.GONE) {
+                    scoreInclude.quizScoreMainView.visibility = View.VISIBLE
+                    triviaInclude.triviaCategoryMain.visibility = View.VISIBLE
+                    TransitionManager.beginDelayedTransition(mainContainer, AutoTransition())
+                }
+            } else {
+                scoreInclude.quizScoreMainView.visibility = View.GONE
+                triviaInclude.triviaCategoryMain.visibility = View.GONE
+                TransitionManager.beginDelayedTransition(mainContainer, AutoTransition())
+            }
+        }
     }
 
     /**
@@ -136,8 +265,38 @@ class TriviaContainerFragment : BaseFragment() {
                 it.id == message
             }?.let { trivia ->
                 viewModel.deleteObject(obj = trivia)
+            } ?: kotlin.run {
+                this.launch(Dispatchers.Main) {
+                    animateView(konfettiView = mBinder.viewKonfetti)
+                }
             }
         }
+    }
+
+
+    /**
+     *
+     */
+    private fun startOver() {
+        viewModel.resetHistory()
+        animateScore(show = false)
+        showChooseFragment()
+    }
+
+    /**
+     *
+     */
+    private fun updateScore(message: String, id: String) {
+        when (message) {
+            "correct" -> {
+                mBinder.scoreInclude.correctTV.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.bounce))
+            }
+            "wrong" -> {
+                AnimationHelper.shakeView(view = mBinder.scoreInclude.incorrectTV, 100, 5)
+            }
+        }
+        viewModel.updateTriviaScore(value = message, id = id)
+        timer?.cancel()
     }
 
     /**
@@ -162,12 +321,12 @@ class TriviaContainerFragment : BaseFragment() {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun onEvent(event: MessageEvent) {
         if (event.reciever == TriviaContainerFragment::class.java.simpleName) {
-//            when (event.key) {
-//                "next" -> {
-            goNext(message = event.message)
-//                }
-//                else -> getResult(key = event.key, message = event.message)
-//            }
+            when (event.key) {
+                "next" -> {
+                    goNext(message = event.message)
+                }
+                else -> updateScore(message = event.message, id = event.key)
+            }
         }
     }
 }

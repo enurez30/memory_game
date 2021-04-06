@@ -138,10 +138,10 @@ class MemoryFragment : BaseFragment(), Handlers {
             it?.let {
                 if (it == viewModel.memoryListValue.value) {
                     // game over
-                    Toast.makeText(requireContext(), "Great Game!!", Toast.LENGTH_LONG).show()
+                    animateView(konfettiView = mBinder.viewKonfetti)
                     Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
                         requireActivity().onBackPressed()
-                    }, 2000)
+                    }, 4000)
                 }
             } ?: kotlin.run {
 

@@ -13,11 +13,17 @@ abstract class TriviaDao : BaseDao<TriviaEntity> {
      *
      */
     @Query("SELECT * FROM trivia_table WHERE id NOT IN (:list) AND is_live=1")
-    abstract suspend fun getTriviaNotInRange(list: List<String>): List<TriviaEntity>
+    abstract fun getTriviaNotInRangeLive(list: List<String>): LiveData<List<TriviaEntity>>
 
     /**
      *
      */
     @Query("SELECT * FROM trivia_table WHERE is_live=1")
-    abstract fun getAllTriviaObjectsLive() : LiveData<List<TriviaEntity>>
+    abstract fun getAllTriviaObjectsLive(): LiveData<List<TriviaEntity>>
+
+    /**
+     *
+     */
+    @Query("DELETE  FROM trivia_table")
+    abstract fun deleteAll()
 }

@@ -1,7 +1,7 @@
 package com.sera.memorygame.network.mapping
 
 import com.sera.memorygame.database.entity.TriviaEntity
-import com.sera.memorygame.database.model.TriviaObjectModel
+import com.sera.memorygame.network.model.TriviaObjectModel
 import com.sera.memorygame.interfaces.EntityMapper
 
 class TriviaNetworkMapper : EntityMapper<TriviaEntity, TriviaObjectModel> {

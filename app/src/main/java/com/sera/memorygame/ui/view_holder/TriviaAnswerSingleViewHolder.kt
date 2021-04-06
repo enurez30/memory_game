@@ -20,7 +20,7 @@ class TriviaAnswerSingleViewHolder(val binding: ViewDataBinding, val callback: H
             handlers = callback
             position = absoluteAdapterPosition
 
-            nameTV.text = item.answer
+            nameTV.text = normalizeText(value = item.answer)
             if (item.animate) {
                 val fromColor = root.context.themeColor(attrRes = R.attr.colorSecondary)
                 if (item.isRight) {
@@ -32,5 +32,11 @@ class TriviaAnswerSingleViewHolder(val binding: ViewDataBinding, val callback: H
         }
     }
 
+    /**
+     *
+     */
+    private fun normalizeText(value: String): String {
+        return value.replace("&quot;", "\"").replace("&#039;", "'")
+    }
 
 }

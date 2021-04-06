@@ -45,14 +45,23 @@ class TriviaRepository @Inject constructor(val context: Context) {
     /**
      *
      */
-    suspend fun getTriviaNotInRange(list: List<String>) = dao.getTriviaNotInRange(list = list)
+    suspend fun getTriviaNotInRangeLive(list: List<String>): LiveData<List<TriviaEntity>> = dao.getTriviaNotInRangeLive(list = list)
 
     /**
      *
      */
     suspend fun getAllTriviaObjectsLive(): LiveData<ArrayList<TriviaEntity>> {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             dao.getAllTriviaObjectsLive() as LiveData<ArrayList<TriviaEntity>>
+        }
+    }
+
+    /**
+     *
+     */
+    suspend fun deleteAll() {
+        withContext(Dispatchers.IO) {
+            dao.deleteAll()
         }
     }
 }

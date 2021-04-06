@@ -12,6 +12,10 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.BaseFragmentLayoutBinding
 import com.sera.memorygame.interfaces.Handlers
+import com.sera.memorygame.utils.Utils
+import nl.dionsegijn.konfetti.KonfettiView
+import nl.dionsegijn.konfetti.models.Shape
+import nl.dionsegijn.konfetti.models.Size
 
 abstract class BaseFragment : Fragment(), FragmentResultListener, Handlers {
     private lateinit var mBinder: BaseFragmentLayoutBinding
@@ -51,6 +55,23 @@ abstract class BaseFragment : Fragment(), FragmentResultListener, Handlers {
      */
     override fun onFragmentResult(requestKey: String, result: Bundle) {
         delegateOnFragmentResult(requestKey = requestKey, result = result)
+    }
+
+    /**
+     *
+     */
+    fun animateView(konfettiView: KonfettiView) {
+        konfettiView.build()
+            .addColors(Utils.getRandomColors())
+            .setDirection(0.0, 365.0)
+            .setSpeed(2f, 5f)
+            .setFadeOutEnabled(true)
+            .setTimeToLive(1500L)
+            .addShapes(Shape.Square, Shape.Circle)
+            .addSizes(Size(12))
+            .setPosition(-50f, konfettiView.width + 50f, -50f, -50f)
+            .streamFor(800, 3500L)
+
     }
 
     /**

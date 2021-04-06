@@ -1,6 +1,7 @@
 package com.sera.memorygame.database.repository
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import com.sera.memorygame.database.AppDatabase
 import com.sera.memorygame.database.dao.HistoryDao
 import com.sera.memorygame.database.entity.HistoryEntity
@@ -23,6 +24,12 @@ class HistoryRepository @Inject constructor(val context: Context) {
      */
     fun getEmptyHistoryEntity(): HistoryEntity = HistoryEntity()
 
+    /**
+     *
+     */
+    suspend fun delete(historyEntity: HistoryEntity) {
+        dao.delete(obj = historyEntity)
+    }
 
     /**
      *
@@ -51,4 +58,9 @@ class HistoryRepository @Inject constructor(val context: Context) {
             dao.getHistoryByType(type = type)
         }
     }
+
+    /**
+     *
+     */
+    fun getHistoryByTypeLive(type: String): LiveData<HistoryEntity?> = dao.getHistoryByTypeLive(type = type)
 }

@@ -29,7 +29,7 @@
     <string name="empty_field">שדה חובה</string>
     <string name="error_camera_permission">על מנת להמשיך יש לתת הרשאת המצלמה </string>
     <string name="settings_language">שפה</string>
-    <string name="category">קטגוריה:</string>
+    <string name="category">קטגוריה</string>
 
     <!-- asset worker -->
     <string name="check_for_updates">בודק עדכונים</string>
@@ -355,5 +355,11 @@
     <string name="za">דרום אפריקה</string>
     <string name="zm">זמביה</string>
     <string name="zw">זימבבואה</string>
+    <string name="trivia_choose_title">אנא בחר מבין הבאים</string>
+    <string name="number_of_questions">מספר השאלות</string>
+    <string name="difficulty">קושי</string>
+    <string name="confirm">אשר</string>
+    <string name="continue_last_game">המשך משחק אחרון</string>
+    <string name="reset">Reset</string>
 
 </resources>

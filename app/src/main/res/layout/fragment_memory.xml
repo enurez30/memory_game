@@ -38,6 +38,11 @@
             android:orientation="vertical"
             android:visibility="gone" />
 
+        <nl.dionsegijn.konfetti.KonfettiView
+            android:id="@+id/viewKonfetti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

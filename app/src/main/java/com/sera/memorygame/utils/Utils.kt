@@ -2,10 +2,12 @@ package com.sera.memorygame.utils
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import java.io.File
 import java.io.InputStream
+import kotlin.random.Random
 
 
 object Utils {
@@ -35,54 +37,6 @@ object Utils {
         return mContext.resources.getIdentifier(reference, "drawable", mContext.packageName)
     }
 
-//    /**
-//     *
-//     */
-//    fun getJsonByReference(context: Context,reference: String): JSONObject? {
-//        loadJSONFromAsset(context = context, jsonFile = "memory_game_themes")?.let {
-//            val collection = it.getJSONArray("collection")
-//            repeat(collection.length()) { index ->
-//                val obj = collection[index] as JSONObject
-//                if (obj.getString("json_ref") == reference) {
-//                    return obj
-//                }
-//            }
-//        }
-//        return null
-//    }
-
-//    /**
-//     *
-//     */
-//    fun loadJSONFromAsset(context: Context, jsonFile: String, objectName: String? = null): JSONObject? {
-//        val json: String?
-//
-//        try {
-//
-//            val reference = if (jsonFile.endsWith(".json")) {
-//                jsonFile
-//            } else {
-//                "$jsonFile.json"
-//            }
-//
-//            val `is`: InputStream = getAssetsInputStream(context, reference)
-//
-//            val size = `is`.available()
-//            val buffer = ByteArray(size)
-//            `is`.read(buffer)
-//            `is`.close()
-//            json = String(buffer)
-//        } catch (ex: IOException) {
-//            // TODO: need to handle this
-//            ex.printStackTrace()
-//            return null
-//        }
-//        return if (objectName == null) {
-//            JSONObject(json).getJSONObject("entity")
-//        } else {
-//            JSONObject(json).getJSONObject(objectName)
-//        }
-//    }
 
     /**
      *
@@ -133,5 +87,18 @@ object Utils {
         }
 
         return drawable
+    }
+
+    /**
+     *
+     */
+    fun getRandomColors(quantity: Int=5): List<Int> {
+        val rnd = Random(256)
+        return ArrayList<Int>().apply {
+            repeat(quantity) {
+                this.add(Color.argb(255, rnd.nextInt(), rnd.nextInt(), rnd.nextInt()))
+            }
+        }
+
     }
 }

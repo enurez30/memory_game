@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:camomile="http://schemas.android.com/apk/res-auto">
+    xmlns:camomile="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,14 +12,31 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/scoreInclude"
+            layout="@layout/quiz_score_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/triviaInclude"
+            layout="@layout/trivia_category_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scoreInclude" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/viewKonfetti"
+            app:layout_constraintTop_toBottomOf="@+id/triviaInclude"
             tools:context=".ui.flag_quiz.FlagQuizContainerFragment" />
 
         <com.gmail.samehadar.iosdialog.CamomileSpinner
@@ -28,6 +45,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:elevation="10dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +53,11 @@
             camomile:clockwise="true"
             camomile:spinnerColor="?attr/colorSecondaryVariant"
             tools:ignore="MissingConstraints" />
+
+        <nl.dionsegijn.konfetti.KonfettiView
+            android:id="@+id/viewKonfetti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

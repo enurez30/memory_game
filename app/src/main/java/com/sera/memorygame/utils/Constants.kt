@@ -8,6 +8,7 @@ object Constants {
     const val BUCKET_ID = "gs://memorygame-c6487.appspot.com"
     const val DEFAULT_PLAYER_NAME = "Player1"
     const val WIKIPEDIA_COUNTRY_BASE_URL = "wikipedia.org/wiki/"
+    const val TRIVIA_BASE_URL =  "https://opentdb.com/"
     const val HISTORY_QUIZ_GAME_TYPE = "history_quiz_game_type"
     const val HISTORY_TRIVIA_GAME_TYPE = "history_trivia_game_type"
 

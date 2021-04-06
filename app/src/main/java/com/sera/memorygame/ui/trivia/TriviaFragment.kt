@@ -1,5 +1,6 @@
 package com.sera.memorygame.ui.trivia
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -18,18 +19,24 @@ import com.sera.memorygame.database.model.TriviaAnswerSingleObject
 import com.sera.memorygame.databinding.TriviaFragmentBinding
 import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.ui.BaseFragment
+import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.ui.adapter.CommonAdapter
 import com.sera.memorygame.utils.AnimationHelper
+import com.sera.memorygame.viewModel.TriviaViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class TriviaFragment : BaseFragment() {
     private lateinit var mBinder: TriviaFragmentBinding
+
+    @Inject
+    lateinit var viewModel: TriviaViewModel
 
     /**
      *
@@ -49,6 +56,13 @@ class TriviaFragment : BaseFragment() {
         }
     }
 
+    /**
+     *
+     */
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity() as? MainActivity?)?.mainComponent?.inject(fragment = this)
+    }
 
     /**
      *
@@ -93,8 +107,7 @@ class TriviaFragment : BaseFragment() {
      */
     private fun generateView() {
         (requireArguments().getSerializable("entity") as? TriviaEntity?)?.let { trivia ->
-            mBinder.questionTV.text = trivia.question
-            mBinder.categoryTV.text = trivia.category
+            mBinder.questionTV.text = viewModel.normalizeText(value = trivia.question)
         }
     }
 
@@ -140,6 +153,22 @@ class TriviaFragment : BaseFragment() {
     /**
      *
      */
+    fun notifyOnTimerFinish() {
+        with(mBinder.recycler.adapter as BaseRecyclerViewAdapter) {
+            keyLiveData.value = "wrong"
+            this.items.mapIndexed { index, iObject ->
+                (iObject as? TriviaAnswerSingleObject?)?.let { fqo ->
+                    fqo.animate = true
+                }
+                this.notifyItemChanged(index)
+            }
+        }
+        sendEvent(key = "score", message = keyLiveData.value ?: "")
+    }
+
+    /**
+     *
+     */
     override fun onHandleClickedWithPosition(view: View, position: Int) {
         when (view.id) {
             R.id.mainView -> {
@@ -161,7 +190,7 @@ class TriviaFragment : BaseFragment() {
                             }
                             this.notifyItemChanged(index)
                         }
-                        //sendEvent(key = keyLiveData.value ?: "", message = (requireArguments().getSerializable("entity") as? TriviaEntity?)?.id ?: "")
+                        sendEvent(key = (requireArguments().getSerializable("entity") as? TriviaEntity?)?.id ?: "", message = keyLiveData.value ?: "")
                     }
                 }
             }

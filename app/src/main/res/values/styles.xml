@@ -64,4 +64,10 @@
         <item name="android:textColorHint">?attr/colorSecondaryVariant</item>
         <item name="endIconTint">?attr/colorSecondaryVariant</item>
     </style>
+
+    <style name="ThemeStyle.Box" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@drawable/selector_box_stroke_color</item>
+        <item name="android:textColorHint">?attr/colorOnPrimary</item>
+        <item name="endIconTint">?attr/colorOnPrimary</item>
+    </style>
 </resources>

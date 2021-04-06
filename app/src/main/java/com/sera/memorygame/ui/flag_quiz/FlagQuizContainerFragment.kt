@@ -2,6 +2,8 @@ package com.sera.memorygame.ui.flag_quiz
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +35,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class FlagQuizContainerFragment : BaseFragment() {
     private lateinit var mBinder: FragmentFlagQuizContainerBinding
+    private var isAnimated: Boolean = false
 
     @Inject
     lateinit var countryViewModel: CountryViewModel
@@ -79,6 +82,17 @@ class FlagQuizContainerFragment : BaseFragment() {
         countryViewModel.getRemainCountriesLive.observe(viewLifecycleOwner, {
             if (it?.isNotEmpty() == true) {
                 setNextItem()
+            } else {
+                // startOver
+                if (!isAnimated) {
+                    isAnimated = !isAnimated
+                    animateView(konfettiView = mBinder.viewKonfetti)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        lifecycleScope.launch {
+                            requireActivity().supportFragmentManager.popBackStack()
+                        }
+                    }, 4000)
+                }
             }
         })
 
@@ -89,6 +103,7 @@ class FlagQuizContainerFragment : BaseFragment() {
         }
 
     }
+
 
     /**
      *
@@ -140,12 +155,6 @@ class FlagQuizContainerFragment : BaseFragment() {
      */
     private suspend fun updateScoreValues() = withContext(Dispatchers.Main) {
         with(countryViewModel) {
-//            val totalCountries = getAllCountries().value?.size ?: 0
-//            val correct = getCorrectCountries().value
-//            val wrong = getWrongCountries().value
-//            val total = totalCountries - (totalCountries - (correct + wrong))
-
-
             val (totalCountries, correct, wrong, total) = getScoreValues()
 
             with(mBinder.scoreInclude) {

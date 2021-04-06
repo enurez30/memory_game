@@ -4,6 +4,7 @@ import android.view.View
 import com.sera.memorygame.database.model.LanguageObject
 import com.sera.memorygame.databinding.SimpleIobjectAutocompleteLayoutBinding
 import com.sera.memorygame.interfaces.Handlers
+import com.sera.memorygame.network.model.TriviaCategoryModel
 import com.sera.memorygame.providers.ResourcesProvider
 
 class SimpleIObjectViewHolder<T>(val binding: SimpleIobjectAutocompleteLayoutBinding, val callback: Handlers?) {
@@ -24,6 +25,10 @@ class SimpleIObjectViewHolder<T>(val binding: SimpleIobjectAutocompleteLayoutBin
                 nameTV.text = it.name
             }
 
+            (item as? TriviaCategoryModel?)?.let {
+                icon.visibility = View.GONE
+                nameTV.text = it.name
+            }
         }
     }
 }

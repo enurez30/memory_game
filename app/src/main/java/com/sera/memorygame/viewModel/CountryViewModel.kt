@@ -155,9 +155,9 @@ class CountryViewModel @Inject constructor(private val repo: CountryRepository, 
             historyRepo.getEmptyHistoryEntity().apply {
                 this.type = Constants.HISTORY_QUIZ_GAME_TYPE
             }.run {
-                viewModelScope.launch {
-
-                }
+//                viewModelScope.launch {
+//
+//                }
                 setHistoryObject(obj = this)
                 historyRepo.persistHistoryEntity(historyEntity = this)
             }

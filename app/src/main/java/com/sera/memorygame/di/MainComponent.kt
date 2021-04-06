@@ -7,7 +7,9 @@ import com.sera.memorygame.ui.flag_quiz.FlagQuizFragment
 import com.sera.memorygame.ui.settings.SettingsFragment
 import com.sera.memorygame.ui.start.StartFragment
 import com.sera.memorygame.ui.theme.GameThemeFragment
+import com.sera.memorygame.ui.trivia.TriviaChooseFragment
 import com.sera.memorygame.ui.trivia.TriviaContainerFragment
+import com.sera.memorygame.ui.trivia.TriviaFragment
 import dagger.Subcomponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -30,5 +32,7 @@ interface MainComponent {
     fun inject(fragment: FlagQuizFragment)
     fun inject(fragment: FlagQuizContainerFragment)
     fun inject(fragment: TriviaContainerFragment)
+    fun inject(fragment: TriviaChooseFragment)
+    fun inject(fragment: TriviaFragment)
     fun inject(dialog: UserDialog)
 }
