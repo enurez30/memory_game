@@ -68,7 +68,7 @@ class MainActivity : BaseActivity(), Handlers {
             )
         }
 
-        replaceFragment(fragment = StartFragment.newInstance())
+//        replaceFragment(fragment = StartFragment.newInstance())
         lifecycleScope.launch {
             addObservers()
         }

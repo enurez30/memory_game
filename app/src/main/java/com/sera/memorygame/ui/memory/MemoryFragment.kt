@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -121,7 +120,8 @@ class MemoryFragment : BaseFragment(), Handlers {
                     val prev = viewModel.getControlValue.value ?: 0
                     viewModel.getControlValue.value = prev + 2
 
-                    Toast.makeText(requireContext(), "Good Job!", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(), "Good Job!", Toast.LENGTH_SHORT).show()
+                    animateShowKonfetti(konfettiView = mBinder.viewKonfetti)
                     viewModel.updatePair.value = Pair(null, null)
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({

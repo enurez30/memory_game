@@ -1,16 +1,17 @@
 <component name="libraryTable">
   <library name="Gradle: com.yayandroid:Rotatable:1.1.1@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f07392902f2926923dfbe35f5f1836bc/jetified-Rotatable-1.1.1/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e10f9e987098c8b392e915ebf47529eb/jetified-Rotatable-1.1.1/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ec5d9c2bb76caea365501fc303798a81/jetified-Rotatable-1.1.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/628190dd700e33b0d242dd68b0a659df/jetified-Rotatable-1.1.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5f9822b412c512267ed68cd6dde3ba79/jetified-Rotatable-1.1.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ab91f8bc25b49aeed0eca46fa06654e4/jetified-Rotatable-1.1.1/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f07392902f2926923dfbe35f5f1836bc/jetified-Rotatable-1.1.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f07392902f2926923dfbe35f5f1836bc/jetified-Rotatable-1.1.1/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f07392902f2926923dfbe35f5f1836bc/jetified-Rotatable-1.1.1/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e10f9e987098c8b392e915ebf47529eb/jetified-Rotatable-1.1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e10f9e987098c8b392e915ebf47529eb/jetified-Rotatable-1.1.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e10f9e987098c8b392e915ebf47529eb/jetified-Rotatable-1.1.1/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

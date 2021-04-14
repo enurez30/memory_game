@@ -25,7 +25,9 @@ import com.sera.memorygame.ui.memory.MemoryFragment
 import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.viewModel.CardsSizeChooseViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 class CardsSizeChooseFragment : BaseFragment() {
     private lateinit var mBinder: CardsSizeChooseFragmentBinding
 

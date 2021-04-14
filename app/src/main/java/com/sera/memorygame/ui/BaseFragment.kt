@@ -70,8 +70,24 @@ abstract class BaseFragment : Fragment(), FragmentResultListener, Handlers {
             .addShapes(Shape.Square, Shape.Circle)
             .addSizes(Size(12))
             .setPosition(-50f, konfettiView.width + 50f, -50f, -50f)
-            .streamFor(800, 3500L)
+            .streamFor(1000, 3500L)
 
+    }
+
+    /**
+     *
+     */
+    fun animateShowKonfetti(konfettiView: KonfettiView){
+        konfettiView.build()
+            .addColors(Utils.getRandomColors(quantity = 2))
+            .setDirection(0.0, 365.0)
+            .setSpeed(2f, 5f)
+            .setFadeOutEnabled(true)
+            .setTimeToLive(1000L)
+            .addShapes(Shape.Square, Shape.Circle)
+            .addSizes(Size(12))
+            .setPosition(-50f, konfettiView.width + 50f, -50f, -50f)
+            .streamFor(500, 700L)
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.sera.memorygame.viewModel
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sera.memorygame.R
@@ -95,7 +96,9 @@ class MemoryViewModel(
                                 reference = imgRef,
                                 dirRef = jsonRef
                             ),
-                            backResource = R.drawable.bckg_squires,
+                            backResource = getBackCardImgReferenceByJson() ?: kotlin.run {
+                                R.drawable.bckg_squires
+                            },
                         )
                     )
                     if (index == breakPoint) {
@@ -127,6 +130,9 @@ class MemoryViewModel(
             val listArray = resourcesProvider.getImagesArrayByDirReference(
                 dirRef = json.getString("type")
             )
+            listArray.find { it.contains("cartoon") }?.let { element ->
+                listArray.remove(element)
+            }
             ArrayList<String>().apply {
                 repeat(sizeViewObject.size / 2) {
                     // Pick a random between 0 and the total
@@ -138,6 +144,17 @@ class MemoryViewModel(
             }
         } ?: kotlin.run {
             ArrayList()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun getBackCardImgReferenceByJson(): Drawable? {
+        return resourcesProvider.getJsonByReference(reference = jsonRef)?.let { json ->
+            resourcesProvider.getDrawableFromAssets(dirRef = "card_back", reference = json.optString("back_card"))
+        } ?: kotlin.run {
+            null
         }
     }
 }

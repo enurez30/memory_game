@@ -23,8 +23,10 @@ import com.sera.memorygame.ui.size.CardsSizeChooseFragment
 import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.viewModel.GameThemeViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class GameThemeFragment : BaseFragment() {
     private lateinit var mBinder: GameThemeFragmentBinding
 
