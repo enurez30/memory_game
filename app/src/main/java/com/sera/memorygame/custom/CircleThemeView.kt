@@ -17,20 +17,24 @@ class CircleThemeView : View {
 
     constructor(context: Context) : super(context)
 
-    private var paint: Paint = Paint().apply {
-        this.color = ContextCompat.getColor(context, R.color.pink_200)
-        this.isAntiAlias = true
-        this.style = Paint.Style.FILL
-        this.strokeWidth = 6F
-    }
-    private var paint2: Paint = Paint().apply {
-        this.color = ContextCompat.getColor(context, R.color.pink_600Dark)
-        this.isAntiAlias = true
-        this.style = Paint.Style.FILL
-        this.strokeWidth = 4F
-    }
-
+    private var paint: Paint
+    private var paint2: Paint
     private var rectangle: RectF = RectF()
+
+    init {
+        paint = Paint().apply {
+            this.color = ContextCompat.getColor(context, R.color.pink_200)
+            this.isAntiAlias = true
+            this.style = Paint.Style.FILL
+            this.strokeWidth = 6F
+        }
+        paint2 = Paint().apply {
+            this.color = ContextCompat.getColor(context, R.color.pink_600Dark)
+            this.isAntiAlias = true
+            this.style = Paint.Style.FILL
+            this.strokeWidth = 4F
+        }
+    }
 
     /**
      *
