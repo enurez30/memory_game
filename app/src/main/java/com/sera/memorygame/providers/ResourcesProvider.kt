@@ -6,11 +6,17 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.content.res.AppCompatResources
 import com.sera.memorygame.utils.Utils
 import org.json.JSONObject
+import org.w3c.dom.Document
+import org.w3c.dom.Element
+import org.w3c.dom.Node
+import org.w3c.dom.NodeList
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.util.*
 import javax.inject.Inject
+import javax.xml.parsers.DocumentBuilder
+import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.collections.ArrayList
 
 
@@ -24,7 +30,6 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
         val configuration = Configuration(context.resources.configuration)
         configuration.setLocale(Locale.getDefault())
         return context.createConfigurationContext(configuration).resources.getString(resId)
-
     }
 
     /**
@@ -150,5 +155,36 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
      */
     fun getResurceFromRaw(fName: String): Int {
         return context.resources.getIdentifier(fName, "raw", context.packageName)
+    }
+
+    /**
+     *
+     */
+    fun test() {
+        var inputStream: InputStream? = null
+        val assetsPath = context.filesDir.toString() + "/assets/files/values/"
+        println()
+        val file = File(assetsPath + "theme.xml")
+        println()
+        inputStream = file.inputStream()
+        println()
+        val dbf: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
+        val db: DocumentBuilder = dbf.newDocumentBuilder()
+        val doc: Document = db.parse(file)
+        doc.getDocumentElement().normalize()
+
+        val nodeList: NodeList = doc.getElementsByTagName("resources")
+
+        for (i in 0 until nodeList.getLength()) {
+            val node: Node = nodeList.item(i)
+            val fstElmnt: Element = node as Element
+        }
+        val n: NodeList = doc.getElementsByTagName("log")
+
+//        for (j in 0 until count) {
+//            val node: Node = n.item(j)
+//            val fstElmnt: Element = node as Element
+//            phone_no.add(fstElmnt.getAttribute("number"))
+//        }
     }
 }

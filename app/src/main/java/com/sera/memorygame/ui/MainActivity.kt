@@ -22,6 +22,7 @@ import com.sera.memorygame.R
 import com.sera.memorygame.databinding.ActivityMainBinding
 import com.sera.memorygame.di.MainComponent
 import com.sera.memorygame.interfaces.Handlers
+import com.sera.memorygame.providers.ThemeXmlParser
 import com.sera.memorygame.ui.settings.SettingsFragment
 import com.sera.memorygame.ui.start.StartFragment
 import com.sera.memorygame.utils.Prefs
@@ -54,6 +55,11 @@ class MainActivity : BaseActivity(), Handlers {
 
         mainComponent = (application as MemoryApplication).appComponent.mainComponene().create()
         mainComponent.inject(activity = this)
+
+//        val themeResId = resources.getIdentifier("Theme.Purple", "style", "com.sera.memorygame")
+
+//        ResourcesProvider(this).test()
+        ThemeXmlParser(context = this).parse("")
 
         super.onCreate(savedInstanceState)
         setTheme(Prefs.getTheme())

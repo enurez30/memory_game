@@ -7,7 +7,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.ui.BaseActivity
-import com.sera.memorygame.utils.*
+import com.sera.memorygame.utils.Constants
+import com.sera.memorygame.utils.FileUtils
+import com.sera.memorygame.utils.Prefs
+import com.sera.memorygame.utils.ZipManager
 import com.sera.memorygame.utils.status_callback.NetworkStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +46,8 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
             val localFile = createTempFile("tmp", ".json")
             fileRef.getFile(localFile).addOnSuccessListener {
                 parseData(localFile = localFile)?.let { json ->
-                    val localAssetVersion = Prefs.getAssetVersion().toDouble()
+//                    val localAssetVersion = Prefs.getAssetVersion().toDouble()
+                    val localAssetVersion = "0.0".toDouble()
                     val serverAssetVersion = json.getString("asset_version").toDouble()
                     localFile.delete()
                     if (localAssetVersion < serverAssetVersion) {
