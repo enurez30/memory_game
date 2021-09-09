@@ -19,8 +19,10 @@ class SimpleIObjectViewHolder<T>(val binding: SimpleIobjectAutocompleteLayoutBin
             position = itemPosition
 
             (item as? LanguageObject?)?.let {
-                ResourcesProvider(context = root.context).getResurceFromRaw(fName = it.iconRefrerence).let { resId ->
-                    icon.setImageResource(resId)
+                with(ResourcesProvider(context = root.context)){
+                    it.iconRefrerence.getResurceFromRaw.let{resId ->
+                        icon.setImageResource(resId)
+                    }
                 }
                 nameTV.text = it.name
             }

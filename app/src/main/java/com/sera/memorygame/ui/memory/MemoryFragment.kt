@@ -6,37 +6,35 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sera.memorygame.R
 import com.sera.memorygame.custom.MemoryCardView
 import com.sera.memorygame.database.model.IObject
 import com.sera.memorygame.database.model.SizeViewObject
 import com.sera.memorygame.databinding.FragmentMemoryBinding
-import com.sera.memorygame.factory.MemoryViewModelFactory
 import com.sera.memorygame.interfaces.Handlers
-import com.sera.memorygame.providers.ResourcesProvider
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.ui.adapter.CommonAdapter
+import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.viewModel.MemoryViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
+@AndroidEntryPoint
 class MemoryFragment : BaseFragment(), Handlers {
 
     private lateinit var mBinder: FragmentMemoryBinding
 
-    /**
-     *
-     */
-    private val viewModel: MemoryViewModel by viewModels {
-        MemoryViewModelFactory(
-            jsonRef = requireArguments().getString("json_ref", ""),
-            sizeViewObject = requireArguments().getSerializable("sizeObj") as SizeViewObject,
-            provider = ResourcesProvider(context = requireContext())
-        )
-    }
+
+    @Inject
+    lateinit var viewModel: MemoryViewModel
 
     /**
      *
@@ -69,6 +67,7 @@ class MemoryFragment : BaseFragment(), Handlers {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
+        setValues()
         addObservers()
         generateAdapter()
         mBinder.container.post {
@@ -88,6 +87,16 @@ class MemoryFragment : BaseFragment(), Handlers {
             }
         }
 
+    }
+
+    /**
+     *
+     */
+    private fun setValues() {
+        viewModel.setValues(
+            sizeViewObject = requireArguments().getSerializable("sizeObj") as SizeViewObject,
+            jsonRef = requireArguments().getString("json_ref", "")
+        )
     }
 
     /**
@@ -141,7 +150,7 @@ class MemoryFragment : BaseFragment(), Handlers {
                     animateView(konfettiView = mBinder.viewKonfetti)
                     Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
                         requireActivity().onBackPressed()
-                    }, 4000)
+                    }, Constants.DEFAULT_AWAIT_TIME)
                 }
             } ?: kotlin.run {
 

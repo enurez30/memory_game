@@ -6,43 +6,46 @@ import androidx.lifecycle.lifecycleScope
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.android.material.snackbar.Snackbar
-import com.sera.memorygame.MemoryApplication
 import com.sera.memorygame.R
-import com.sera.memorygame.di.SplashComponent
 import com.sera.memorygame.service.AssetWorker
 import com.sera.memorygame.utils.status_callback.NetworkStatus
 import com.sera.memorygame.viewModel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class SplashActivity : BaseActivity() {
 
     @Inject
     lateinit var userViewModel: UserViewModel
 
-    // Stores an instance of RegistrationComponent so that its Fragments can access it
-    private lateinit var splashComponenet: SplashComponent
-
     /**
      *
      */
-    @FlowPreview
     override fun onCreate(savedInstanceState: Bundle?) {
-        splashComponenet = (application as MemoryApplication).appComponent.splashComponent().create()
-        splashComponenet.inject(activity = this)
-
         super.onCreate(savedInstanceState)
         lifecycleScope.launch {
             val flowA = flow { emit(addObserver()) }
             val flowB = flow { emit(userViewModel.checkUserExistance()) }
             merge(flowA, flowB).collect()
         }
+
+    }
+
+    /**
+     *
+     */
+    override fun onStart() {
+        super.onStart()
         WorkManager.getInstance(this).enqueue(OneTimeWorkRequestBuilder<AssetWorker>().build())
     }
 

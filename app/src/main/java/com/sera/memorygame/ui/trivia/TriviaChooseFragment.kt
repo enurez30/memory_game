@@ -1,6 +1,5 @@
 package com.sera.memorygame.ui.trivia
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,38 +7,39 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.FragmentTriviaChooseBinding
 import com.sera.memorygame.network.model.TriviaCategoryModel
 import com.sera.memorygame.providers.ResourcesProvider
 import com.sera.memorygame.ui.BaseFragment
-import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.IObjectAutocompleteAdapter
 import com.sera.memorygame.viewModel.TriviaViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class TriviaChooseFragment : BaseFragment() {
+
     private lateinit var mBinder: FragmentTriviaChooseBinding
 
     @Inject
     lateinit var viewModel: TriviaViewModel
+
+    @Inject
+    lateinit var provider: ResourcesProvider
 
     /**
      *
      */
     companion object {
         fun newInstance() = TriviaChooseFragment()
-    }
-
-    /**
-     *
-     */
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity() as? MainActivity?)?.mainComponent?.inject(fragment = this)
     }
 
     /**
@@ -76,7 +76,9 @@ class TriviaChooseFragment : BaseFragment() {
                     println("TriviaChooseFragment error")
                 }
             } ?: kotlin.run {
-                viewModel.getTriviaCategories()
+                lifecycleScope.launch {
+                    viewModel.getTriviaCategories()
+                }
             }
         })
     }
@@ -130,13 +132,16 @@ class TriviaChooseFragment : BaseFragment() {
         when (view.id) {
             R.id.confirmBtn -> {
                 if (validateForm()) {
+                    viewModel.checkHistory()
                     with(mBinder) {
                         viewModel.buildRequest(
                             amount = textFieldNumberOfQuestions.editText?.text.toString().toInt(),
                             category = (textFieldCategory.editText?.tag as? Int) ?: -1,
                             diff = textFieldDifficulty.editText?.text.toString()
                         ).let {
-                            viewModel.getTriviaQuestions(map = it)
+                            lifecycleScope.launch {
+                                viewModel.getTriviaQuestions(map = it)
+                            }
                         }
                     }
                 }
@@ -148,7 +153,6 @@ class TriviaChooseFragment : BaseFragment() {
      *
      */
     private fun validateForm(): Boolean {
-        val provider = ResourcesProvider(context = requireContext())
         with(mBinder) {
             if (textFieldNumberOfQuestions.editText?.text.toString().isEmpty()) {
                 textFieldNumberOfQuestions.error = provider.getString(reference = "empty_field")

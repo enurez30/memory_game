@@ -16,8 +16,10 @@ import com.sera.memorygame.databinding.AppThemeDialogLayoutBinding
 import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.ui.adapter.CommonAdapter
 import com.sera.memorygame.utils.Prefs
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
-
+import javax.inject.Inject
+@AndroidEntryPoint
 class AppThemeDialog : BaseDialogFragment() {
 
     private lateinit var mBinder: AppThemeDialogLayoutBinding

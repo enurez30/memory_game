@@ -1,10 +1,7 @@
 package com.sera.memorygame.ui.trivia
 
-import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,26 +13,28 @@ import androidx.lifecycle.lifecycleScope
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.sera.memorygame.R
-import com.sera.memorygame.database.entity.HistoryEntity
 import com.sera.memorygame.database.entity.TriviaEntity
 import com.sera.memorygame.database.model.ScoreObject
 import com.sera.memorygame.databinding.FragmentTriviaContainerBinding
 import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.ui.BaseFragment
-import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.utils.AnimationHelper
+import com.sera.memorygame.utils.Constants
+import com.sera.memorygame.viewModel.TriviaUiState
 import com.sera.memorygame.viewModel.TriviaViewModel
 import com.transitionseverywhere.ChangeText
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import javax.inject.Inject
 
 
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class TriviaContainerFragment : BaseFragment() {
     private lateinit var mBinder: FragmentTriviaContainerBinding
     private var firstRun: Boolean = true
@@ -55,14 +54,6 @@ class TriviaContainerFragment : BaseFragment() {
     /**
      *
      */
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity() as? MainActivity?)?.mainComponent?.inject(fragment = this)
-    }
-
-    /**
-     *
-     */
     override fun getChildView(container: ViewGroup?): View {
         mBinder = DataBindingUtil.inflate(LayoutInflater.from(requireContext()), R.layout.fragment_trivia_container, container, false)
         return mBinder.root
@@ -77,7 +68,6 @@ class TriviaContainerFragment : BaseFragment() {
         if (firstRun) {
             showChooseFragment()
         }
-        viewModel.checkHistory()
         animateScore()
         lifecycleScope.launch {
             addObservers()
@@ -95,46 +85,38 @@ class TriviaContainerFragment : BaseFragment() {
      *
      */
     private suspend fun addObservers() {
-        viewModel.getMediator().observe(viewLifecycleOwner, {
-            when (it.first) {
-                "trivia" -> {
-                    println("TRIVIA: list size = ${it.second}")
+        viewModel.getData().collect { state ->
+            when (state) {
+                is TriviaUiState.History -> {
+                    state.entity?.let { he ->
+                        updateScoreView(score = he.score)
+                    }
+                }
+                is TriviaUiState.Trivia -> {
+                    println("TRIVIA: list size = ${state.list}")
                     mBinder.camomileSpinner.visibility = View.GONE
 
-                    if ((it.second as? List<*>)?.isEmpty() == true) {
+                    if ((state.list as? List<*>)?.isEmpty() == true) {
                         // game over
                         if (!firstRun) {
                             // add some animation
                             if (!isAnimated) {
                                 isAnimated = true
                                 animateView(konfettiView = mBinder.viewKonfetti)
-                                Handler(Looper.getMainLooper()).postDelayed({
-                                    lifecycleScope.launch {
-                                        isAnimated = false
-                                        startOver()
-                                    }
-                                }, 4000)
+                                delay(Constants.DEFAULT_AWAIT_TIME)
+                                isAnimated = false
+                                startOver()
                             }
                         }
                     } else {
                         animateScore(show = true)
                         firstRun = false
-                        viewModel.updateHistoryTotal(total = (it.second as? List<*>)?.size ?: 0)
+                        viewModel.updateHistoryTotal(total = (state.list as? List<*>)?.size ?: 0)
                         setNextItem()
-                    }
-
-                }
-                "history" -> {
-                    it.second?.let { he ->
-                        (he as? HistoryEntity)?.let { history ->
-                            updateScoreView(score = history.score)
-                        }
-                    } ?: kotlin.run {
-                        viewModel.checkHistory()
                     }
                 }
             }
-        })
+        }
     }
 
 

@@ -58,8 +58,7 @@
                 android:elevation="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/quizBtn"
                 app:layout_constraintEnd_toEndOf="@+id/quizBtn"
-                app:layout_constraintHorizontal_bias="1.04"
-                app:layout_constraintStart_toStartOf="@+id/quizBtn"
+                app:layout_constraintStart_toEndOf="@+id/quizBtn"
                 app:layout_constraintTop_toTopOf="@+id/quizBtn"
                 app:layout_constraintVertical_bias="0" />
 
@@ -87,8 +86,7 @@
                 android:elevation="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/triviaBtn"
                 app:layout_constraintEnd_toEndOf="@+id/triviaBtn"
-                app:layout_constraintHorizontal_bias="1.04"
-                app:layout_constraintStart_toStartOf="@+id/triviaBtn"
+                app:layout_constraintStart_toEndOf="@+id/triviaBtn"
                 app:layout_constraintTop_toTopOf="@+id/triviaBtn"
                 app:layout_constraintVertical_bias="0" />
 

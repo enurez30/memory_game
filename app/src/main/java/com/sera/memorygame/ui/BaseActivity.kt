@@ -10,10 +10,13 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.R
 import com.sera.memorygame.event.MessageEvent
+import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.utils.ContextUtils
 import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.utils.status_callback.NetworkStatus
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -21,13 +24,15 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 abstract class BaseActivity : AppCompatActivity() {
+
 
     /**
      *
      */
     override fun attachBaseContext(newBase: Context) {
-
         val localeToSwitchTo = Prefs.getAppLanguage()
         val localeUpdatedContext: ContextWrapper = ContextUtils.updateLocale(newBase, Locale(localeToSwitchTo))
         super.attachBaseContext(localeUpdatedContext)
@@ -59,16 +64,6 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      *
      */
-    fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment, fragment::class.java.simpleName)
-            .addToBackStack("fragment")
-            .commit()
-    }
-
-    /**
-     *
-     */
     fun addFragment(fragment: Fragment) {
         with(supportFragmentManager) {
             findFragmentByTag(fragment::class.java.simpleName)?.let {
@@ -93,6 +88,8 @@ abstract class BaseActivity : AppCompatActivity() {
             .show()
     }
 
+    open fun updateTitle(id: String) {}
+
     /**
      *
      */
@@ -103,13 +100,17 @@ abstract class BaseActivity : AppCompatActivity() {
                 "test" -> {
                     println("event bus test")
                 }
-                "network_status" -> {
+                Constants.EVENT_NETWORK_STATUS -> {
                     lifecycleScope.launch(Dispatchers.Main) {
                         workerState.value = event.network_status
+                    }
+                }
+                Constants.EVENT_UPDATE_TITLE -> {
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        updateTitle(id = event.message)
                     }
                 }
             }
         }
     }
-
 }

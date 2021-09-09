@@ -5,23 +5,21 @@ import com.sera.memorygame.database.model.IObject
 import com.sera.memorygame.database.model.SizeViewObject
 import com.sera.memorygame.providers.ResourcesProvider
 import org.json.JSONObject
+import javax.inject.Inject
 
-class CardsSizeChooseViewModel(private val resourcesProvider: ResourcesProvider, private val jsonReference: String) : ViewModel() {
+class CardsSizeChooseViewModel @Inject constructor(private val resourcesProvider: ResourcesProvider) : ViewModel() {
 
     /**
      *
      */
-    fun getList(): ArrayList<IObject> {
+    fun getList(jsonReference: String): ArrayList<IObject> {
 //        val json = Utils.loadJSONFromAsset(context = context, jsonReference)!!
-
         val json = resourcesProvider.getJsonByReference(reference = jsonReference) ?: return ArrayList()
-
         return ArrayList<IObject>().apply {
             val list = getSizeObjects(json = json)
             if (list.isNotEmpty()) {
                 this.addAll(list)
             }
-
         }
     }
 
@@ -31,8 +29,11 @@ class CardsSizeChooseViewModel(private val resourcesProvider: ResourcesProvider,
      */
     private fun getSizeObjects(json: JSONObject): ArrayList<SizeViewObject> {
         return ArrayList<SizeViewObject>().apply {
-//            val jsonSize = (json.getJSONArray("images").length() * 2)
-            val size = (resourcesProvider.getSizeByDirectoryReference(dirRef = json.getString("type")) * 2)
+
+            val size = with(resourcesProvider) {
+                (json.getString("type").getSizeByDirectoryReference) * 2
+            }
+
             resourcesProvider.loadJSONFromAsset("game_size")?.getJSONArray("collection")
                 ?.let { arr ->
                     repeat(arr.length()) {

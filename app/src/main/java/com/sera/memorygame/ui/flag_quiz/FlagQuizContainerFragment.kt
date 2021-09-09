@@ -1,6 +1,5 @@
 package com.sera.memorygame.ui.flag_quiz
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -17,10 +16,11 @@ import com.sera.memorygame.database.entity.CountryEntity
 import com.sera.memorygame.databinding.FragmentFlagQuizContainerBinding
 import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.ui.BaseFragment
-import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.utils.AnimationHelper
+import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.viewModel.CountryViewModel
 import com.transitionseverywhere.ChangeText
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
@@ -32,7 +32,9 @@ import org.greenrobot.eventbus.ThreadMode
 import javax.inject.Inject
 
 
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class FlagQuizContainerFragment : BaseFragment() {
     private lateinit var mBinder: FragmentFlagQuizContainerBinding
     private var isAnimated: Boolean = false
@@ -47,13 +49,6 @@ class FlagQuizContainerFragment : BaseFragment() {
         fun newInstance() = FlagQuizContainerFragment()
     }
 
-    /**
-     *
-     */
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity() as? MainActivity?)?.mainComponent?.inject(fragment = this)
-    }
 
     /**
      *
@@ -91,7 +86,7 @@ class FlagQuizContainerFragment : BaseFragment() {
                         lifecycleScope.launch {
                             requireActivity().supportFragmentManager.popBackStack()
                         }
-                    }, 4000)
+                    }, Constants.DEFAULT_AWAIT_TIME)
                 }
             }
         })
@@ -101,7 +96,6 @@ class FlagQuizContainerFragment : BaseFragment() {
         merge(flowA, flowB).collect {
             updateScoreValues()
         }
-
     }
 
 

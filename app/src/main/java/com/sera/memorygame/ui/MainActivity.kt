@@ -2,6 +2,7 @@
 
 package com.sera.memorygame.ui
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
@@ -16,30 +17,29 @@ import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
-import com.sera.memorygame.MemoryApplication
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.ActivityMainBinding
-import com.sera.memorygame.di.MainComponent
+import com.sera.memorygame.extentions.toResId
 import com.sera.memorygame.interfaces.Handlers
-import com.sera.memorygame.providers.ThemeXmlParser
-import com.sera.memorygame.ui.settings.SettingsFragment
-import com.sera.memorygame.ui.start.StartFragment
 import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.viewModel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class MainActivity : BaseActivity(), Handlers {
-
 
     @Inject
     lateinit var userViewModel: UserViewModel
 
-    lateinit var mainComponent: MainComponent
 
     /**
      *
@@ -52,19 +52,11 @@ class MainActivity : BaseActivity(), Handlers {
      *
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        mainComponent = (application as MemoryApplication).appComponent.mainComponene().create()
-        mainComponent.inject(activity = this)
-
-//        val themeResId = resources.getIdentifier("Theme.Purple", "style", "com.sera.memorygame")
-
-//        ResourcesProvider(this).test()
-        ThemeXmlParser(context = this).parse("")
-
         super.onCreate(savedInstanceState)
         setTheme(Prefs.getTheme())
         mBinder.handlers = this
         mBinder.lifecycleOwner = this
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
@@ -74,7 +66,6 @@ class MainActivity : BaseActivity(), Handlers {
             )
         }
 
-//        replaceFragment(fragment = StartFragment.newInstance())
         lifecycleScope.launch {
             addObservers()
         }
@@ -147,7 +138,8 @@ class MainActivity : BaseActivity(), Handlers {
                 }
             }
             R.id.setttingsTV -> {
-                addFragment(fragment = SettingsFragment.newInstance())
+                findNavController(mBinder.container.id).navigate(R.id.action_global_settingsFragment)
+//                addFragment(fragment = SettingsFragment.newInstance())
                 closeDrawer()
             }
         }
@@ -165,14 +157,30 @@ class MainActivity : BaseActivity(), Handlers {
     /**
      *
      */
+    @SuppressLint("RestrictedApi")
     override fun onBackPressed() {
-        with(supportFragmentManager) {
-            if (this.fragments.size <= 2 && this.findFragmentByTag(StartFragment::class.java.simpleName)?.isVisible == true) {
+//        with(supportFragmentManager) {
+//            if (this.fragments.size <= 2 && this.findFragmentByTag(StartFragment::class.java.simpleName)?.isVisible == true) {
+//                // nothing, add exit dialog
+//            } else {
+////                this.popBackStack()
+//                findNavController(R.id.container).popBackStack()
+//            }
+//        }
+        with(findNavController(mBinder.container.id)) {
+            if (this.backStack.count() <= 2) {
                 // nothing, add exit dialog
             } else {
                 this.popBackStack()
             }
         }
+    }
+
+    /**
+     *
+     */
+    override fun updateTitle(id: String) {
+        mBinder.include.mainTitle.text = getString(id.toResId)
     }
 
     /**

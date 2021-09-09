@@ -3,20 +3,13 @@ package com.sera.memorygame.providers
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
-import androidx.appcompat.content.res.AppCompatResources
 import com.sera.memorygame.utils.Utils
 import org.json.JSONObject
-import org.w3c.dom.Document
-import org.w3c.dom.Element
-import org.w3c.dom.Node
-import org.w3c.dom.NodeList
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.util.*
 import javax.inject.Inject
-import javax.xml.parsers.DocumentBuilder
-import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.collections.ArrayList
 
 
@@ -35,49 +28,6 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
     /**
      *
      */
-    fun getDrawableByReference(context: Context, reference: String): Drawable? {
-        return AppCompatResources.getDrawable(
-            context,
-            Utils.getImageByReference(mContext = context, reference = reference)
-        )
-    }
-
-    /**
-     *
-     */
-    fun loadJSONFromAsset(jsonFile: String, objectName: String? = null): JSONObject? {
-        val json: String?
-
-        try {
-
-            val reference = if (jsonFile.endsWith(".json")) {
-                jsonFile
-            } else {
-                "$jsonFile.json"
-            }
-
-            val `is`: InputStream = Utils.getAssetsInputStream(context, reference)
-
-            val size = `is`.available()
-            val buffer = ByteArray(size)
-            `is`.read(buffer)
-            `is`.close()
-            json = String(buffer)
-        } catch (ex: IOException) {
-            // TODO: need to handle this
-            ex.printStackTrace()
-            return null
-        }
-        return if (objectName == null) {
-            JSONObject(json).getJSONObject("entity")
-        } else {
-            JSONObject(json).getJSONObject(objectName)
-        }
-    }
-
-    /**
-     *
-     */
     fun getJsonByReference(reference: String): JSONObject? {
         loadJSONFromAsset(jsonFile = "memory_game_themes")?.let {
             val collection = it.getJSONArray("collection")
@@ -91,18 +41,19 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
         return null
     }
 
-
     /**
      *
      */
-    fun getSizeByDirectoryReference(dirRef: String): Int {
-        return try {
-            val assetsPath = context.filesDir.toString() + "/assets/files/$dirRef/"
-            File(assetsPath).list()?.size ?: 0
-        } catch (e: Exception) {
-            0
+    val String.getSizeByDirectoryReference: Int
+        get() {
+            return try {
+                val assetsPath = context.filesDir.toString() + "/assets/files/$this/"
+                File(assetsPath).list()?.size ?: 0
+            } catch (e: Exception) {
+                0
+            }
         }
-    }
+
 
     /**
      *
@@ -115,7 +66,6 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
             ArrayList()
         }
     }
-
 
     /**
      *
@@ -153,38 +103,39 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
     /**
      *
      */
-    fun getResurceFromRaw(fName: String): Int {
-        return context.resources.getIdentifier(fName, "raw", context.packageName)
-    }
+    val String.getResurceFromRaw: Int
+        get() {
+            return context.resources.getIdentifier(this, "raw", context.packageName)
+        }
 
     /**
      *
      */
-    fun test() {
-        var inputStream: InputStream? = null
-        val assetsPath = context.filesDir.toString() + "/assets/files/values/"
-        println()
-        val file = File(assetsPath + "theme.xml")
-        println()
-        inputStream = file.inputStream()
-        println()
-        val dbf: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
-        val db: DocumentBuilder = dbf.newDocumentBuilder()
-        val doc: Document = db.parse(file)
-        doc.getDocumentElement().normalize()
+    fun loadJSONFromAsset(jsonFile: String, objectName: String? = null): JSONObject? {
+        val json: String?
+        try {
+            val reference = if (jsonFile.endsWith(".json")) {
+                jsonFile
+            } else {
+                "$jsonFile.json"
+            }
 
-        val nodeList: NodeList = doc.getElementsByTagName("resources")
+            val `is`: InputStream = Utils.getAssetsInputStream(context, reference)
 
-        for (i in 0 until nodeList.getLength()) {
-            val node: Node = nodeList.item(i)
-            val fstElmnt: Element = node as Element
+            val size = `is`.available()
+            val buffer = ByteArray(size)
+            `is`.read(buffer)
+            `is`.close()
+            json = String(buffer)
+        } catch (ex: IOException) {
+            // TODO: need to handle this
+            ex.printStackTrace()
+            return null
         }
-        val n: NodeList = doc.getElementsByTagName("log")
-
-//        for (j in 0 until count) {
-//            val node: Node = n.item(j)
-//            val fstElmnt: Element = node as Element
-//            phone_no.add(fstElmnt.getAttribute("number"))
-//        }
+        return if (objectName == null) {
+            JSONObject(json).getJSONObject("entity")
+        } else {
+            JSONObject(json).getJSONObject(objectName)
+        }
     }
 }

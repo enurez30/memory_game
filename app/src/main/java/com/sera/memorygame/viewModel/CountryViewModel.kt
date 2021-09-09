@@ -137,9 +137,9 @@ class CountryViewModel @Inject constructor(private val repo: CountryRepository, 
                 }
             } else {
                 allCountries.value = it
-//                viewModelScope.launch {
-//                    getRemainCountriesLive.value = repo.getAllCountriesOnly()
-//                }
+                viewModelScope.launch {
+                    getRemainCountriesLive.value = repo.getAllCountriesOnly()
+                }
             }
         }
 
@@ -155,15 +155,12 @@ class CountryViewModel @Inject constructor(private val repo: CountryRepository, 
             historyRepo.getEmptyHistoryEntity().apply {
                 this.type = Constants.HISTORY_QUIZ_GAME_TYPE
             }.run {
-//                viewModelScope.launch {
-//
-//                }
                 setHistoryObject(obj = this)
                 historyRepo.persistHistoryEntity(historyEntity = this)
             }
-//            viewModelScope.launch {
-//                getRemainCountriesLive.value = repo.getAllCountriesOnly()
-//            }
+            viewModelScope.launch {
+                getRemainCountriesLive.value = repo.getAllCountriesOnly()
+            }
         } else {
             setHistoryObject(obj = historyObject)
             populateRemainCountriesFromHistoryObject(historyObject = historyObject)

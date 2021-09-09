@@ -1,6 +1,5 @@
 package com.sera.memorygame.ui.trivia
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -18,20 +17,24 @@ import com.sera.memorygame.database.model.IObject
 import com.sera.memorygame.database.model.TriviaAnswerSingleObject
 import com.sera.memorygame.databinding.TriviaFragmentBinding
 import com.sera.memorygame.event.MessageEvent
+import com.sera.memorygame.extentions.normalizeText
 import com.sera.memorygame.ui.BaseFragment
-import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.ui.adapter.CommonAdapter
 import com.sera.memorygame.utils.AnimationHelper
 import com.sera.memorygame.viewModel.TriviaViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class TriviaFragment : BaseFragment() {
     private lateinit var mBinder: TriviaFragmentBinding
 
@@ -54,14 +57,6 @@ class TriviaFragment : BaseFragment() {
                 this.putSerializable("entity", entity)
             }
         }
-    }
-
-    /**
-     *
-     */
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity() as? MainActivity?)?.mainComponent?.inject(fragment = this)
     }
 
     /**
@@ -107,7 +102,7 @@ class TriviaFragment : BaseFragment() {
      */
     private fun generateView() {
         (requireArguments().getSerializable("entity") as? TriviaEntity?)?.let { trivia ->
-            mBinder.questionTV.text = viewModel.normalizeText(value = trivia.question)
+            mBinder.questionTV.text = trivia.question.normalizeText()
         }
     }
 

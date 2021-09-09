@@ -11,14 +11,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.AssetDialogLayoutBinding
+import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.service.AssetWorker
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.util.*
 
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 class AssetDownloadDialog : BaseDialogFragment() {
 
     private lateinit var mBinder: AssetDialogLayoutBinding

@@ -8,15 +8,24 @@ import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.BaseFragmentLayoutBinding
+import com.sera.memorygame.event.MessageEvent
 import com.sera.memorygame.interfaces.Handlers
+import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.utils.Utils
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import nl.dionsegijn.konfetti.KonfettiView
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
+import org.greenrobot.eventbus.EventBus
 
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 abstract class BaseFragment : Fragment(), FragmentResultListener, Handlers {
     private lateinit var mBinder: BaseFragmentLayoutBinding
 
@@ -53,6 +62,21 @@ abstract class BaseFragment : Fragment(), FragmentResultListener, Handlers {
     /**
      *
      */
+    fun navigate(direction: NavDirections) {
+        findNavController().navigate(direction)
+    }
+
+    /**
+     *
+     */
+    override fun onResume() {
+        super.onResume()
+        sendEvent(msg = this::class.java.simpleName)
+    }
+
+    /**
+     *
+     */
     override fun onFragmentResult(requestKey: String, result: Bundle) {
         delegateOnFragmentResult(requestKey = requestKey, result = result)
     }
@@ -77,7 +101,7 @@ abstract class BaseFragment : Fragment(), FragmentResultListener, Handlers {
     /**
      *
      */
-    fun animateShowKonfetti(konfettiView: KonfettiView){
+    fun animateShowKonfetti(konfettiView: KonfettiView) {
         konfettiView.build()
             .addColors(Utils.getRandomColors(quantity = 2))
             .setDirection(0.0, 365.0)
@@ -88,6 +112,18 @@ abstract class BaseFragment : Fragment(), FragmentResultListener, Handlers {
             .addSizes(Size(12))
             .setPosition(-50f, konfettiView.width + 50f, -50f, -50f)
             .streamFor(500, 700L)
+    }
+
+    /**
+     *
+     */
+    private fun sendEvent(msg: String) {
+        val event = MessageEvent().apply {
+            this.reciever = BaseActivity::class.java.simpleName
+            this.key = Constants.EVENT_UPDATE_TITLE
+            this.message = msg
+        }
+        EventBus.getDefault().postSticky(event)
     }
 
     /**

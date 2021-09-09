@@ -2,29 +2,22 @@
 
 package com.sera.memorygame.database.repository
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import com.sera.memorygame.database.AppDatabase
 import com.sera.memorygame.database.dao.TriviaDao
 import com.sera.memorygame.database.entity.TriviaEntity
+import com.sera.memorygame.network.IServiceHelper
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import retrofit2.http.QueryMap
 import javax.inject.Inject
 
-class TriviaRepository @Inject constructor(val context: Context) {
+class TriviaRepository @Inject constructor(private val dao: TriviaDao, private val service: IServiceHelper) {
 
     /**
      *
      */
-    private val dao: TriviaDao by lazy {
-        AppDatabase.getDataBase(context).triviaDao()
-    }
-
-
-    /**
-     *
-     */
-    suspend fun insertMultiple(list: ArrayList<TriviaEntity>) {
+    suspend fun insertMultiple(list: List<TriviaEntity>) {
         dao.insert(obj = list)
     }
 
@@ -45,7 +38,12 @@ class TriviaRepository @Inject constructor(val context: Context) {
     /**
      *
      */
-    suspend fun getTriviaNotInRangeLive(list: List<String>): LiveData<List<TriviaEntity>> = dao.getTriviaNotInRangeLive(list = list)
+    fun getTriviaNotInRangeLive(list: List<String>): LiveData<List<TriviaEntity>> = dao.getTriviaNotInRangeLive(list = list)
+
+    /**
+     *
+     */
+    fun getTriviaNotInRangeFlow(list: List<String>): Flow<List<TriviaEntity>> = dao.getTriviaNotInRangeFlow(list = list)
 
     /**
      *
@@ -64,4 +62,10 @@ class TriviaRepository @Inject constructor(val context: Context) {
             dao.deleteAll()
         }
     }
+
+    // --- Network --- //
+
+    suspend fun getTriviaCategories() = service.getTriviaCategories()
+
+    suspend fun getTriviaQuestionsFlow(@QueryMap options: Map<String, String>) = service.getTriviaQuestionsFlow(options = options)
 }

@@ -2,7 +2,6 @@ package com.sera.memorygame.ui.dialog
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,15 +15,18 @@ import com.google.android.material.snackbar.Snackbar
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.UserDialogLayoutBinding
 import com.sera.memorygame.ui.BaseActivity
-import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.utils.FileUtils
 import com.sera.memorygame.utils.observers.PictureLifecycleObserver
 import com.sera.memorygame.viewModel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class UserDialog : BaseDialogFragment() {
     private lateinit var mBinder: UserDialogLayoutBinding
     private lateinit var pictureObserver: PictureLifecycleObserver
@@ -32,13 +34,6 @@ class UserDialog : BaseDialogFragment() {
     @Inject
     lateinit var userViewModel: UserViewModel
 
-    /**
-     *
-     */
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity() as? MainActivity?)?.mainComponent?.inject(dialog = this)
-    }
 
     /**
      *

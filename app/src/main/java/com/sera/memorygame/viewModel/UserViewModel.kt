@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sera.memorygame.database.entity.UserEntity
 import com.sera.memorygame.database.repository.UserRepository
-import com.sera.memorygame.di.ActivityScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@ActivityScope
 class UserViewModel @Inject constructor(private val repo: UserRepository) : ViewModel() {
 
     /**

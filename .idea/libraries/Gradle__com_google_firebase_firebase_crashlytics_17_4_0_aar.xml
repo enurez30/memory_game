@@ -1,12 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-crashlytics:17.4.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1914e75aef6658f1f5ea9ce1dd0b7516/jetified-firebase-crashlytics-17.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/870dd795df265e44802531312e3f56db/jetified-firebase-crashlytics-17.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/44926a8b459435393d1bcbfcc9a96167/jetified-firebase-crashlytics-17.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a54338beac796d4820aac3f821cd6c28/jetified-firebase-crashlytics-17.4.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a54338beac796d4820aac3f821cd6c28/jetified-firebase-crashlytics-17.4.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a54338beac796d4820aac3f821cd6c28/jetified-firebase-crashlytics-17.4.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/44c2504a71fb5d3a3d3747eb7eaa4e77/transformed/jetified-firebase-crashlytics-17.4.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/388cb2a50e52b2e331e2e48598b78dde/transformed/jetified-firebase-crashlytics-17.4.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6fb39e79253b7d6ef7e19261ce1e58fe/transformed/jetified-firebase-crashlytics-17.4.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6fb39e79253b7d6ef7e19261ce1e58fe/transformed/jetified-firebase-crashlytics-17.4.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6fb39e79253b7d6ef7e19261ce1e58fe/transformed/jetified-firebase-crashlytics-17.4.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-crashlytics/17.4.0/bdab7f98cc9da76c62ff877f8b89c19b56ede6d0/firebase-crashlytics-17.4.0-javadoc.jar!/" />

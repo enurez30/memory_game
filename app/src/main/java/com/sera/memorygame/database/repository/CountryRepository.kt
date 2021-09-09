@@ -1,20 +1,11 @@
 package com.sera.memorygame.database.repository
 
-import android.content.Context
-import com.sera.memorygame.database.AppDatabase
 import com.sera.memorygame.database.dao.CoutryDao
 import com.sera.memorygame.database.entity.CountryEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class CountryRepository @Inject constructor(val context: Context) {
-
-    /**
-     *
-     */
-    private val dao: CoutryDao by lazy {
-        AppDatabase.getDataBase(context).countryDao()
-    }
+class CountryRepository @Inject constructor(private val dao: CoutryDao) {
 
     /**
      *

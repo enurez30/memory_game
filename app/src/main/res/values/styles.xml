@@ -7,10 +7,8 @@
 
         <item name="colorPrimaryDark">@color/colorTransparent</item>
         <item name="android:windowContentTransitions">true</item>
-        <!--        <item name="android:windowBackground">@color/secondaryDarkColor</item>-->
         <item name="android:fontFamily">@font/annie_use_your_telescope</item>
         <item name="android:textStyle">bold</item>
-        <!--        <item name="android:textViewStyle">@style/CustomTextViewStyle</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar">

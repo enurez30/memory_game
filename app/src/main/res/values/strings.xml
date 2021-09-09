@@ -30,6 +30,16 @@
     <string name="error_camera_permission">In order to proceed, camera permission should be granded</string>
     <string name="settings_language">language</string>
 
+    <!-- titles -->
+    <string name="start_fragment_choose_game">Choose Game to Play</string>
+    <string name="trivia_choose_fragment_choose_trivia">Build-up Trivia to Play</string>
+    <string name="trivia_fragment_trivia">Trivia Game</string>
+    <string name="flag_fragment_quize">Flag Quize Game</string>
+    <string name="game_theme_fragment_chosse_theme">Choose Theme</string>
+    <string name="card_size_fragment_chosse_size">Choose Cards Amount</string>
+    <string name="memory_fragment_memory">Memory Game</string>
+    <string name="settings_fragment_Settings">Settings</string>
+
     <!-- asset worker -->
     <string name="check_for_updates">Checking for updates</string>
     <string name="downloading_assets">Downloading Assets</string>

@@ -11,6 +11,10 @@ object Constants {
     const val TRIVIA_BASE_URL =  "https://opentdb.com/"
     const val HISTORY_QUIZ_GAME_TYPE = "history_quiz_game_type"
     const val HISTORY_TRIVIA_GAME_TYPE = "history_trivia_game_type"
+    const val EVENT_NETWORK_STATUS = "network_status"
+    const val EVENT_UPDATE_TITLE = "update_title"
+
+    const val DEFAULT_AWAIT_TIME = 3000L
 
     const val MEMORY_VIEW_OBJECT_VIEW_TYPE = 10
     const val SIZE_VIEW_OBJECT_VIEW_TYPE = 20

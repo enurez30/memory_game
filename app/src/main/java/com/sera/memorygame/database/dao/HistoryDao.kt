@@ -27,4 +27,9 @@ abstract class HistoryDao : BaseDao<HistoryEntity> {
     @Query("SELECT * FROM history_table WHERE type=:type AND is_alive=1")
     abstract fun getHistoryByTypeLive(type: String): LiveData<HistoryEntity?>
 
+    /**
+     *
+     */
+    @Query("SELECT * FROM history_table WHERE type=:type AND is_alive=1")
+    abstract fun getHistoryByTypeFlow(type: String): Flow<HistoryEntity?>
 }

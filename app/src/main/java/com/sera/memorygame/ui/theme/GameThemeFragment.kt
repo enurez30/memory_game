@@ -1,6 +1,5 @@
 package com.sera.memorygame.ui.theme
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,19 +15,25 @@ import com.sera.memorygame.R
 import com.sera.memorygame.database.model.GameThemeObject
 import com.sera.memorygame.databinding.GameThemeFragmentBinding
 import com.sera.memorygame.ui.BaseFragment
-import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.ui.adapter.CommonAdapter
-import com.sera.memorygame.ui.size.CardsSizeChooseFragment
 import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.viewModel.GameThemeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
 
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class GameThemeFragment : BaseFragment() {
+
     private lateinit var mBinder: GameThemeFragmentBinding
+
+    @Inject
+    lateinit var viewModel: GameThemeViewModel
 
     /**
      *
@@ -37,19 +42,6 @@ class GameThemeFragment : BaseFragment() {
         fun newInstance() = GameThemeFragment()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity() as? MainActivity?)?.mainComponent?.inject(fragment = this)
-    }
-//    /**
-//     *
-//     */
-//    private val viewModel: GameThemeViewModel by viewModels {
-//        GameThemeFactory(context = requireContext())
-//    }
-
-    @Inject
-    lateinit var viewModel: GameThemeViewModel
 
     /**
      *
@@ -97,7 +89,7 @@ class GameThemeFragment : BaseFragment() {
         when (view.id) {
             R.id.mainView -> {
                 ((mBinder.recycler.adapter as BaseRecyclerViewAdapter).getItemByPosition(position = position) as? GameThemeObject?)?.let {
-                    (requireActivity() as MainActivity).replaceFragment(fragment = CardsSizeChooseFragment.newInstance(jsonReference = it.jsonReference))
+                    navigate(GameThemeFragmentDirections.actionGameThemeFragmentToCardsSizeChooseFragment(jsonReference = it.jsonReference))
                 }
             }
         }

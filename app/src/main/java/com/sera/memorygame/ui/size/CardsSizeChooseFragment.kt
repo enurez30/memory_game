@@ -9,45 +9,38 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
 import com.sera.memorygame.R
 import com.sera.memorygame.database.model.SizeViewObject
 import com.sera.memorygame.databinding.CardsSizeChooseFragmentBinding
-import com.sera.memorygame.factory.CardSizeFactory
-import com.sera.memorygame.providers.ResourcesProvider
 import com.sera.memorygame.ui.BaseFragment
-import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.ui.adapter.CommonAdapter
-import com.sera.memorygame.ui.memory.MemoryFragment
 import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.viewModel.CardsSizeChooseViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
+import javax.inject.Inject
 
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class CardsSizeChooseFragment : BaseFragment() {
+
     private lateinit var mBinder: CardsSizeChooseFragmentBinding
 
-    /**
-     *
-     */
-    companion object {
-        fun newInstance(jsonReference: String) = CardsSizeChooseFragment().apply {
-            arguments = Bundle().apply {
-                this.putString("json_ref", jsonReference)
-            }
-        }
-    }
+    private val args: CardsSizeChooseFragmentArgs by navArgs()
 
     /**
      *
      */
-    private val viewModel: CardsSizeChooseViewModel by viewModels {
-        CardSizeFactory(resourcesProvider = ResourcesProvider(requireContext()), jsonReference = requireArguments().getString("json_ref", ""))
-    }
+    @Inject
+    lateinit var viewModel: CardsSizeChooseViewModel
+
 
     /**
      *
@@ -85,22 +78,17 @@ class CardsSizeChooseFragment : BaseFragment() {
      *
      */
     private fun setList() {
-        (mBinder.recycler.adapter as BaseRecyclerViewAdapter).setList(list = viewModel.getList())
+        (mBinder.recycler.adapter as BaseRecyclerViewAdapter).setList(list = viewModel.getList(jsonReference = args.jsonReference))
     }
 
     /**
-     *
+     *action_cardsSizeChooseFragment_to_memoryFragment
      */
     override fun onHandleClickedWithPosition(view: View, position: Int) {
         when (view.id) {
             R.id.mainView -> {
                 ((mBinder.recycler.adapter as BaseRecyclerViewAdapter).getItemByPosition(position = position) as? SizeViewObject?)?.let {
-                    (requireActivity() as MainActivity).replaceFragment(
-                        fragment = MemoryFragment.newInstance(
-                            jsonRef = requireArguments().getString("json_ref", ""),
-                            sizeObj = it
-                        )
-                    )
+                    navigate(CardsSizeChooseFragmentDirections.actionCardsSizeChooseFragmentToMemoryFragment(jsonRef = args.jsonReference, sizeObj = it))
                 }
             }
         }

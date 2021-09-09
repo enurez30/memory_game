@@ -1,9 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
     app:startDestination="@id/startFragment">
 
     <fragment
         android:id="@+id/startFragment"
         android:name="com.sera.memorygame.ui.start.StartFragment"
-        android:label="StartFragment" />
+        android:label="StartFragment" >
+        <action
+            android:id="@+id/action_startFragment_to_flagQuizContainerFragment"
+            app:destination="@id/flagQuizContainerFragment"
+            app:popUpTo="@id/startFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_triviaContainerFragment"
+            app:destination="@id/triviaContainerFragment"
+            app:popUpTo="@id/startFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_gameThemeFragment"
+            app:destination="@id/gameThemeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/flagQuizContainerFragment"
+        android:name="com.sera.memorygame.ui.flag_quiz.FlagQuizContainerFragment"
+        android:label="FlagQuizContainerFragment" />
+    <fragment
+        android:id="@+id/triviaContainerFragment"
+        android:name="com.sera.memorygame.ui.trivia.TriviaContainerFragment"
+        android:label="TriviaContainerFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.sera.memorygame.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+    <action
+        android:id="@+id/action_global_settingsFragment"
+        app:destination="@id/settingsFragment" />
+    <fragment
+        android:id="@+id/gameThemeFragment"
+        android:name="com.sera.memorygame.ui.theme.GameThemeFragment"
+        android:label="GameThemeFragment" >
+        <action
+            android:id="@+id/action_gameThemeFragment_to_cardsSizeChooseFragment"
+            app:destination="@id/cardsSizeChooseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardsSizeChooseFragment"
+        android:name="com.sera.memorygame.ui.size.CardsSizeChooseFragment"
+        android:label="CardsSizeChooseFragment" >
+        <argument
+            android:name="jsonReference"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_cardsSizeChooseFragment_to_memoryFragment"
+            app:destination="@id/memoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/memoryFragment"
+        android:name="com.sera.memorygame.ui.memory.MemoryFragment"
+        android:label="MemoryFragment" >
+        <argument
+            android:name="json_ref"
+            app:argType="string" />
+        <argument
+            android:name="sizeObj"
+            app:argType="com.sera.memorygame.database.model.SizeViewObject" />
+    </fragment>
 </navigation>

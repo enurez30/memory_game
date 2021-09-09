@@ -5,20 +5,17 @@ import com.sera.memorygame.database.entity.HistoryEntity
 import com.sera.memorygame.database.entity.TriviaEntity
 import com.sera.memorygame.database.repository.HistoryRepository
 import com.sera.memorygame.database.repository.TriviaRepository
-import com.sera.memorygame.network.IService
-import com.sera.memorygame.network.RetrofitClient
-import com.sera.memorygame.network.mapping.TriviaNetworkMapper
+import com.sera.memorygame.extentions.toTriviaEntity
 import com.sera.memorygame.network.model.TriviaCategoryModel
 import com.sera.memorygame.network.model.TriviaCategoryResponseBody
 import com.sera.memorygame.network.model.TriviaResponseBody
 import com.sera.memorygame.utils.Constants
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers.io
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 
@@ -59,14 +56,14 @@ class TriviaViewModel @Inject constructor(private val historyRepository: History
     /**
      *
      */
-    private var triviaObjects = MutableLiveData<ArrayList<TriviaEntity>?>().apply {
+    private var triviaObjects = MutableLiveData<List<TriviaEntity>?>().apply {
         value = null
     }
 
     /**
      *
      */
-    var getTriviaObjects: MutableLiveData<ArrayList<TriviaEntity>?>
+    var getTriviaObjects: MutableLiveData<List<TriviaEntity>?>
         get() = triviaObjects
         set(value) {
             triviaObjects = value
@@ -76,17 +73,17 @@ class TriviaViewModel @Inject constructor(private val historyRepository: History
     /**
      *
      */
-    suspend fun getMediator(): LiveData<Pair<String, Any?>> {
-        return MediatorLiveData<Pair<String, Any?>>().apply {
-            this.addSource(triviaRepository.getTriviaNotInRangeLive(getHistoryObj.value?.ids ?: listOf(""))) {
-                triviaObjects.value = it as ArrayList<TriviaEntity>?
-                this.value = Pair("trivia", it)
-            }
-            this.addSource(historyRepository.getHistoryByTypeLive(type = Constants.HISTORY_TRIVIA_GAME_TYPE)) {
-                getHistoryObj.value = it
-                this.value = Pair("history", it)
-            }
+    @ExperimentalCoroutinesApi
+    fun getData(): Flow<TriviaUiState> {
+        val trivia = triviaRepository.getTriviaNotInRangeFlow(list = getHistoryObj.value?.ids ?: listOf("")).map {
+            triviaObjects.value = it
+            TriviaUiState.Trivia(list = it)
         }
+        val history = historyRepository.getHistoryByTypeFlow(type = Constants.HISTORY_TRIVIA_GAME_TYPE).map {
+            getHistoryObj.value = it
+            TriviaUiState.History(entity = it)
+        }
+        return merge(trivia, history)
     }
 
     /**
@@ -110,15 +107,10 @@ class TriviaViewModel @Inject constructor(private val historyRepository: History
      *
      */
     private fun persistTriviaObjects(item: TriviaResponseBody) {
-        ArrayList<TriviaEntity>().apply {
-            item.result.map {
-                this.add(TriviaNetworkMapper().mapToEntity(domainModel = it))
-            }
-        }.run {
-            viewModelScope.launch {
-                triviaRepository.insertMultiple(list = this@run)
-                getTriviaObjects.value = this@run
-            }
+        val result = item.result.toTriviaEntity()
+        viewModelScope.launch {
+            triviaRepository.insertMultiple(list = result)
+            getTriviaObjects.value = result
         }
     }
 
@@ -136,27 +128,6 @@ class TriviaViewModel @Inject constructor(private val historyRepository: History
         triviaRepository.deleteSingleObject(triviaEntity = obj)
     }
 
-    /**
-     *
-     */
-    fun getTriviaCategories() {
-        val api = RetrofitClient.getRetrofitInstance(baseUrl = Constants.TRIVIA_BASE_URL, timeout = 10L).create(IService::class.java)
-        CompositeDisposable().add(
-            api.getTriviaCategories()
-                .subscribeOn(io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError {
-                    println("Error: $it")
-                }
-                .subscribe({ categories ->
-                    println()
-                    parseCategoryReslut(result = categories)
-                }, {
-                    println("Error: $it")
-                })
-
-        )
-    }
 
     /**
      *
@@ -172,7 +143,6 @@ class TriviaViewModel @Inject constructor(private val historyRepository: History
      *
      */
     fun buildRequest(amount: Int, category: Int, diff: String): HashMap<String, String> {
-
         return HashMap<String, String>().apply {
             this["amount"] = amount.toString()
             if (category != -1) {
@@ -182,36 +152,39 @@ class TriviaViewModel @Inject constructor(private val historyRepository: History
                 this["difficulty"] = diff.toLowerCase(Locale.getDefault())
             }
         }
+    }
+
+    /**
+     *
+     */
+    suspend fun getTriviaCategories() {
+        flow {
+            emit(triviaRepository.getTriviaCategories())
+        }.flowOn(Dispatchers.IO)
+            .catch { error ->
+                println("Error: $error")
+            }
+            .collect { categories ->
+                parseCategoryReslut(result = categories)
+            }
 
     }
 
     /**
      *
      */
-    fun getTriviaQuestions(map: HashMap<String, String>) {
-        val api = RetrofitClient.getRetrofitInstance(baseUrl = Constants.TRIVIA_BASE_URL, timeout = 10L).create(IService::class.java)
-        CompositeDisposable().add(
-            api.getTriviaQuestions(options = map)
-                .subscribeOn(io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError {
-                    println("Error: $it")
-                }
-                .subscribe({ trivia ->
-                    println()
-                    persistTriviaObjects(item = trivia)
-                }, {
-                    println("Error: $it")
-                })
+    suspend fun getTriviaQuestions(map: HashMap<String, String>) {
 
-        )
-    }
+        flow {
+            emit(triviaRepository.getTriviaQuestionsFlow(options = map))
+        }.flowOn(Dispatchers.IO)
+            .catch { error ->
+                println("Error: $error")
+            }
+            .collect { trivia ->
+                persistTriviaObjects(item = trivia)
+            }
 
-    /**
-     *
-     */
-    fun normalizeText(value: String): String {
-        return value.replace("&quot;", "\"").replace("&#039;", "'")
     }
 
     /**
@@ -240,7 +213,7 @@ class TriviaViewModel @Inject constructor(private val historyRepository: History
         getHistoryObj.value?.score?.let { score ->
             if (score.total == 0) {
                 score.total = total
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     getHistoryObj.value?.let { historyRepository.updateHistoryEntity(historyEntity = it) }
                 }
             }
@@ -264,4 +237,9 @@ class TriviaViewModel @Inject constructor(private val historyRepository: History
             }
         }
     }
+}
+
+sealed class TriviaUiState {
+    data class Trivia(val list: List<*>) : TriviaUiState()
+    data class History(val entity: HistoryEntity?) : TriviaUiState()
 }

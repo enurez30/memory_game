@@ -24,18 +24,18 @@
     <color name="pink_600Dark">#a00037</color>
 
     <color name="red_700">#d32f2f</color>
-    <color name="red_700Light">#ff6659</color>
+    <color name="red_700Light">#FDD8D6</color>
     <color name="red_700Dark">#9a0007</color>
-    <color name="teal_900">#004d40</color>
-    <color name="teal_900Light">#39796b</color>
-    <color name="teal_900Dark">#00251a</color>
+    <color name="teal_900">#016C4C</color>
+    <color name="teal_900Light">#2A937C</color>
+    <color name="teal_900Dark">#014E37</color>
 
     <color name="white_variant">#F3F2F2</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
     <color name="blue_700">#1976d2</color>
-    <color name="blue_700Light">#63a4ff</color>
+    <color name="blue_700Light">#B6CFF1</color>
     <color name="blue_700Dark">#004ba0</color>
     <color name="light_blue300">#4fc3f7</color>
     <color name="light_blue300Light">#8bf6ff</color>
@@ -43,7 +43,7 @@
 
     <color name="purple_400">#ab47bc</color>
     <color name="purple_400Light">#df78ef</color>
-    <color name="purple_400Dark">#790e8b</color>
+    <color name="purple_400Dark">#F4B4FF</color>
     <color name="deep_purple_500">#673ab7</color>
     <color name="deep_purple_500Light">#9a67ea</color>
     <color name="deep_purple_500Dark">#320b86</color>

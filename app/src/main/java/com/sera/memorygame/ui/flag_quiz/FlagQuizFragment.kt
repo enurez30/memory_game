@@ -1,6 +1,5 @@
 package com.sera.memorygame.ui.flag_quiz
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -18,21 +17,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
 import com.sera.memorygame.R
-import com.sera.memorygame.database.datastore.AppPreferences
 import com.sera.memorygame.database.model.FlagQuizMainObject
 import com.sera.memorygame.database.model.FlagQuizSingleObject
 import com.sera.memorygame.database.model.IObject
 import com.sera.memorygame.databinding.FlagQuizFragmentBinding
 import com.sera.memorygame.event.MessageEvent
+import com.sera.memorygame.extentions.toAbbreviation
 import com.sera.memorygame.providers.ResourcesProvider
 import com.sera.memorygame.ui.BaseFragment
-import com.sera.memorygame.ui.MainActivity
 import com.sera.memorygame.ui.adapter.BaseRecyclerViewAdapter
 import com.sera.memorygame.ui.adapter.CommonAdapter
 import com.sera.memorygame.utils.AnimationHelper
 import com.sera.memorygame.utils.Constants
+import com.sera.memorygame.utils.Prefs
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -41,13 +42,14 @@ import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class FlagQuizFragment : BaseFragment() {
     private lateinit var mBinder: FlagQuizFragmentBinding
 
-
     @Inject
-    lateinit var appPrefs: AppPreferences
+    lateinit var provider: ResourcesProvider
 
     /**
      *
@@ -67,13 +69,6 @@ class FlagQuizFragment : BaseFragment() {
         }
     }
 
-    /**
-     *
-     */
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity() as? MainActivity?)?.mainComponent?.inject(fragment = this)
-    }
 
     /**
      *
@@ -120,9 +115,8 @@ class FlagQuizFragment : BaseFragment() {
      */
     private fun setFlag() {
         (requireArguments().getSerializable("entity") as? FlagQuizMainObject?)?.let { fqm ->
-            with(ResourcesProvider(context = requireContext())) {
-
-                val rId = this.getResurceFromRaw(fName = fqm.flagReference)
+            with(provider) {
+                val rId = fqm.flagReference.getResurceFromRaw
                 ResourcesCompat.getDrawable(resources, rId, requireContext().theme)?.toBitmap()?.let {
                     val ratio = it.width.toDouble() / it.height.toDouble()
                     mBinder.flagContainer.layoutParams.height = (it.height * 2)
@@ -224,19 +218,10 @@ class FlagQuizFragment : BaseFragment() {
      *
      */
     private suspend fun buildBaseUrl() = flow {
-        appPrefs.appLanguage.collect { result ->
-            val prefix = result?.let {
-                when(it){
-                    "iw"->"https://he."
-                    else->"https://$it."
-                }
-            } ?: kotlin.run {
-                "https://en."
-            }
-
-            emit("$prefix${Constants.WIKIPEDIA_COUNTRY_BASE_URL}")
-        }
+        val prefix = Prefs.getAppLanguage().toAbbreviation()
+        emit("$prefix${Constants.WIKIPEDIA_COUNTRY_BASE_URL}")
     }
+
 
     /**
      *

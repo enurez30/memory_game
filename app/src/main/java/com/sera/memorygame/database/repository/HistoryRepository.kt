@@ -1,8 +1,6 @@
 package com.sera.memorygame.database.repository
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import com.sera.memorygame.database.AppDatabase
 import com.sera.memorygame.database.dao.HistoryDao
 import com.sera.memorygame.database.entity.HistoryEntity
 import kotlinx.coroutines.Dispatchers
@@ -10,14 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class HistoryRepository @Inject constructor(val context: Context) {
-
-    /**
-     *
-     */
-    private val dao: HistoryDao by lazy {
-        AppDatabase.getDataBase(context).historyDao()
-    }
+class HistoryRepository @Inject constructor(private val dao: HistoryDao) {
 
     /**
      *
@@ -63,4 +54,9 @@ class HistoryRepository @Inject constructor(val context: Context) {
      *
      */
     fun getHistoryByTypeLive(type: String): LiveData<HistoryEntity?> = dao.getHistoryByTypeLive(type = type)
+
+    /**
+     *
+     */
+    fun getHistoryByTypeFlow(type: String): Flow<HistoryEntity?> = dao.getHistoryByTypeFlow(type = type)
 }

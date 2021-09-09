@@ -1,12 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-crashlytics-ktx:17.4.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a0f971874f8f6c80f6c69f7f6db4c696/jetified-firebase-crashlytics-ktx-17.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/05435a47de2f0aef7a288c3429203011/jetified-firebase-crashlytics-ktx-17.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4de2c22130ccafcc78d37076743ab983/jetified-firebase-crashlytics-ktx-17.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e87b1a3b00b586838bd69fd4c5f16a63/jetified-firebase-crashlytics-ktx-17.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e87b1a3b00b586838bd69fd4c5f16a63/jetified-firebase-crashlytics-ktx-17.4.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e87b1a3b00b586838bd69fd4c5f16a63/jetified-firebase-crashlytics-ktx-17.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a1c830ed27f8c9ce485bd4a3da425eb6/transformed/jetified-firebase-crashlytics-ktx-17.4.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ce158b10307233c24d1df4ca4df6054f/transformed/jetified-firebase-crashlytics-ktx-17.4.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a9365e076e0fce4ed8e6ebd3857b5053/transformed/jetified-firebase-crashlytics-ktx-17.4.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/a9365e076e0fce4ed8e6ebd3857b5053/transformed/jetified-firebase-crashlytics-ktx-17.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a9365e076e0fce4ed8e6ebd3857b5053/transformed/jetified-firebase-crashlytics-ktx-17.4.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-crashlytics-ktx/17.4.0/1406dfb1611a8101c7cf814520a9ab6d1999ff24/firebase-crashlytics-ktx-17.4.0-javadoc.jar!/" />

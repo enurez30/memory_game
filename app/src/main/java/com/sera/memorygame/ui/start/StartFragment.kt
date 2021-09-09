@@ -1,7 +1,6 @@
 package com.sera.memorygame.ui.start
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,44 +12,26 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.sera.memorygame.R
 import com.sera.memorygame.database.entity.HistoryEntity
 import com.sera.memorygame.databinding.StartFragmentBinding
-import com.sera.memorygame.ui.BaseActivity
 import com.sera.memorygame.ui.BaseFragment
-import com.sera.memorygame.ui.MainActivity
-import com.sera.memorygame.ui.flag_quiz.FlagQuizContainerFragment
-import com.sera.memorygame.ui.theme.GameThemeFragment
-import com.sera.memorygame.ui.trivia.TriviaContainerFragment
 import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.viewModel.StartViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.bottom_sheet_layout.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 
+@InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class StartFragment : BaseFragment() {
     private lateinit var mBinder: StartFragmentBinding
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
 
-    /**
-     *
-     */
-    companion object {
-        fun newInstance() = StartFragment()
-    }
-
     @Inject
     lateinit var viewModel: StartViewModel
 
-    /**
-     *
-     */
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity() as? MainActivity?)?.mainComponent?.inject(fragment = this)
-    }
 
     /**
      *
@@ -72,25 +53,25 @@ class StartFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
         buildBottomView()
-        addObserver()
+        lifecycleScope.launchWhenCreated {
+            addObserver()
+        }
     }
 
     /**
      *
      */
-    private fun addObserver() {
-        viewModel.getMediator().observe(viewLifecycleOwner, {
-            it?.let { pair ->
-                when (pair.first) {
-                    Constants.HISTORY_QUIZ_GAME_TYPE -> {
-                        mBinder.quizIndicator.isVisible = pair.second
-                    }
-                    Constants.HISTORY_TRIVIA_GAME_TYPE -> {
-                        mBinder.triviaIndicator.isVisible = pair.second
-                    }
+    private suspend fun addObserver() {
+        viewModel.getData().collect { indicator ->
+            when (indicator.type) {
+                Constants.HISTORY_QUIZ_GAME_TYPE -> {
+                    mBinder.quizIndicator.isVisible = indicator.isVisible
+                }
+                Constants.HISTORY_TRIVIA_GAME_TYPE -> {
+                    mBinder.triviaIndicator.isVisible = indicator.isVisible
                 }
             }
-        })
+        }
     }
 
     /**
@@ -141,22 +122,22 @@ class StartFragment : BaseFragment() {
     override fun delegateHandlerClick(view: View) {
         when (view.id) {
             R.id.memoryBtn -> {
-                (requireActivity() as MainActivity).replaceFragment(fragment = GameThemeFragment.newInstance())
+                navigate(StartFragmentDirections.actionStartFragmentToGameThemeFragment())
             }
             R.id.quizBtn -> {
-                viewModel.hQuiz.value?.let {
-                    mBinder.mainView.bottom_view_root.tag = viewModel.hQuiz.value
+                viewModel.hQuizState.value?.let {
+                    mBinder.mainView.bottom_view_root.tag = it
                     toggleBottomSheet()
                 } ?: kotlin.run {
-                    (requireActivity() as? BaseActivity?)?.replaceFragment(fragment = FlagQuizContainerFragment.newInstance())
+                    navigate(StartFragmentDirections.actionStartFragmentToFlagQuizContainerFragment())
                 }
             }
             R.id.triviaBtn -> {
-                viewModel.hTrivia.value?.let {
-                    mBinder.mainView.bottom_view_root.tag = viewModel.hTrivia.value
+                viewModel.hTriviaState.value?.let {
+                    mBinder.mainView.bottom_view_root.tag = it
                     toggleBottomSheet()
                 } ?: kotlin.run {
-                    (requireActivity() as? BaseActivity?)?.replaceFragment(fragment = TriviaContainerFragment.newInstance())
+                    navigate(StartFragmentDirections.actionStartFragmentToTriviaContainerFragment())
                 }
             }
             R.id.backOverlay -> {
@@ -170,10 +151,10 @@ class StartFragment : BaseFragment() {
                         (it as? HistoryEntity)?.let { he ->
                             when (he.type) {
                                 Constants.HISTORY_QUIZ_GAME_TYPE -> {
-                                    (requireActivity() as? BaseActivity?)?.replaceFragment(fragment = FlagQuizContainerFragment.newInstance())
+                                    navigate(StartFragmentDirections.actionStartFragmentToFlagQuizContainerFragment())
                                 }
                                 Constants.HISTORY_TRIVIA_GAME_TYPE -> {
-                                    (requireActivity() as? BaseActivity?)?.replaceFragment(fragment = TriviaContainerFragment.newInstance())
+                                    navigate(StartFragmentDirections.actionStartFragmentToTriviaContainerFragment())
                                 }
                                 else -> {
                                     println("some error")
@@ -192,17 +173,6 @@ class StartFragment : BaseFragment() {
                             lifecycleScope.launch {
                                 viewModel.deleteHistory(obj = he)
                             }
-//                            when (he.type) {
-//                                Constants.HISTORY_QUIZ_GAME_TYPE -> {
-//                                    (requireActivity() as? BaseActivity?)?.replaceFragment(fragment = FlagQuizContainerFragment.newInstance())
-//                                }
-//                                Constants.HISTORY_TRIVIA_GAME_TYPE -> {
-//                                    (requireActivity() as? BaseActivity?)?.replaceFragment(fragment = TriviaContainerFragment.newInstance())
-//                                }
-//                                else -> {
-//                                    println("some error")
-//                                }
-//                            }
                         }
                     }
                 }

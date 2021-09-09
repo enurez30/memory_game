@@ -1,6 +1,8 @@
 package com.sera.memorygame.service
 
 import android.content.Context
+import android.content.Context.CONNECTIVITY_SERVICE
+import android.net.ConnectivityManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.google.firebase.ktx.Firebase
@@ -12,27 +14,33 @@ import com.sera.memorygame.utils.FileUtils
 import com.sera.memorygame.utils.Prefs
 import com.sera.memorygame.utils.ZipManager
 import com.sera.memorygame.utils.status_callback.NetworkStatus
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
 import java.io.File
 import java.io.File.createTempFile
 
 
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 class AssetWorker(private val context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
 
     private val scope = CoroutineScope(Dispatchers.IO)
+
 
     /**
      *
      */
     override fun doWork(): Result {
         sendEvent(msg = "", ns = NetworkStatus.START.status)
-        scope.launch {
-            getConfiguration()
+        (context.getSystemService(CONNECTIVITY_SERVICE) as? ConnectivityManager?)?.let {
+            if (it.activeNetwork != null) {
+                scope.launch {
+                    getConfiguration()
+                }
+            } else {
+                sendEvent(msg = "", ns = NetworkStatus.NO_INTERNET_CONNECTION.status)
+            }
         }
         return Result.success()
     }
@@ -46,8 +54,7 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
             val localFile = createTempFile("tmp", ".json")
             fileRef.getFile(localFile).addOnSuccessListener {
                 parseData(localFile = localFile)?.let { json ->
-//                    val localAssetVersion = Prefs.getAssetVersion().toDouble()
-                    val localAssetVersion = "0.0".toDouble()
+                    val localAssetVersion = Prefs.getAssetVersion().toDouble()
                     val serverAssetVersion = json.getString("asset_version").toDouble()
                     localFile.delete()
                     if (localAssetVersion < serverAssetVersion) {
@@ -130,11 +137,10 @@ class AssetWorker(private val context: Context, workerParams: WorkerParameters) 
     private fun sendEvent(msg: String, ns: Int) {
         val event = MessageEvent().apply {
             this.reciever = BaseActivity::class.java.simpleName
-            this.key = "network_status"
+            this.key = Constants.EVENT_NETWORK_STATUS
             this.message = msg
             this.network_status = ns
         }
-        println("DOWNLOAD: post event= ${event.network_status}")
         EventBus.getDefault().postSticky(event)
     }
 

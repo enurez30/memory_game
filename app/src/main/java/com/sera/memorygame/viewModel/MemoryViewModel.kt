@@ -10,13 +10,13 @@ import com.sera.memorygame.database.model.MemoryViewObject
 import com.sera.memorygame.database.model.SizeViewObject
 import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.providers.ResourcesProvider
+import javax.inject.Inject
 import kotlin.random.Random
 
-class MemoryViewModel(
-    private val jsonRef: String,
-    private val sizeViewObject: SizeViewObject,
-    private val resourcesProvider: ResourcesProvider
-) : ViewModel() {
+class MemoryViewModel @Inject constructor(private val resourcesProvider: ResourcesProvider) : ViewModel() {
+
+    private lateinit var sizeViewObject: SizeViewObject
+    private lateinit var jsonRef: String
 
     /**
      *
@@ -55,6 +55,14 @@ class MemoryViewModel(
             pair = value
         }
 
+
+    /**
+     *
+     */
+    fun setValues(sizeViewObject: SizeViewObject, jsonRef: String) {
+        this.sizeViewObject = sizeViewObject
+        this.jsonRef = jsonRef
+    }
 
     /**
      *

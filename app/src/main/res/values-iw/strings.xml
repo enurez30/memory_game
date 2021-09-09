@@ -362,4 +362,14 @@
     <string name="continue_last_game">המשך משחק אחרון</string>
     <string name="reset">Reset</string>
 
+    <!-- titles -->
+    <string name="start_fragment_choose_game">בחר משחק</string>
+    <string name="trivia_choose_fragment_choose_trivia">הגדר טריוויה למשחק</string>
+    <string name="trivia_fragment_trivia">"משחק טריוויה "</string>
+    <string name="flag_fragment_quize">"משחק דגלים "</string>
+    <string name="game_theme_fragment_chosse_theme">הגדר נושא</string>
+    <string name="card_size_fragment_chosse_size">הגדר כמות כרטיסים</string>
+    <string name="memory_fragment_memory">משחק זיכרון</string>
+    <string name="settings_fragment_Settings">הגדרות</string>
+
 </resources>

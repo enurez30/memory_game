@@ -13,7 +13,7 @@ import com.sera.memorygame.databinding.SimpleIobjectAutocompleteLayoutBinding
 import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.ui.view_holder.SimpleIObjectViewHolder
 
-class IObjectAutocompleteAdapter<T>(context: Context,val list:ArrayList<T>,val handlers: Handlers?) : ArrayAdapter<T>(context, R.layout.simple_iobject_autocomplete_layout) {
+class IObjectAutocompleteAdapter<T>(context: Context,val list:List<T>,val handlers: Handlers?) : ArrayAdapter<T>(context, R.layout.simple_iobject_autocomplete_layout) {
 
     /**
      *
