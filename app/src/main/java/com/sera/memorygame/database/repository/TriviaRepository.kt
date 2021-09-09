@@ -5,14 +5,14 @@ package com.sera.memorygame.database.repository
 import androidx.lifecycle.LiveData
 import com.sera.memorygame.database.dao.TriviaDao
 import com.sera.memorygame.database.entity.TriviaEntity
-import com.sera.memorygame.network.IServiceHelper
+import com.sera.memorygame.network.IService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import retrofit2.http.QueryMap
 import javax.inject.Inject
 
-class TriviaRepository @Inject constructor(private val dao: TriviaDao, private val service: IServiceHelper) {
+class TriviaRepository @Inject constructor(private val dao: TriviaDao, private val service: IService) {
 
     /**
      *

@@ -5,18 +5,18 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.sera.memorygame.R
 import com.sera.memorygame.database.model.MemoryViewObject
+import com.sera.memorygame.extentions.resolveColorAttr
 import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.utils.Utils
 import com.yayandroid.rotatable.Rotatable
 
 
 @SuppressLint("ViewConstructor")
-class MemoryCardView constructor(private val mContext: Context, private val memoryViewObject: MemoryViewObject, private var callback: Handlers) : CardView(mContext, null, 0) {
+class MemoryCardView constructor(mContext: Context, private val memoryViewObject: MemoryViewObject, private var callback: Handlers) : CardView(mContext, null, 0) {
     private var rotatable: Rotatable? = null
 
     init {
@@ -29,7 +29,7 @@ class MemoryCardView constructor(private val mContext: Context, private val memo
         this.id = View.generateViewId()
         this.radius = Utils.dpToPx(3).toFloat()
         this.maxCardElevation = 3F
-        this.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorLightGrey))
+        this.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorLightGrey))
         this.tag = memoryViewObject.id
 
         this.layoutParams = LayoutParams(memoryViewObject.width.toInt(), memoryViewObject.height.toInt()).apply {
@@ -37,7 +37,7 @@ class MemoryCardView constructor(private val mContext: Context, private val memo
         }
 
 
-        val targetImg = ImageView(mContext).apply {
+        val targetImg = ImageView(context).apply {
             this.id = View.generateViewId()
             (memoryViewObject.frontResource as? Drawable)?.let {
                 this.setImageDrawable(it)
@@ -51,14 +51,14 @@ class MemoryCardView constructor(private val mContext: Context, private val memo
 
         this.addView(targetImg)
 
-        val backCardImg = ImageView(mContext).apply {
+        val backCardImg = ImageView(context).apply {
             this.id = View.generateViewId()
             when (val resource = memoryViewObject.backResource) {
                 is Drawable -> {
                     this.setImageDrawable(resource)
                 }
                 is Int -> {
-                    this.setImageDrawable(AppCompatResources.getDrawable(mContext, resource))
+                    this.setBackgroundColor(context.resolveColorAttr(colorAttr = resource))
                 }
             }
         }

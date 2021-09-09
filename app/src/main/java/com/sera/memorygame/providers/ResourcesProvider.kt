@@ -138,4 +138,5 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
             JSONObject(json).getJSONObject(objectName)
         }
     }
+
 }

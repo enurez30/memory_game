@@ -39,7 +39,7 @@ object Prefs {
     /**
      *
      */
-    fun getTheme(): Int = getSharedPreference().getInt("theme", R.style.Theme_Grey)
+    fun getTheme(): Int = getSharedPreference().getInt("theme", R.style.Theme_Red)
 
     /**
      *

@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sera.memorygame.R
 import com.sera.memorygame.custom.MemoryCardView
 import com.sera.memorygame.database.model.IObject
-import com.sera.memorygame.database.model.SizeViewObject
 import com.sera.memorygame.databinding.FragmentMemoryBinding
 import com.sera.memorygame.interfaces.Handlers
 import com.sera.memorygame.ui.BaseFragment
@@ -19,8 +20,7 @@ import com.sera.memorygame.ui.adapter.CommonAdapter
 import com.sera.memorygame.utils.Constants
 import com.sera.memorygame.viewModel.MemoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.*
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -32,21 +32,11 @@ class MemoryFragment : BaseFragment(), Handlers {
 
     private lateinit var mBinder: FragmentMemoryBinding
 
+    private val args: MemoryFragmentArgs by navArgs()
 
     @Inject
     lateinit var viewModel: MemoryViewModel
 
-    /**
-     *
-     */
-    companion object {
-        fun newInstance(jsonRef: String, sizeObj: SizeViewObject) = MemoryFragment().apply {
-            arguments = Bundle().apply {
-                this.putString("json_ref", jsonRef)
-                this.putSerializable("sizeObj", sizeObj)
-            }
-        }
-    }
 
     /**
      *
@@ -94,8 +84,8 @@ class MemoryFragment : BaseFragment(), Handlers {
      */
     private fun setValues() {
         viewModel.setValues(
-            sizeViewObject = requireArguments().getSerializable("sizeObj") as SizeViewObject,
-            jsonRef = requireArguments().getString("json_ref", "")
+            sizeViewObject = args.sizeObj,
+            jsonRef = args.jsonRef
         )
     }
 
@@ -111,7 +101,7 @@ class MemoryFragment : BaseFragment(), Handlers {
      *
      */
     private fun generateAdapter() {
-        val sizeViewObject = requireArguments().getSerializable("sizeObj") as SizeViewObject
+        val sizeViewObject = args.sizeObj
         with(mBinder.recycler) {
             layoutManager = GridLayoutManager(requireContext(), sizeViewObject.xAxis)
             adapter = CommonAdapter()
@@ -125,19 +115,19 @@ class MemoryFragment : BaseFragment(), Handlers {
         viewModel.updatePair.observe(viewLifecycleOwner, {
             if (it.first != null && it.second != null) {
                 mBinder.overlay.visibility = View.VISIBLE
-                if (it.first?.tag == it.second?.tag) {
+                if (it.first.tag == it.second.tag) {
                     val prev = viewModel.getControlValue.value ?: 0
                     viewModel.getControlValue.value = prev + 2
 
-//                    Toast.makeText(requireContext(), "Good Job!", Toast.LENGTH_SHORT).show()
                     animateShowKonfetti(konfettiView = mBinder.viewKonfetti)
-                    viewModel.updatePair.value = Pair(null, null)
+                    viewModel.updatePair.value = MemoryViewModel.MemoryPair(null, null)
                 } else {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        it.first?.reset()
-                        it.second?.reset()
-                        viewModel.updatePair.value = Pair(null, null)
-                    }, 1000)
+                    lifecycleScope.launch {
+                        delay(1000L)
+                        it.first.reset()
+                        it.second.reset()
+                        viewModel.updatePair.value = MemoryViewModel.MemoryPair(null, null)
+                    }
                 }
             } else {
                 mBinder.overlay.visibility = View.GONE
@@ -148,12 +138,13 @@ class MemoryFragment : BaseFragment(), Handlers {
                 if (it == viewModel.memoryListValue.value) {
                     // game over
                     animateView(konfettiView = mBinder.viewKonfetti)
-                    Handler(Looper.myLooper() ?: Looper.getMainLooper()).postDelayed({
-                        requireActivity().onBackPressed()
-                    }, Constants.DEFAULT_AWAIT_TIME)
+                    lifecycleScope.launch {
+                        delay(Constants.DEFAULT_AWAIT_TIME)
+                        this.launch(Dispatchers.Main) {
+                            requireActivity().onBackPressed()
+                        }
+                    }
                 }
-            } ?: kotlin.run {
-
             }
         })
     }
@@ -165,13 +156,13 @@ class MemoryFragment : BaseFragment(), Handlers {
         // memory card was clicked
         (view as? MemoryCardView)?.let { cardView ->
             viewModel.updatePair.value?.let {
-                var pair: Pair<MemoryCardView?, MemoryCardView?> = it
+                var pair: MemoryViewModel.MemoryPair = it
                 when {
                     it.first == null -> {
-                        pair = Pair(cardView, null)
+                        pair = MemoryViewModel.MemoryPair(cardView, null)
                     }
                     it.second == null -> {
-                        pair = Pair(it.first, cardView)
+                        pair = MemoryViewModel.MemoryPair(it.first, cardView)
                     }
                 }
                 viewModel.updatePair.value = pair

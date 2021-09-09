@@ -1,7 +1,6 @@
 package com.sera.memorygame.viewModel
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sera.memorygame.R
@@ -21,8 +20,8 @@ class MemoryViewModel @Inject constructor(private val resourcesProvider: Resourc
     /**
      *
      */
-    private var pair = MutableLiveData<Pair<MemoryCardView?, MemoryCardView?>>().apply {
-        value = Pair(null, null)
+    private var pair = MutableLiveData<MemoryPair>().apply {
+        value = MemoryPair(null, null)
     }
 
     /**
@@ -49,7 +48,7 @@ class MemoryViewModel @Inject constructor(private val resourcesProvider: Resourc
     /**
      *
      */
-    var updatePair: MutableLiveData<Pair<MemoryCardView?, MemoryCardView?>>
+    var updatePair: MutableLiveData<MemoryPair>
         get() = pair
         set(value) {
             pair = value
@@ -104,9 +103,7 @@ class MemoryViewModel @Inject constructor(private val resourcesProvider: Resourc
                                 reference = imgRef,
                                 dirRef = jsonRef
                             ),
-                            backResource = getBackCardImgReferenceByJson() ?: kotlin.run {
-                                R.drawable.bckg_squires
-                            },
+                            backResource = getBackCardImgReferenceByJson(),
                         )
                     )
                     if (index == breakPoint) {
@@ -158,11 +155,19 @@ class MemoryViewModel @Inject constructor(private val resourcesProvider: Resourc
     /**
      *
      */
-    private fun getBackCardImgReferenceByJson(): Drawable? {
-        return resourcesProvider.getJsonByReference(reference = jsonRef)?.let { json ->
-            resourcesProvider.getDrawableFromAssets(dirRef = "card_back", reference = json.optString("back_card"))
-        } ?: kotlin.run {
-            null
+    private fun getBackCardImgReferenceByJson(): Any {
+        return try {
+            resourcesProvider.getJsonByReference(reference = jsonRef)?.let { json ->
+                resourcesProvider.getDrawableFromAssets(dirRef = "card_back", reference = json.optString("back_card"))
+            } ?: kotlin.run {
+                R.attr.colorSecondary
+            }
+        } catch (e: Exception) {
+            R.drawable.bckg_squires
         }
     }
+
+    sealed class GamePair
+    class MemoryPair(val first: MemoryCardView?, val second: MemoryCardView?) : GamePair()
+
 }

@@ -2,8 +2,6 @@ package com.sera.memorygame.di
 
 import com.sera.memorygame.BuildConfig
 import com.sera.memorygame.network.IService
-import com.sera.memorygame.network.IServiceHelper
-import com.sera.memorygame.network.ISeviceImpl
 import com.sera.memorygame.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -62,9 +60,6 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit): IService = retrofit.create(IService::class.java)
-
-    @Provides
-    @Singleton
-    fun provideApiHelper(helper: ISeviceImpl): IServiceHelper = helper
+    
 
 }
