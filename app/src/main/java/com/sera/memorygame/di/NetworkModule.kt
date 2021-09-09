@@ -2,7 +2,6 @@ package com.sera.memorygame.di
 
 import com.sera.memorygame.BuildConfig
 import com.sera.memorygame.network.IService
-import com.sera.memorygame.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,8 +17,6 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    @Provides
-    fun provideBaseUrl() = Constants.TRIVIA_BASE_URL
 
     @Provides
     fun provideTimeout() = 10L
@@ -50,9 +47,9 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(BASE_URL)
+        .baseUrl(BuildConfig.TRIVIA_BASE_URL)
         .client(okHttpClient)
         .build()
 
@@ -60,6 +57,6 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit): IService = retrofit.create(IService::class.java)
-    
+
 
 }
