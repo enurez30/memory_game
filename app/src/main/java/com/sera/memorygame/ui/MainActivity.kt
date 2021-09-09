@@ -19,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import com.sera.memorygame.BuildConfig
 import com.sera.memorygame.R
 import com.sera.memorygame.databinding.ActivityMainBinding
 import com.sera.memorygame.extentions.toResId
@@ -102,6 +103,7 @@ class MainActivity : BaseActivity(), Handlers {
             it?.avatar?.toUri()?.let { uri ->
                 setImage(uri = uri)
             }
+            mBinder.navLayout.versionTV.text = BuildConfig.VERSION_NAME
         }
     }
 
