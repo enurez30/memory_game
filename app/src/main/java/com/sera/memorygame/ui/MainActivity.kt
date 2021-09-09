@@ -5,13 +5,11 @@ package com.sera.memorygame.ui
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Menu
 import android.view.View
-import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
@@ -57,16 +55,10 @@ class MainActivity : BaseActivity(), Handlers {
         setTheme(Prefs.getTheme())
         mBinder.handlers = this
         mBinder.lifecycleOwner = this
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         lifecycleScope.launch {
             addObservers()
         }
