@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.rubensousa:gravitysnaphelper:2.2.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/1303da3981a6b4700d0c7ceea6d0b9c1/transformed/jetified-gravitysnaphelper-2.2.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1303da3981a6b4700d0c7ceea6d0b9c1/transformed/jetified-gravitysnaphelper-2.2.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1303da3981a6b4700d0c7ceea6d0b9c1/transformed/jetified-gravitysnaphelper-2.2.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/0c10862bd1906bb41a39e96ddc655f77/transformed/jetified-gravitysnaphelper-2.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0c10862bd1906bb41a39e96ddc655f77/transformed/jetified-gravitysnaphelper-2.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0c10862bd1906bb41a39e96ddc655f77/transformed/jetified-gravitysnaphelper-2.2.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.rubensousa/gravitysnaphelper/2.2.0/fb3aea2cbd1996f6a58e4f51a44fe98366bea81b/gravitysnaphelper-2.2.0-javadoc.jar!/" />

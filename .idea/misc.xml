@@ -17,6 +17,8 @@
         <entry key="app/src/main/res/layout/top_bar_main.xml" value="0.3484375" />
         <entry key="app/src/main/res/layout/trivia_fragment.xml" value="0.15416666666666667" />
         <entry key="app/src/main/res/layout/user_dialog_layout.xml" value="0.3484375" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.3484375" />
+        <entry key="app/src/main/res/menu/main.xml" value="0.3484375" />
       </map>
     </option>
   </component>
