@@ -16,7 +16,6 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,12 +55,6 @@ class FlagQuizFragment : BaseFragment() {
     @Inject
     lateinit var provider: ResourcesProvider
 
-    /**
-     *
-     */
-    private val keyLiveData by lazy {
-        MutableLiveData("")
-    }
 
     /**
      *
@@ -88,10 +81,6 @@ class FlagQuizFragment : BaseFragment() {
         generateAdapter()
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                delay(100)
-//                countryObserver()
-//                observeFlag()
-//                addObserver()
                 observeUiState()
             }
         }

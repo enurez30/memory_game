@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.sera.memorygame.interfaces.Handlers" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.flag_quiz.view.FlagQuizFragment">
+
+        <include
+            android:id="@+id/scoreInclude"
+            layout="@layout/quiz_score_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/flagContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:elevation="4dp"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="2:1"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scoreInclude"
+            app:layout_constraintWidth_percent=".35"
+            app:strokeColor="@color/grey_50"
+            app:strokeWidth="0.5dp">
+
+            <ImageView
+                android:id="@+id/flagIV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/ca" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <ImageView
+            android:id="@+id/infoIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/circle_white_transparent"
+            android:elevation="1dp"
+            android:onClick="@{handlers::onHandlerClicked}"
+            android:padding="6dp"
+            android:src="@drawable/ic_baseline_info"
+            app:layout_constraintEnd_toEndOf="@+id/flagContainer"
+            app:layout_constraintTop_toTopOf="@+id/flagContainer"
+            app:tint="?attr/colorSecondary"
+            tools:ignore="ContentDescription" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/scoreInclude" />
+
+        <LinearLayout
+            android:id="@+id/overlayView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorTransparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal" />
+
+        <Button
+            android:id="@+id/nextBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/annie_use_your_telescope"
+            android:minWidth="140dp"
+            android:onClick="@{handlers::onHandlerClicked}"
+            android:text="@string/flag_next"
+            android:textColor="?attr/colorSecondary"
+            android:textStyle="bold"
+            app:backgroundTint="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <nl.dionsegijn.konfetti.KonfettiView
+            android:id="@+id/viewKonfetti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

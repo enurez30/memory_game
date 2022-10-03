@@ -38,3 +38,6 @@ val screenWidth: Int
 
 val screenHeight: Int
     get() = displayMetrics.heightPixels
+
+val orientation: Int
+    get() = Resources.getSystem().configuration.orientation
