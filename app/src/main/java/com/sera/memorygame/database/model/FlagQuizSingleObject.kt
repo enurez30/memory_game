@@ -6,7 +6,8 @@ import java.io.Serializable
 data class FlagQuizSingleObject(
     val flagName: String,
     val isRight: Boolean = false,
-    var animate: Boolean = false
+    val animate: Boolean = false,
+    val onClick: (item: FlagQuizSingleObject) -> Unit,
 ) : IObject(), Serializable {
     /**
      *

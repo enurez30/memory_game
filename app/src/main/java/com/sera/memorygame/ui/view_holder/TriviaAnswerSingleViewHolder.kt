@@ -17,8 +17,8 @@ class TriviaAnswerSingleViewHolder(val binding: ViewDataBinding, val callback: H
      */
     fun bind(item: TriviaAnswerSingleObject) {
         with(binding as FlagQuizSingleViewBinding) {
-            handlers = callback
-            position = absoluteAdapterPosition
+//            handlers = callback
+//            position = absoluteAdapterPosition
 
             nameTV.text = normalizeText(value = item.answer)
             if (item.animate) {

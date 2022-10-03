@@ -1,6 +1,8 @@
 package com.sera.memorygame.database
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.sera.memorygame.database.dao.CoutryDao
@@ -11,6 +13,7 @@ import com.sera.memorygame.database.entity.CountryEntity
 import com.sera.memorygame.database.entity.HistoryEntity
 import com.sera.memorygame.database.entity.TriviaEntity
 import com.sera.memorygame.database.entity.UserEntity
+import com.sera.memorygame.utils.Constants
 
 @Database(
     exportSchema = false,
@@ -29,31 +32,31 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun historyDao(): HistoryDao
     abstract fun triviaDao(): TriviaDao
 
-//    companion object {
-//        @Volatile
-//        private var INSTANCE: AppDatabase? = null
-//
-//        /**
-//         *
-//         */
-//        fun getDataBase(context: Context): AppDatabase {
-//            val tempInstance = INSTANCE
-//            if (tempInstance != null) {
-//                return tempInstance
-//            }
-//            synchronized(this) {
-//                val instance = Room.databaseBuilder(
-//                    context.applicationContext,
-//                    AppDatabase::class.java,
-//                    Constants.APP_DATABAS_NAME
-//                )
-//                    .setJournalMode(JournalMode.TRUNCATE)
-//                    .allowMainThreadQueries()
-//                    .build()
-//                INSTANCE = instance
-//                return instance
-//            }
-//        }
-//    }
+    companion object {
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
+
+        /**
+         *
+         */
+        fun getDataBase(context: Context): AppDatabase {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    Constants.APP_DATABAS_NAME
+                )
+                    .setJournalMode(JournalMode.TRUNCATE)
+                    .allowMainThreadQueries()
+                    .build()
+                INSTANCE = instance
+                return instance
+            }
+        }
+    }
 
 }

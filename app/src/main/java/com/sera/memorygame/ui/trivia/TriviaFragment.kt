@@ -198,7 +198,7 @@ class TriviaFragment : BaseFragment() {
     override fun onHandlerClicked(view: View) {
         when (view.id) {
             R.id.nextBtn -> {
-                sendEvent(key = "next", message = (requireArguments().getSerializable("entity") as? TriviaEntity?)?.id ?: "")
+                sendEvent(key = "nextQuiz", message = (requireArguments().getSerializable("entity") as? TriviaEntity?)?.id ?: "")
             }
         }
     }

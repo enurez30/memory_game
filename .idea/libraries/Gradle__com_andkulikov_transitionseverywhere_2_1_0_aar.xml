@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.andkulikov:transitionseverywhere:2.1.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/226062cf3f5cb5f751455eacce61be42/transformed/jetified-transitionseverywhere-2.1.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/226062cf3f5cb5f751455eacce61be42/transformed/jetified-transitionseverywhere-2.1.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/226062cf3f5cb5f751455eacce61be42/transformed/jetified-transitionseverywhere-2.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/737cee32a17c1ea23fcbd6f48e0598c0/transformed/jetified-transitionseverywhere-2.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/737cee32a17c1ea23fcbd6f48e0598c0/transformed/jetified-transitionseverywhere-2.1.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/737cee32a17c1ea23fcbd6f48e0598c0/transformed/jetified-transitionseverywhere-2.1.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.andkulikov/transitionseverywhere/2.1.0/c5e2011721bad9c493e1e45e1bb2833b0b5eb6a2/transitionseverywhere-2.1.0-javadoc.jar!/" />

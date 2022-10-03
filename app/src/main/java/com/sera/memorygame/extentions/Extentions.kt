@@ -9,7 +9,7 @@ import com.sera.memorygame.R
 import com.sera.memorygame.database.entity.TriviaEntity
 import com.sera.memorygame.network.mapping.TriviaNetworkMapper
 import com.sera.memorygame.network.model.TriviaObjectModel
-import com.sera.memorygame.ui.flag_quiz.FlagQuizFragment
+import com.sera.memorygame.ui.flag_quiz.view.FlagQuizFragment
 import com.sera.memorygame.ui.memory.MemoryFragment
 import com.sera.memorygame.ui.settings.SettingsFragment
 import com.sera.memorygame.ui.size.CardsSizeChooseFragment
@@ -20,7 +20,6 @@ import com.sera.memorygame.ui.trivia.TriviaFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 

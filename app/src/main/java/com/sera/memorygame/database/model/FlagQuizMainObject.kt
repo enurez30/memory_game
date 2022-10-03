@@ -6,7 +6,7 @@ import java.io.Serializable
 data class FlagQuizMainObject(
     val countryId: String,
     val flagReference: String,
-    val options: ArrayList<FlagQuizSingleObject>
+    val options: List<FlagQuizSingleObject>
 ) : IObject(), Serializable {
 
     /**

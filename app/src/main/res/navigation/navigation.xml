@@ -10,7 +10,7 @@
         android:label="StartFragment" >
         <action
             android:id="@+id/action_startFragment_to_flagQuizContainerFragment"
-            app:destination="@id/flagQuizContainerFragment"
+            app:destination="@id/FlagQuizFragment"
             app:popUpTo="@id/startFragment" />
         <action
             android:id="@+id/action_startFragment_to_triviaContainerFragment"
@@ -21,8 +21,8 @@
             app:destination="@id/gameThemeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/flagQuizContainerFragment"
-        android:name="com.sera.memorygame.ui.flag_quiz.FlagQuizContainerFragment"
+        android:id="@+id/FlagQuizFragment"
+        android:name="com.sera.memorygame.ui.flag_quiz.view.FlagQuizFragment"
         android:label="FlagQuizContainerFragment" />
     <fragment
         android:id="@+id/triviaContainerFragment"

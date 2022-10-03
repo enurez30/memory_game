@@ -10,7 +10,6 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 class ResourcesProvider @Inject constructor(private val context: Context) {
@@ -19,7 +18,9 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
      *
      */
     fun getString(reference: String): String {
+        println("TEST_TEST: ${this.javaClass.simpleName} getString() reference = $reference")
         val resId: Int = context.resources.getIdentifier(reference, "string", context.packageName)
+        println("TEST_TEST: ${this.javaClass.simpleName} getString() resId = $resId")
         val configuration = Configuration(context.resources.configuration)
         configuration.setLocale(Locale.getDefault())
         return context.createConfigurationContext(configuration).resources.getString(resId)

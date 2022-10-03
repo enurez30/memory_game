@@ -11,12 +11,15 @@
         <entry key="app/src/main/res/layout/bottom_sheet_layout.xml" value="0.3484375" />
         <entry key="app/src/main/res/layout/cards_size_choose_fragment.xml" value="0.3484375" />
         <entry key="app/src/main/res/layout/custom_navigation_layout.xml" value="0.3484375" />
+        <entry key="app/src/main/res/layout/flag_quiz_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/flag_quiz_single_view.xml" value="0.15416666666666667" />
+        <entry key="app/src/main/res/layout/fragment_flag_quiz_container.xml" value="0.15172101449275363" />
         <entry key="app/src/main/res/layout/fragment_memory.xml" value="0.3484375" />
         <entry key="app/src/main/res/layout/fragment_trivia_choose.xml" value="0.2703125" />
-        <entry key="app/src/main/res/layout/fragment_trivia_container.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/layout/fragment_trivia_container.xml" value="0.125" />
         <entry key="app/src/main/res/layout/game_theme_recycler_single_view.xml" value="0.2630208333333333" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.3484375" />
+        <entry key="app/src/main/res/layout/quiz_score_layout.xml" value="0.2677083333333333" />
         <entry key="app/src/main/res/layout/simple_iobject_autocomplete_layout.xml" value="0.153125" />
         <entry key="app/src/main/res/layout/size_recycler_single_view.xml" value="0.3484375" />
         <entry key="app/src/main/res/layout/start_fragment.xml" value="0.25" />
@@ -28,7 +31,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -13,10 +13,10 @@ interface BaseDao<T> {
     @Delete
     suspend fun delete(obj: List<T>)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(obj: T): Long
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(obj: List<T>): List<Long>
 
     @Update

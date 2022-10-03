@@ -3,9 +3,7 @@ package com.sera.memorygame.database.repository
 import androidx.lifecycle.LiveData
 import com.sera.memorygame.database.dao.HistoryDao
 import com.sera.memorygame.database.entity.HistoryEntity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class HistoryRepository @Inject constructor(private val dao: HistoryDao) {
@@ -44,11 +42,7 @@ class HistoryRepository @Inject constructor(private val dao: HistoryDao) {
     /**
      *
      */
-    suspend fun getHistoryEntityByType(type: String): HistoryEntity? {
-        return withContext(Dispatchers.IO) {
-            dao.getHistoryByType(type = type)
-        }
-    }
+    suspend fun getHistoryEntityByType(type: String): HistoryEntity? = dao.getHistoryByType(type = type)
 
     /**
      *

@@ -19,7 +19,7 @@ abstract class HistoryDao : BaseDao<HistoryEntity> {
      *
      */
     @Query("SELECT * FROM history_table WHERE type=:type AND is_alive=1")
-    abstract fun getHistoryByType(type: String): HistoryEntity?
+    abstract suspend fun getHistoryByType(type: String): HistoryEntity?
 
     /**
      *

@@ -25,7 +25,6 @@ import com.sera.memorygame.viewModel.TriviaViewModel
 import com.transitionseverywhere.ChangeText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -304,7 +303,7 @@ class TriviaContainerFragment : BaseFragment() {
     fun onEvent(event: MessageEvent) {
         if (event.reciever == TriviaContainerFragment::class.java.simpleName) {
             when (event.key) {
-                "next" -> {
+                "nextQuiz" -> {
                     goNext(message = event.message)
                 }
                 else -> updateScore(message = event.message, id = event.key)

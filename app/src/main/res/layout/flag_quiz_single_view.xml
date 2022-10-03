@@ -4,13 +4,13 @@
 
     <data>
 
-        <variable
-            name="handlers"
-            type="com.sera.memorygame.interfaces.Handlers" />
+<!--        <variable-->
+<!--            name="handlers"-->
+<!--            type="com.sera.memorygame.interfaces.Handlers" />-->
 
-        <variable
-            name="position"
-            type="int" />
+<!--        <variable-->
+<!--            name="position"-->
+<!--            type="int" />-->
     </data>
 
 
@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:backgroundTint="?attr/colorSecondary"
-        android:onClick="@{(view)->handlers.onHandleClickedWithPosition(view,position)}"
         app:cardCornerRadius="4dp"
         app:cardElevation="4dp">
 

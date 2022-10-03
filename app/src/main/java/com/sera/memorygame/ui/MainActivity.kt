@@ -162,7 +162,7 @@ class MainActivity : BaseActivity(), Handlers {
 //            }
 //        }
         with(findNavController(mBinder.container.id)) {
-            if (this.backStack.count() <= 2) {
+            if (this.backQueue.count() <= 2) {
                 // nothing, add exit dialog
             } else {
                 this.popBackStack()
