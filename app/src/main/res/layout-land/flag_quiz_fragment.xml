@@ -19,7 +19,8 @@
             android:id="@+id/scoreInclude"
             layout="@layout/quiz_score_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="6dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline4"
