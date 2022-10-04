@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/memoryFragment"
-        android:name="com.sera.memorygame.ui.memory.MemoryFragment"
+        android:name="com.sera.memorygame.ui.memory.view.MemoryFragment"
         android:label="MemoryFragment" >
         <argument
             android:name="json_ref"

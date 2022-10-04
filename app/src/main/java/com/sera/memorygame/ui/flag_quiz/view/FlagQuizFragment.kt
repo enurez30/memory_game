@@ -26,7 +26,6 @@ import com.sera.memorygame.databinding.FlagQuizFragmentBinding
 import com.sera.memorygame.extentions.toAbbreviation
 import com.sera.memorygame.providers.ResourcesProvider
 import com.sera.memorygame.ui.BaseFragment
-import com.sera.memorygame.ui.adapter.FlagsAdapter
 import com.sera.memorygame.ui.flag_quiz.setImageDrawableWithAnimation
 import com.sera.memorygame.ui.flag_quiz.toFlagDimentions
 import com.sera.memorygame.ui.flag_quiz.viewmodel.CountryViewModel

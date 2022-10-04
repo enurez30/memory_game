@@ -16,11 +16,12 @@
         <entry key="app/src/main/res/layout/flag_quiz_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/flag_quiz_single_view.xml" value="0.15416666666666667" />
         <entry key="app/src/main/res/layout/fragment_flag_quiz_container.xml" value="0.15172101449275363" />
-        <entry key="app/src/main/res/layout/fragment_memory.xml" value="0.3484375" />
+        <entry key="app/src/main/res/layout/fragment_memory.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_trivia_choose.xml" value="0.2703125" />
         <entry key="app/src/main/res/layout/fragment_trivia_container.xml" value="0.125" />
         <entry key="app/src/main/res/layout/game_theme_recycler_single_view.xml" value="0.2630208333333333" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.3484375" />
+        <entry key="app/src/main/res/layout/memory_recycler_single_view.xml" value="0.11" />
         <entry key="app/src/main/res/layout/quiz_score_layout.xml" value="0.2677083333333333" />
         <entry key="app/src/main/res/layout/simple_iobject_autocomplete_layout.xml" value="0.153125" />
         <entry key="app/src/main/res/layout/size_recycler_single_view.xml" value="0.3484375" />

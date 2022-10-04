@@ -18,15 +18,15 @@ class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callba
      */
     override fun setViewHolder(parent: ViewGroup?, viewType: Int, callback: Handlers?): RecyclerView.ViewHolder {
         return when (viewType) {
-            Constants.MEMORY_VIEW_OBJECT_VIEW_TYPE -> {
-                val binding: MemoryRecyclerSingleViewBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent?.context),
-                    R.layout.memory_recycler_single_view,
-                    parent,
-                    false
-                )
-                MemoryViewHolder(binding, callback)
-            }
+//            Constants.MEMORY_VIEW_OBJECT_VIEW_TYPE -> {
+//                val binding: MemoryRecyclerSingleViewBinding = DataBindingUtil.inflate(
+//                    LayoutInflater.from(parent?.context),
+//                    R.layout.memory_recycler_single_view,
+//                    parent,
+//                    false
+//                )
+//                MemoryViewHolder(binding)
+//            }
             Constants.SIZE_VIEW_OBJECT_VIEW_TYPE -> {
                 val binding: SizeRecyclerSingleViewBinding = DataBindingUtil.inflate(
                     LayoutInflater.from(parent?.context),
@@ -85,7 +85,7 @@ class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callba
                     parent,
                     false
                 )
-                MemoryViewHolder(binding, callback)
+                MemoryViewHolder(binding)
             }
         }
 
@@ -96,7 +96,7 @@ class CommonAdapter(handlers: Handlers? = null) : BaseRecyclerViewAdapter(callba
      */
     override fun onBindData(holder: RecyclerView.ViewHolder?, position: Int) {
         when (holder) {
-            is MemoryViewHolder -> holder.bind(item = items[position] as MemoryViewObject)
+//            is MemoryViewHolder -> holder.bind(item = items[position] as MemoryViewObject)
             is SizeViewHolder -> holder.bind(item = items[position] as SizeViewObject)
             is TitleIconViewHolder -> holder.bind(item = items[position] as TitleIconObject)
             is GameThemeViewHolder -> holder.bind(item = items[position] as GameThemeObject)

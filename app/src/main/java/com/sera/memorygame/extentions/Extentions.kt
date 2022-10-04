@@ -10,7 +10,7 @@ import com.sera.memorygame.database.entity.TriviaEntity
 import com.sera.memorygame.network.mapping.TriviaNetworkMapper
 import com.sera.memorygame.network.model.TriviaObjectModel
 import com.sera.memorygame.ui.flag_quiz.view.FlagQuizFragment
-import com.sera.memorygame.ui.memory.MemoryFragment
+import com.sera.memorygame.ui.memory.view.MemoryFragment
 import com.sera.memorygame.ui.settings.SettingsFragment
 import com.sera.memorygame.ui.size.CardsSizeChooseFragment
 import com.sera.memorygame.ui.start.StartFragment

@@ -18,7 +18,6 @@ import com.sera.memorygame.viewModel.StartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.bottom_sheet_layout.view.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 

@@ -59,12 +59,12 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
     /**
      *
      */
-    fun getImagesArrayByDirReference(dirRef: String): ArrayList<String> {
+    fun getImagesArrayByDirReference(dirRef: String): List<String> {
         return try {
             val assetsPath = context.filesDir.toString() + "/assets/files/$dirRef/"
-            File(assetsPath).list()?.toList() as ArrayList<String>
+            File(assetsPath).list()?.toList() ?: listOf()
         } catch (e: Exception) {
-            ArrayList()
+            listOf()
         }
     }
 
