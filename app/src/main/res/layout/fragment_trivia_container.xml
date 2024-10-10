@@ -39,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@+id/triviaInclude"
             tools:context=".ui.flag_quiz.view.FlagQuizContainerFragment" />
 
-        <com.gmail.samehadar.iosdialog.CamomileSpinner
+        <ProgressBar
             android:id="@+id/camomileSpinner"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -50,8 +50,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            camomile:clockwise="true"
-            camomile:spinnerColor="?attr/colorSecondaryVariant"
             tools:ignore="MissingConstraints" />
 
         <nl.dionsegijn.konfetti.KonfettiView

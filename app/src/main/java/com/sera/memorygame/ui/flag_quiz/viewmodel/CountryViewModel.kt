@@ -214,6 +214,8 @@ class CountryViewModel @Inject constructor(
         list.remove(countryEntity)
 
         return ArrayList<FlagQuizSingleObject>().apply {
+            println("TEST_TEST: countryEntity = ${countryEntity.name}")
+            println("TEST_TEST: countryEntity = ${countryEntity.imageReference}")
             this.add(
                 FlagQuizSingleObject(
                     flagName = resourcesProvider.getString(reference = countryEntity.nameReference),

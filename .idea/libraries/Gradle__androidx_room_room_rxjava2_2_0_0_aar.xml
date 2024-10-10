@@ -1,13 +1,8 @@
 <component name="libraryTable">
-  <library name="Gradle: androidx.room:room-rxjava2:2.0.0@aar">
+  <library name="Gradle: androidx.room:room-rxjava2:2.0.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c3cc91395b350b62c6ecb3c74bfd41af/transformed/room-rxjava2-2.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b0ecbca6c661f81545f9af12d537a833/transformed/room-rxjava2-2.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/29aa7522add64c6d8bcddc67514a9e65/transformed/room-rxjava2-2.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/be848897f529bb829999414e426ba3ad/transformed/room-rxjava2-2.0.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7436e5048a92ad14afa1eccf0b69d9f6/transformed/room-rxjava2-2.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7436e5048a92ad14afa1eccf0b69d9f6/transformed/room-rxjava2-2.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7436e5048a92ad14afa1eccf0b69d9f6/transformed/room-rxjava2-2.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/31dc95833f571c9a656d5a40e239b6d9/transformed/room-rxjava2-2.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/31dc95833f571c9a656d5a40e239b6d9/transformed/room-rxjava2-2.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

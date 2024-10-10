@@ -1,13 +1,8 @@
 <component name="libraryTable">
-  <library name="Gradle: com.google.android.gms:play-services-measurement-base:18.0.2@aar">
+  <library name="Gradle: com.google.android.gms:play-services-measurement-base:18.0.2@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c16c9d3b7c26e7bd787f09d4f8d48b64/transformed/jetified-play-services-measurement-base-18.0.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bd08b78e8b006cc7a80ca122ecfe16c6/transformed/jetified-play-services-measurement-base-18.0.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/20f37df1dae4931d527368c0f8287702/transformed/jetified-play-services-measurement-base-18.0.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f7b8b0c490c551d69e06a9d673fd7e7c/transformed/jetified-play-services-measurement-base-18.0.2/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b3183b064966b843e3eeb81c98716681/transformed/jetified-play-services-measurement-base-18.0.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b3183b064966b843e3eeb81c98716681/transformed/jetified-play-services-measurement-base-18.0.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b3183b064966b843e3eeb81c98716681/transformed/jetified-play-services-measurement-base-18.0.2/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/07426284c0ced3619c0ad344ac9db5b2/transformed/jetified-play-services-measurement-base-18.0.2/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/07426284c0ced3619c0ad344ac9db5b2/transformed/jetified-play-services-measurement-base-18.0.2/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-measurement-base/18.0.2/27037f967d955876b3e29db6de6a24458c5b6080/play-services-measurement-base-18.0.2-javadoc.jar!/" />

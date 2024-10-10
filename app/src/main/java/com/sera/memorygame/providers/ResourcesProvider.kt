@@ -8,7 +8,7 @@ import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 
@@ -106,6 +106,7 @@ class ResourcesProvider @Inject constructor(private val context: Context) {
      */
     val String.getResurceFromRaw: Int
         get() {
+            println("TEST_TEST: getResurceFromRaw = $this")
             return context.resources.getIdentifier(this, "raw", context.packageName)
         }
 

@@ -1,20 +1,11 @@
 <component name="libraryTable">
-  <library name="Gradle: com.yayandroid:Rotatable:1.1.1@aar">
+  <library name="Gradle: com.yayandroid:Rotatable:1.1.1@aar" external-system-id="GRADLE">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6fab1ce564ffc763dc773627e602b23a/transformed/jetified-Rotatable-1.1.1/annotations.zip!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b43e4101304acb4ac9cb16d88c9fd143/transformed/jetified-Rotatable-1.1.1/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b0280dfe0d3dcdf6d24d8813fca14d89/transformed/jetified-Rotatable-1.1.1/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5f7fa81fcf90a80c5e7d30db7aa622a9/transformed/jetified-Rotatable-1.1.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d934bba0e6ce89fd008cb1e85c82f5f3/transformed/jetified-Rotatable-1.1.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3bd5dd43c06bd56f0d758b0e74a87119/transformed/jetified-Rotatable-1.1.1/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6fab1ce564ffc763dc773627e602b23a/transformed/jetified-Rotatable-1.1.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6fab1ce564ffc763dc773627e602b23a/transformed/jetified-Rotatable-1.1.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6fab1ce564ffc763dc773627e602b23a/transformed/jetified-Rotatable-1.1.1/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cb99b4191f5f0032b57cdf3ab92900e3/transformed/jetified-Rotatable-1.1.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b43e4101304acb4ac9cb16d88c9fd143/transformed/jetified-Rotatable-1.1.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b43e4101304acb4ac9cb16d88c9fd143/transformed/jetified-Rotatable-1.1.1/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b43e4101304acb4ac9cb16d88c9fd143/transformed/jetified-Rotatable-1.1.1/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b0280dfe0d3dcdf6d24d8813fca14d89/transformed/jetified-Rotatable-1.1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b0280dfe0d3dcdf6d24d8813fca14d89/transformed/jetified-Rotatable-1.1.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

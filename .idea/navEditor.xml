@@ -8,6 +8,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="FlagQuizFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="action_global_settingsFragment">
                     <value>
                       <LayoutPositions />
@@ -22,17 +34,14 @@
                             <option name="y" value="114" />
                           </Point>
                         </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="flagQuizContainerFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="8" />
-                            <option name="y" value="-252" />
-                          </Point>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_cardsSizeChooseFragment_to_memoryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

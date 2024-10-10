@@ -7,18 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.sera.memorygame.R
 import com.sera.memorygame.database.entity.HistoryEntity
 import com.sera.memorygame.databinding.StartFragmentBinding
 import com.sera.memorygame.ui.BaseFragment
 import com.sera.memorygame.utils.Constants
+import com.sera.memorygame.viewModel.HistoryIndicator
 import com.sera.memorygame.viewModel.StartViewModel
+import com.sera.memorygame.viewModel.StartViewModelInterface
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.bottom_sheet_layout.view.*
 import kotlinx.coroutines.*
-import javax.inject.Inject
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 
 @InternalCoroutinesApi
@@ -28,9 +35,7 @@ class StartFragment : BaseFragment() {
     private lateinit var mBinder: StartFragmentBinding
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
 
-    @Inject
-    lateinit var viewModel: StartViewModel
-
+    private val viewModel: StartViewModelInterface by viewModels<StartViewModel>()
 
     /**
      *
@@ -52,26 +57,26 @@ class StartFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinder.handlers = this
         buildBottomView()
-        lifecycleScope.launchWhenCreated {
-            addObserver()
-        }
-    }
-
-    /**
-     *
-     */
-    private suspend fun addObserver() {
-        viewModel.getData().collect { indicator ->
-            when (indicator.type) {
-                Constants.HISTORY_QUIZ_GAME_TYPE -> {
-                    mBinder.quizIndicator.isVisible = indicator.isVisible
-                }
-                Constants.HISTORY_TRIVIA_GAME_TYPE -> {
-                    mBinder.triviaIndicator.isVisible = indicator.isVisible
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                observeIndicator()
             }
         }
     }
+
+    private fun CoroutineScope.observeIndicator() {
+        viewModel.indicateorState.filterNotNull().onEach { indicator ->
+            when (indicator) {
+                is HistoryIndicator.QuizResult -> {
+                    mBinder.quizIndicator.isVisible = indicator.isVisible
+                }
+                is HistoryIndicator.TriviaResult -> {
+                    mBinder.triviaIndicator.isVisible = indicator.isVisible
+                }
+            }
+        }.launchIn(this)
+    }
+
 
     /**
      *
@@ -124,20 +129,32 @@ class StartFragment : BaseFragment() {
                 navigate(StartFragmentDirections.actionStartFragmentToGameThemeFragment())
             }
             R.id.quizBtn -> {
-                viewModel.hQuizState.value?.let {
-                    mBinder.mainView.bottom_view_root.tag = it
+                if (viewModel.isIndicatorOn(type = Constants.HISTORY_QUIZ_GAME_TYPE)) {
+//                    mBinder.mainView.bottom_view_root.tag = it
                     toggleBottomSheet()
-                } ?: kotlin.run {
+                } else {
                     navigate(StartFragmentDirections.actionStartFragmentToFlagQuizContainerFragment())
                 }
+//                viewModel.hQuizState.value?.let {
+//                    mBinder.mainView.bottom_view_root.tag = it
+//                    toggleBottomSheet()
+//                } ?: kotlin.run {
+//                    navigate(StartFragmentDirections.actionStartFragmentToFlagQuizContainerFragment())
+//                }
             }
             R.id.triviaBtn -> {
-                viewModel.hTriviaState.value?.let {
-                    mBinder.mainView.bottom_view_root.tag = it
+                if (viewModel.isIndicatorOn(type = Constants.HISTORY_TRIVIA_GAME_TYPE)) {
+//                    mBinder.mainView.bottom_view_root.tag = it
                     toggleBottomSheet()
-                } ?: kotlin.run {
+                } else {
                     navigate(StartFragmentDirections.actionStartFragmentToTriviaContainerFragment())
                 }
+//                viewModel.hTriviaState.value?.let {
+//                    mBinder.mainView.bottom_view_root.tag = it
+//                    toggleBottomSheet()
+//                } ?: kotlin.run {
+//                    navigate(StartFragmentDirections.actionStartFragmentToTriviaContainerFragment())
+//                }
             }
             R.id.backOverlay -> {
                 toggleBottomSheet()
@@ -170,7 +187,7 @@ class StartFragment : BaseFragment() {
                     mBinder.mainView.bottom_view_root.tag?.let {
                         (it as? HistoryEntity)?.let { he ->
                             lifecycleScope.launch {
-                                viewModel.deleteHistory(obj = he)
+                                viewModel.deleteHistory(he = he)
                             }
                         }
                     }
